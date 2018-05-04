@@ -21,7 +21,7 @@ export class FullListService {
   }
 
   getDataList() {
-    return this.http.get(ServerURL.topiclist);
+    return this.http.get(ServerURL.datatypes);
   }
 
 

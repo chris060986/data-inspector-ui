@@ -4,5 +4,5 @@ const baseUrl: string = 'localhost:3000/';
 
 export const ServerURL = {
   websocket: WS + baseUrl + 'websocket',
-  topiclist: REST + baseUrl + 'topics'
+  datatypes: REST + baseUrl + 'datatypes'
 }
