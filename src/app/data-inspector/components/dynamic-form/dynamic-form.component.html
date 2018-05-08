@@ -1,0 +1,23 @@
+<mat-card>
+    <h1>Hobbies</h1>
+    <!--<button mat-button (click)="onNewHobby()">neues Hobby</button>-->
+    <form [formGroup]="myForm" (ngSubmit)="onSubmit()">
+      <!--<mat-form-field>
+        <input matInput type="text" placeholder="Name" formControlName="name">
+      </mat-form-field>-->
+      <div formArrayName="fields">
+        <mat-list-item *ngFor="let field of myForm.get('fields').controls; let i = index">
+          <div [ngSwitch]="objects[i].type">
+            <mat-form-field *ngSwitchCase="'text'">
+              <input matInput type="objects[i].type" placeholder="{{objects[i].label}}" formControlName="{{i}}">
+            </mat-form-field>
+            <mat-checkbox *ngSwitchCase="'checkbox'" [(checked)]="objects[i].value" [(value)]="objects[i].value">
+              {{objects[i].label}}
+            </mat-checkbox>
+          </div>
+        </mat-list-item>
+      </div>
+      <diu-form-level *ngFor="let array of arrays; let i = index" [localFormGroup]="myForm.get(i.toString())" [data]="array"></diu-form-level>
+      <button class="someMargin" mat-button type="submit">SENDEN</button>
+    </form>
+  </mat-card>

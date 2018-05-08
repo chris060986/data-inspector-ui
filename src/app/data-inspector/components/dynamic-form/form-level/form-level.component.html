@@ -1,0 +1,12 @@
+<mat-card>
+    <div [formGroup]="localFormGroup">
+      <div formArrayName="fields">
+        <mat-list-item *ngFor="let control of localFormGroup.get('fields').controls; let i = index">
+          <mat-form-field>
+            <input matInput type="objects[i].type" placeholder="{{objects[i].label}}" formControlName="{{i}}">
+          </mat-form-field>
+        </mat-list-item>
+      </div>
+      <diu-form-level *ngFor="let array of arrays; let i = index" [localFormGroup]="localFormGroup.get(i.toString())" [data]="array"></diu-form-level>
+    </div>
+  </mat-card>
