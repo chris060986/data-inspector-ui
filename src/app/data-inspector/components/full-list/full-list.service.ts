@@ -3,6 +3,7 @@ import {ServerURL} from '../../urls';
 import {HttpClient} from '@angular/common/http';
 import {WebsocketService} from '../../websocket/websocket.service';
 import {Subject} from 'rxjs/Subject';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class FullListService {
@@ -20,9 +21,12 @@ export class FullListService {
     }, 2000);
   }
 
-  getDataList() {
+  getDataList(): Observable<any> {
     return this.http.get(ServerURL.datatypes);
   }
 
+  getDataStructure(name: String): Observable<any> {
+    return this.http.get(ServerURL.datastructure+"/"+name);
+  }
 
 }

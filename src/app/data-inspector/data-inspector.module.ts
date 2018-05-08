@@ -10,20 +10,28 @@ import { PageNotFoundComponent } from './components/page-not-found/page-not-foun
 import {FullListService} from './components/full-list/full-list.service';
 import { HttpClientModule } from '@angular/common/http';
 import {WebsocketService} from './websocket/websocket.service';
+import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
+import { FormLevelComponent } from './components/dynamic-form/form-level/form-level.component';
+import { BrowserModule } from '@angular/platform-browser';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    BrowserModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     CompleteMaterialModule,
     BrowserAnimationsModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   declarations: [
     DataInspectorComponent,
     NavigationComponent,
     FullListComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    DynamicFormComponent,
+    FormLevelComponent
   ],
   exports: [DataInspectorComponent],
   providers: [

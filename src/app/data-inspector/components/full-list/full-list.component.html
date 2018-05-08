@@ -2,5 +2,9 @@
   full data list
 </mat-toolbar>
 <mat-list>
-  <mat-list-item *ngFor="let data of dataList">{{data.name}}</mat-list-item>
+  <mat-list-item *ngFor="let data of dataList">
+    {{data.name}}
+    <button mat-button (click)="onStructureClick(data)">Fetch structure</button>
+  </mat-list-item>
 </mat-list>
+{{details}} 

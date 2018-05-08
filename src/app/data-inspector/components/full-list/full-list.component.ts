@@ -9,6 +9,7 @@ import {FullListService} from './full-list.service';
 export class FullListComponent implements OnInit {
 
   dataList = [];
+  details;
 
   constructor(private fullListService: FullListService) { }
 
@@ -18,4 +19,10 @@ export class FullListComponent implements OnInit {
     });
   }
 
+  onStructureClick(data){
+    this.fullListService.getDataStructure(data.name).subscribe(response => {
+      console.log(response);
+      this.details = JSON.stringify(response);
+    });
+  }
 }
