@@ -1,128 +1,111 @@
-import {Component, OnInit} from '@angular/core';
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
-import {MAT_CHECKBOX_CLICK_ACTION} from '@angular/material';
+import { Component, OnInit } from "@angular/core";
+import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { MAT_CHECKBOX_CLICK_ACTION } from "@angular/material";
 
 @Component({
-  selector: 'diu-dynamic-form',
-  templateUrl: './dynamic-form.component.html',
-  styleUrls: ['./dynamic-form.component.css'],
-  providers: [
-    {provide: MAT_CHECKBOX_CLICK_ACTION, useValue: 'check'}
-  ]
+  selector: "diu-dynamic-form",
+  templateUrl: "./dynamic-form.component.html",
+  styleUrls: ["./dynamic-form.component.css"],
+  providers: [{ provide: MAT_CHECKBOX_CLICK_ACTION, useValue: "check" }]
 })
 export class DynamicFormComponent implements OnInit {
-  myForm: FormGroup;
-
-  hobbies = [
-    {
-      name: 'Cooking',
-      duration: 2
+  jsonSchema = {
+    $schema: "http://json-schema.org/draft-04/schema#",
+    type: "object",
+    title: "COMPUTER-Schema",
+    properties: {
+      processor: {
+        type: "string"
+      },
+      storage: {
+        type: "array",
+        items: [
+          {
+            type: "object",
+            properties: {
+              type: {
+                type: "string"
+              },
+              memory: {
+                type: "integer"
+              }
+            },
+            required: ["type", "memory"]
+          },
+          {
+            type: "object",
+            properties: {
+              type: {
+                type: "string"
+              },
+              memory: {
+                type: "integer"
+              }
+            },
+            required: ["type", "memory"]
+          }
+        ]
+      },
+      ram: {
+        type: "integer"
+      },
+      cooler: {
+        type: "object",
+        properties: {
+          name: {
+            type: "string"
+          },
+          speed: {
+            type: "integer"
+          }
+        }
+      }
     },
-    {
-      name: 'Testing',
-      duration: 2
+    required: ["processor", "storage", "ram", "cooler"]
+  };
+
+  jsonValues = {
+    processor: "i7 7500U",
+    storage: [
+      {
+        type: "HDD",
+        memory: 1024
+      },
+      {
+        type: "SSD",
+        memory: 512
+      }
+    ],
+    ram: 8,
+    cooler: {
+      name: "Aplenfön",
+      speed: 1500
     }
-  ];
+  };
 
-  jsonData = [
-    {
-      label: 'element1',
-      type: 'checkbox',
-      value: true
-    },
-    {
-      label: 'element2',
-      type: 'text',
-      value: 'value2'
-    },
-    [
-      {
-        label: 'element3',
-        type: 'text',
-        value: 'value3'
-      },
-      {
-        label: 'element4',
-        type: 'text',
-        value: 'value4'
-      },
-      [
-        {
-          label: 'element5',
-          type: 'text',
-          value: 'value5'
-        },
-        {
-          label: 'element6',
-          type: 'text',
-          value: 'value6'
-        },
-      ]
-    ]
-  ];
+  private topLevelForm: FormGroup;
+  private title: String;
+  private schemaVersion: String;
+  private structureObject: Object;
+  private dataObject: Object;
+  private requiredFields: Array<String>;
 
-  objects = [];
-  arrays = [];
-
-  constructor() {
-  }
-
-  logAttribute(objects : Array<any>) {
-    objects.forEach(object => {
-      if(Array.isArray(object)){
-        this.logAttribute(object);
-      } else {
-        console.log(object);
-      }
-    })
-  }
-
-  extractObjects(input: Array<any>, objects: Array<any>, arrays: Array<any>){
-    input.forEach(element => {
-      if(Array.isArray(element)){
-        arrays.push(element);
-      } else {
-        objects.push(element);
-      }
-    })
-  }
+  constructor() {}
 
   ngOnInit() {
-    console.log(this.jsonData);
-    console.log('-------------');
-    this.logAttribute(this.jsonData);
-    this.extractObjects(this.jsonData, this.objects, this.arrays);
-
-    this.myForm = new FormGroup({});
-    this.myForm.addControl('fields', new FormArray([]))
-    this.objects.forEach(object => {
-      (<FormArray>this.myForm.get('fields')).push((new FormControl(object.value)));
-    });
-
-    this.arrays.forEach((array, index) => {
-      this.myForm.addControl(index.toString(),new FormGroup({}))
-    });
-
-
-    /*this.myForm = new FormGroup({
-      'name': new FormControl('Andreas'),
-      'hobbies': new FormArray([]),
-      'unterGroup': new FormGroup({
-        'unterArray': new FormArray([])
-      })
-    });
-    this.hobbies.forEach(hobby => {
-      (<FormArray>this.myForm.get('hobbies')).push(new FormControl(hobby.name));
-    });*/
-
+    this.topLevelForm = new FormGroup({});
+    this.title = this.jsonSchema.title;
+    this.schemaVersion = this.jsonSchema.$schema;
+    this.structureObject = this.jsonSchema.properties;
+    this.requiredFields = this.jsonSchema.required;
+    this.dataObject = this.jsonValues;
   }
 
   onSubmit() {
-    console.log(this.myForm);
+    console.log(this.topLevelForm.value);
   }
 
   onNewHobby() {
-    (<FormArray>this.myForm.get('hobbies')).push(new FormControl(''));
+    (<FormArray>this.topLevelForm.get("hobbies")).push(new FormControl(""));
   }
-
 }
