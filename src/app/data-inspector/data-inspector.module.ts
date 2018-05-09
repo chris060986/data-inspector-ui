@@ -14,6 +14,7 @@ import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.com
 import { FormLevelComponent } from './components/dynamic-form/form-level/form-level.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
+import { FormElementComponent } from './components/dynamic-form/form-level/form-element/form-element.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FullListComponent,
     PageNotFoundComponent,
     DynamicFormComponent,
-    FormLevelComponent
+    FormLevelComponent,
+    FormElementComponent
   ],
   exports: [DataInspectorComponent],
   providers: [

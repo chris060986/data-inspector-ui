@@ -14,6 +14,9 @@ export class DynamicFormComponent implements OnInit {
     type: "object",
     title: "COMPUTER-Schema",
     properties: {
+      isWorking: {
+        type: "boolean"
+      },
       processor: {
         type: "string"
       },
@@ -43,6 +46,9 @@ export class DynamicFormComponent implements OnInit {
               }
             },
             required: ["type", "memory"]
+          },
+          {
+            type: "string"
           }
         ]
       },
@@ -65,6 +71,7 @@ export class DynamicFormComponent implements OnInit {
   };
 
   jsonValues = {
+    isWorking: true,
     processor: "i7 7500U",
     storage: [
       {
@@ -82,6 +89,8 @@ export class DynamicFormComponent implements OnInit {
       speed: 1500
     }
   };
+
+  
 
   private topLevelForm: FormGroup;
   private title: String;
@@ -102,7 +111,8 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.topLevelForm.value);
+    console.log("Form Values:", this.topLevelForm.value);
+    console.log("Form Valid?:", this.topLevelForm.valid);
   }
 
   onNewHobby() {

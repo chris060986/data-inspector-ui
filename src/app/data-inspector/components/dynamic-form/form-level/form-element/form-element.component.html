@@ -1,0 +1,14 @@
+<div [formGroup]="parentFormGroup" [ngSwitch]="type">
+  <mat-form-field *ngSwitchCase="'string'">
+    <input matInput placeholder="{{propName}}" [formControlName]="propName">
+  </mat-form-field>
+  <mat-form-field *ngSwitchCase="'integer'">
+      <input matInput placeholder="{{propName}}" [formControlName]="propName">
+  </mat-form-field>
+  <mat-form-field *ngSwitchCase="'number'">
+      <input matInput placeholder="{{propName}}" [formControlName]="propName">
+  </mat-form-field>
+  <mat-checkbox *ngSwitchCase="'boolean'" [formControlName]="propName">
+      {{propName}}
+    </mat-checkbox>
+</div>
