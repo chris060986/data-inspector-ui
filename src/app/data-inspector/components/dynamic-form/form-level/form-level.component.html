@@ -2,7 +2,7 @@
   <h4 *ngIf="propName">{{propName}}</h4>
   <div [formGroup]="localFormGroup">
     <mat-list-item *ngFor="let prop of allPropertyKeys">
-      <diu-form-element *ngIf="actLevelForms.includes(prop)" [propName]="prop" [type]="structureObject[prop].type" [parentFormGroup]="localFormGroup"></diu-form-element>
+      <diu-form-element *ngIf="actLevelForms.includes(prop)" [propName]="prop" [type]="structureObject[prop].type" [parentFormGroup]="localFormGroup" [options]="structureObject[prop].enum" [errorMessage]=getErrorMessage(localFormGroup.get(prop))></diu-form-element>
       <diu-form-level *ngIf="nextLevelForms.includes(prop)" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)" [structureObject]="structureObject[prop].properties"
         [dataObject]="dataObject[prop]" [requiredFields]="structureObject.require"></diu-form-level>
       <div *ngIf="arrayForms.includes(prop)" [formArrayName]="prop">

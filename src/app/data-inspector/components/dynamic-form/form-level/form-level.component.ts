@@ -30,14 +30,21 @@ export class FormLevelComponent implements OnInit {
           case "number":
           case "boolean":
             let tmpFormControl: FormControl;
-            if(this.dataObject && this.dataObject[key]) {
-              if(this.requiredFields && this.requiredFields.includes(key)) {
-                tmpFormControl = new FormControl(this.dataObject[key], [Validators.required]);
-              } else {
-                tmpFormControl = new FormControl(this.dataObject[key]);
-              }
+            let currentValidators: Array<any> = [];
+            if (
+              val.enum &&
+              this.dataObject[key] &&
+              !val.enum.includes(this.dataObject[key])
+            ) {
+              this.dataObject[key] = undefined;
+            }
+            if (this.requiredFields && this.requiredFields.includes(key)) {
+              currentValidators.push(Validators.required);
+            }
+            if (this.dataObject && this.dataObject[key]) {
+                tmpFormControl = new FormControl(this.dataObject[key], currentValidators);
             } else {
-              tmpFormControl = new FormControl();
+              tmpFormControl = new FormControl(undefined, currentValidators);
             }
             this.localFormGroup.addControl(key, tmpFormControl);
             this.actLevelForms.push(key);
@@ -49,11 +56,11 @@ export class FormLevelComponent implements OnInit {
             break;
 
           case "array":
-            console.log(val)
+            console.log(val);
             let tmpFormArray: FormArray = new FormArray([]);
             let i = 0;
-            val.items.forEach((items) => {
-              if(items.type == 'object'){
+            val.items.forEach(items => {
+              if (items.type == "object") {
                 tmpFormArray.push(new FormGroup({}));
               }
             });
@@ -68,4 +75,18 @@ export class FormLevelComponent implements OnInit {
     }
   }
 
+  getErrorMessage(field: FormControl) {
+    if(field.errors == null) return undefined;
+    return field.hasError('required')
+      ? 'You have to enter a value!'
+      : field.hasError('maxlength')
+        ? 'The entered value is too long!'
+        : field.hasError('minlength')
+          ? 'The entered value is too short!'
+          : field.hasError('max')
+            ? 'The entered value greater than the maximum value!'
+            : field.errors['number'] != undefined
+              ? 'Only numbers are valid (not 0)!'
+              : undefined;
+  }
 }

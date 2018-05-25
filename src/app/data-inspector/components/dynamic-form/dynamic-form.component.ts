@@ -18,7 +18,11 @@ export class DynamicFormComponent implements OnInit {
         type: "boolean"
       },
       processor: {
-        type: "string"
+        type: "string",
+        enum: [
+          "i7 7200",
+          "i5 7200"
+        ]
       },
       storage: {
         type: "array",
@@ -72,7 +76,7 @@ export class DynamicFormComponent implements OnInit {
 
   jsonValues = {
     isWorking: true,
-    processor: "i7 7500U",
+    processor: "i7 7200",
     storage: [
       {
         type: "HDD",

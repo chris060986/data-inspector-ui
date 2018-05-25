@@ -1,14 +1,46 @@
-<div [formGroup]="parentFormGroup" [ngSwitch]="type">
-  <mat-form-field *ngSwitchCase="'string'">
-    <input matInput placeholder="{{propName}}" [formControlName]="propName">
-  </mat-form-field>
-  <mat-form-field *ngSwitchCase="'integer'">
-      <input matInput placeholder="{{propName}}" [formControlName]="propName">
-  </mat-form-field>
-  <mat-form-field *ngSwitchCase="'number'">
-      <input matInput placeholder="{{propName}}" [formControlName]="propName">
-  </mat-form-field>
-  <mat-checkbox *ngSwitchCase="'boolean'" [formControlName]="propName">
+<div [formGroup]="parentFormGroup">
+
+  <div *ngIf="options">
+    <!-- Enum Field -->
+    <mat-form-field>
+      <mat-select placeholder="{{propName}}" [formControlName]="propName">
+        <mat-option>--</mat-option>
+        <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="errorMessage">
+        {{errorMessage}}
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="!options" [ngSwitch]="type">
+    <!-- String Field -->
+    <mat-form-field *ngSwitchCase="'string'">
+      <input matInput placeholder="{{propName}}" [formControlName]="propName" autocomplete="off">
+      <mat-error *ngIf="errorMessage">
+        {{errorMessage}}
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Integer Field -->
+    <mat-form-field *ngSwitchCase="'integer'">
+      <input matInput placeholder="{{propName}}" [formControlName]="propName" autocomplete="off">
+      <mat-error *ngIf="errorMessage">
+          {{errorMessage}}
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Other Numbers Field -->
+    <mat-form-field *ngSwitchCase="'number'">
+      <input matInput placeholder="{{propName}}" [formControlName]="propName" autocomplete="off">
+      <mat-error *ngIf="errorMessage">
+          {{errorMessage}}
+        </mat-error>
+    </mat-form-field>
+
+    <!-- Boolean Field -->
+    <mat-checkbox *ngSwitchCase="'boolean'" [formControlName]="propName">
       {{propName}}
     </mat-checkbox>
+  </div>
 </div>

@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup } from '@angular/forms';
+import { FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'diu-form-element',
@@ -11,9 +11,12 @@ export class FormElementComponent implements OnInit {
   @Input() propName: String;
   @Input() type: String;
   @Input() parentFormGroup: FormGroup;
+  @Input() options: Array<any>;
+  @Input() errorMessage: String;
 
   constructor() { }
 
-  ngOnInit() { }
+  ngOnInit() { 
+  }
 
 }
