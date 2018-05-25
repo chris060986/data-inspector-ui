@@ -2,8 +2,9 @@
 
   <div *ngIf="options">
     <!-- Enum Field -->
-    <mat-form-field>
-      <mat-select placeholder="{{propName}}" [formControlName]="propName">
+    <mat-form-field [appearance]="getAppearance()">
+      <mat-label>{{getLabel()}}</mat-label>
+      <mat-select [formControlName]="propName">
         <mat-option>--</mat-option>
         <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
       </mat-select>
@@ -15,27 +16,30 @@
 
   <div *ngIf="!options" [ngSwitch]="type">
     <!-- String Field -->
-    <mat-form-field *ngSwitchCase="'string'">
-      <input matInput placeholder="{{propName}}" [formControlName]="propName" autocomplete="off">
+    <mat-form-field *ngSwitchCase="'string'" [appearance]="getAppearance()">
+      <mat-label>{{getLabel()}}</mat-label>
+      <input matInput [formControlName]="propName" autocomplete="off" type="text">
       <mat-error *ngIf="errorMessage">
         {{errorMessage}}
       </mat-error>
     </mat-form-field>
 
     <!-- Integer Field -->
-    <mat-form-field *ngSwitchCase="'integer'">
-      <input matInput placeholder="{{propName}}" [formControlName]="propName" autocomplete="off">
+    <mat-form-field *ngSwitchCase="'integer'" [appearance]="getAppearance()">
+      <mat-label>{{getLabel()}}</mat-label>
+      <input matInput [formControlName]="propName" autocomplete="off" type="number">
       <mat-error *ngIf="errorMessage">
-          {{errorMessage}}
-        </mat-error>
+        {{errorMessage}}
+      </mat-error>
     </mat-form-field>
 
     <!-- Other Numbers Field -->
-    <mat-form-field *ngSwitchCase="'number'">
-      <input matInput placeholder="{{propName}}" [formControlName]="propName" autocomplete="off">
+    <mat-form-field *ngSwitchCase="'number'" [appearance]="getAppearance()">
+      <mat-label>{{getLabel()}}</mat-label>
+      <input matInput [formControlName]="propName" autocomplete="off" type="number">
       <mat-error *ngIf="errorMessage">
-          {{errorMessage}}
-        </mat-error>
+        {{errorMessage}}
+      </mat-error>
     </mat-form-field>
 
     <!-- Boolean Field -->

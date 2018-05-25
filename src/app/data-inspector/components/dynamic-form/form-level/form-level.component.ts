@@ -24,13 +24,19 @@ export class FormLevelComponent implements OnInit {
     if (this.structureObject) {
       Object.entries(this.structureObject).forEach(([key, val]) => {
         this.allPropertyKeys.push(key);
+        let tmpFormControl: FormControl;
+        let currentValidators: Array<any> = [];
+        if (val.type == "integer")
+          currentValidators.push(this.integerValidator);
+        if (val.type == "number") currentValidators.push(this.numberValidator);
         switch (val.type) {
           case "string":
           case "integer":
           case "number":
           case "boolean":
-            let tmpFormControl: FormControl;
-            let currentValidators: Array<any> = [];
+            if (this.requiredFields && this.requiredFields.includes(key)) {
+              currentValidators.push(Validators.required);
+            }
             if (
               val.enum &&
               this.dataObject[key] &&
@@ -38,11 +44,11 @@ export class FormLevelComponent implements OnInit {
             ) {
               this.dataObject[key] = undefined;
             }
-            if (this.requiredFields && this.requiredFields.includes(key)) {
-              currentValidators.push(Validators.required);
-            }
             if (this.dataObject && this.dataObject[key]) {
-                tmpFormControl = new FormControl(this.dataObject[key], currentValidators);
+              tmpFormControl = new FormControl(
+                this.dataObject[key],
+                currentValidators
+              );
             } else {
               tmpFormControl = new FormControl(undefined, currentValidators);
             }
@@ -56,7 +62,6 @@ export class FormLevelComponent implements OnInit {
             break;
 
           case "array":
-            console.log(val);
             let tmpFormArray: FormArray = new FormArray([]);
             let i = 0;
             val.items.forEach(items => {
@@ -75,18 +80,56 @@ export class FormLevelComponent implements OnInit {
     }
   }
 
+  integerValidator(control: FormControl): { [s: string]: boolean } {
+    let reg = new RegExp("^[-+]?\\d*$");
+    if (!reg.test(control.value)) {
+      return { integer: false };
+    }
+    return null;
+  }
+
+  integerWithoutZeroValidator(control: FormControl): { [s: string]: boolean } {
+    let reg = new RegExp("^[-+]?\\d*$");
+    if (!reg.test(control.value) || control.value === "0") {
+      return { integerWithoutZero: false };
+    }
+    return null;
+  }
+
+  numberValidator(control: FormControl): { [s: string]: boolean } {
+    let reg = new RegExp("^[-+]?([0-9]+([.,][0-9]+)?|[.,][0-9]+)$");
+    if (!reg.test(control.value)) {
+      return { number: false };
+    }
+    return null;
+  }
+
+  numberWithoutZeroValidator(control: FormControl): { [s: string]: boolean } {
+    let reg = new RegExp("^[-+]?([0-9]+(.[0-9]+)?|.[0-9]+)$");
+    if (!reg.test(control.value) || control.value === "0") {
+      return { numberWithoutZero: false };
+    }
+    return null;
+  }
+
   getErrorMessage(field: FormControl) {
-    if(field.errors == null) return undefined;
-    return field.hasError('required')
-      ? 'You have to enter a value!'
-      : field.hasError('maxlength')
-        ? 'The entered value is too long!'
-        : field.hasError('minlength')
-          ? 'The entered value is too short!'
-          : field.hasError('max')
-            ? 'The entered value greater than the maximum value!'
-            : field.errors['number'] != undefined
-              ? 'Only numbers are valid (not 0)!'
-              : undefined;
+    if (field.errors == null) return undefined;
+    return field.hasError("maxlength")
+      ? "The entered value is too long!"
+      : field.hasError("minlength")
+        ? "The entered value is too short!"
+        : field.hasError("max")
+          ? "The entered value greater than the maximum value!"
+          : field.errors["integer"] != undefined
+            ? "Only integers are valid!"
+            : field.errors["integerWithoutZero"] != undefined
+              ? "Only integers are valid (not 0)!"
+              : field.errors["number"] != undefined
+                ? "Only numbers are valid!"
+                : field.errors["numberWithoutZero"] != undefined
+                  ? "Only numbers are valid (not 0)!"
+                  : field.hasError("required")
+                    ? "You have to enter a value!"
+                    : undefined;
   }
 }

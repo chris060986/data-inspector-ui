@@ -13,10 +13,18 @@ export class FormElementComponent implements OnInit {
   @Input() parentFormGroup: FormGroup;
   @Input() options: Array<any>;
   @Input() errorMessage: String;
+  @Input() required: boolean = false;
 
   constructor() { }
 
   ngOnInit() { 
   }
 
+  getAppearance(): String {
+    return this.required ? "outline" : "standard";
+  }
+
+  getLabel(): String {
+    return this.required ? this.propName+ " *" : this.propName;
+  }
 }

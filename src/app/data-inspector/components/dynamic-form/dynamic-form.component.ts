@@ -57,7 +57,7 @@ export class DynamicFormComponent implements OnInit {
         ]
       },
       ram: {
-        type: "integer"
+        type: "number"
       },
       cooler: {
         type: "object",
@@ -87,7 +87,7 @@ export class DynamicFormComponent implements OnInit {
         memory: 512
       }
     ],
-    ram: 8,
+    ram: 8.1,
     cooler: {
       name: "Aplenfön",
       speed: 1500
@@ -116,7 +116,6 @@ export class DynamicFormComponent implements OnInit {
 
   onSubmit() {
     console.log("Form Values:", this.topLevelForm.value);
-    console.log("Form Valid?:", this.topLevelForm.valid);
   }
 
   onNewHobby() {
