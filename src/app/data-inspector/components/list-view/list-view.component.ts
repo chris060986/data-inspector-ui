@@ -34,7 +34,7 @@ export class ListViewComponent implements OnInit {
     this.subscribedTopics = this.subscribedTopics.filter(element => element != topic);
   }
 
-  inspectTopic(topic: String){
+  listInstances(topic: String){
     if(!this.currentTopic || this.currentTopic != topic) {
       this.currentTopic = topic;
       this.buildInstanceList();
