@@ -6,9 +6,13 @@
 
 .content {
   height: calc(100vh - 64px);
-  overflow-y: auto;
 }
 
 .innerContent {
-  min-height: calc(100vh - 2*64px);
+  min-height: calc(100vh - 1*64px);
+}
+
+.sideMenu {
+  width: 100%;
+  text-align: right;
 }

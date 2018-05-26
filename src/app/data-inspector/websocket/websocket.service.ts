@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Subject, Observer, Observable } from 'rxjs/Rx';
-import {ServerURL} from '../urls';
+import { ServerURL } from '../urls';
 
-@Injectable()
+@Injectable({
+  providedIn: "root"
+})
 export class WebsocketService {
 
   constructor() { }

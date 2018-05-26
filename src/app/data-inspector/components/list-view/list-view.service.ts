@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
-import {ServerURL} from '../../urls';
-import {HttpClient} from '@angular/common/http';
-import {WebsocketService} from '../../websocket/websocket.service';
-import {Subject} from 'rxjs/Subject';
-import { Observable } from 'rxjs';
+import { Subject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { WebsocketService } from '../../websocket/websocket.service';
+import { ServerURL } from '../../urls';
 
-@Injectable()
-export class FullListService {
-
+@Injectable({
+  providedIn: 'root'
+})
+export class ListViewService {
   private socket: Subject<any>;
   constructor(private http: HttpClient,
               private websocketService: WebsocketService) {
@@ -28,5 +28,4 @@ export class FullListService {
   getDataStructure(name: String): Observable<any> {
     return this.http.get(ServerURL.datastructure+"/"+name);
   }
-
 }

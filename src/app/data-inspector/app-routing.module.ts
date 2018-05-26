@@ -1,18 +1,21 @@
+import { ListViewComponent } from './components/list-view/list-view.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {FullListComponent} from './components/full-list/full-list.component';
-import {PageNotFoundComponent} from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
-    path: 'full-list',
-    component: FullListComponent
+    path: 'overview',
+    component: ListViewComponent
   },
-  { path: '',
-    redirectTo: '/full-list',
+  { 
+    path: '',
+    redirectTo: '/overview',
     pathMatch: 'full'
   },
-  { path: '**', component: PageNotFoundComponent }
+  { 
+    path: '**', 
+    redirectTo: '/overview',
+  }
 ];
 
 @NgModule({

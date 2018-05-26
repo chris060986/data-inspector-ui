@@ -1,9 +1,9 @@
 <mat-card style="margin: 0px; padding: 0px;">
-<mat-toolbar color="primary" class="md-elevation-z15">
-  <mat-toolbar-row>
-    <mat-icon>loupe</mat-icon>
-    <span>Data Inspector UI</span>
-    <div class="menubar">
+  <mat-toolbar color="primary" class="md-elevation-z15">
+    <mat-toolbar-row>
+      <mat-icon>loupe</mat-icon>
+      <span>Data Inspector UI</span>
+      <!-- <div class="menubar">
       <button mat-button routerLink="/full-list" routerLinkActive="active">
         <strong>data type list</strong>
       </button>
@@ -13,19 +13,17 @@
       <button mat-button>
         <strong>send data</strong>
       </button>
-    </div>
-    <button mat-icon-button>
-      <mat-icon>settings</mat-icon>
-    </button>
-  </mat-toolbar-row>
-</mat-toolbar>
+    </div> -->
+      <div class="sideMenu">
+        <button mat-icon-button>
+          <mat-icon>settings</mat-icon>
+        </button>
+      </div>
+    </mat-toolbar-row>
+  </mat-toolbar>
 </mat-card>
 <div class="content">
   <div class="innerContent">
     <router-outlet></router-outlet>
   </div>
-  <mat-toolbar>
-    Footer
-  </mat-toolbar>
 </div>
-
