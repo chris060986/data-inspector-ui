@@ -21,7 +21,7 @@ export class ListViewService {
     }, 2000);
   }
 
-  getDataList(): Observable<any> {
+  getDatatypes(): Observable<any> {
     return this.http.get(ServerURL.datatypes);
   }
 

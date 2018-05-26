@@ -12,6 +12,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormElementComponent } from './components/dynamic-form/form-level/form-element/form-element.component';
 import { ListViewComponent } from './components/list-view/list-view.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { ListViewComponent } from './components/list-view/list-view.component';
     CompleteMaterialModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FlexLayoutModule
   ],
   declarations: [
     DataInspectorComponent,

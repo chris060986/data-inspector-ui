@@ -1,11 +1,56 @@
-<mat-toolbar>
-  full data list
-</mat-toolbar>
-<mat-list>
-  <mat-list-item *ngFor="let data of dataList">
-    {{data.name}}
-    <button mat-button (click)="onStructureClick(data)">Fetch structure</button>
-  </mat-list-item>
-</mat-list>
-{{details}} 
-<diu-dynamic-form></diu-dynamic-form>
+<mat-sidenav-container>
+  <mat-sidenav #sidenav [mode]="'push'">
+
+    <!-- Row 1 -->
+    <mat-card class="sidenavList">
+      <mat-card-title>all of the requested Topics</mat-card-title>
+      <div class="sidenavItems">
+        <div class="sidenavItem" *ngFor="let item of allTopics">
+          <p class="sidenavItemText">{{item}}</p>
+          <div class="sidenavItemTools">
+            <button mat-icon-button matTooltip="subscribe" (click)="subscribeTopic(item)">
+              <mat-icon>subscriptions</mat-icon>
+            </button>
+            <button mat-icon-button matTooltip="publish" (click)="publishTopic(item)">
+              <mat-icon>publish</mat-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <mat-toolbar color="accent">
+      <button color="primary" mat-raised-button (click)="sidenav.toggle()">Register Topics</button>
+    </mat-toolbar>
+
+    <div class="container" fxLayout="row" fxLayoutGap="5px">
+
+      <!-- Row 2 -->
+      <mat-card class="list" fxFlex="35%">
+        <mat-card-title class="listhead">subscribed Topics</mat-card-title>
+        <mat-list>
+          <mat-list-item *ngFor="let item of subscribedTopics">
+            <p class="textElement">{{item}}</p>
+            <button mat-raised-button (click)="inspectTopic(item)">Show</button>
+            <button mat-raised-button (click)="unSubscribeTopic(item)">Unsubscribe</button>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+
+      <!-- Row 3 -->
+      <mat-card class="list" fxFlex="65%">
+        <mat-card-title class="listhead">Topic Instances</mat-card-title>
+        <mat-list>
+          <mat-list-item *ngFor="let item of topicInstances">
+            <p class="textElement">{{item}}</p>
+            <button mat-raised-button (click)="openDialog(item)">Inspect</button>
+          </mat-list-item>
+        </mat-list>
+      </mat-card>
+    </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>
