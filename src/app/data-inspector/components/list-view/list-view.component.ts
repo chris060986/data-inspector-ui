@@ -12,6 +12,7 @@ export class ListViewComponent implements OnInit {
   private subscribedTopics: Array<String> = [];
   private publishingTopics: Array<String> = [];
   private registeredTopics: Array<String> = [];
+  private topicSchemas: Array<any> = [];
   private topicInstances: Array<String> = [];
   private currentTopic: String;
 
@@ -29,6 +30,10 @@ export class ListViewComponent implements OnInit {
     });
     this.listViewService.registeredTopicsEmitter.subscribe((data: Array<String>) => {
       this.registeredTopics = data;
+    });
+    this.listViewService.topicSchemasEmitter.subscribe((data: Array<any>) => {
+      this.topicSchemas = data;
+      console.log(this.topicSchemas);
     });
   }
 

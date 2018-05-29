@@ -14,7 +14,8 @@ export class ListViewService {
   public shouldBeConnected: boolean = false;
   public allTopics: Array<String> = [];
   public allTopicsEmitter: EventEmitter<Array<String>> = new EventEmitter();
-  public topicStructures: Array<any> = [];
+  public topicSchemas: Array<any> = [];
+  public topicSchemasEmitter: EventEmitter<Array<any>> = new EventEmitter();
   public subscribedTopics: Array<String> = [];
   public subscribedTopicsEmitter: EventEmitter<
     Array<String>
@@ -42,11 +43,6 @@ export class ListViewService {
         this.allTopicsEmitter.emit(this.allTopics);
       }
     );
-
-    // this.listViewService.getDataStructure(data.name).subscribe(response => {
-    //   console.log(response);
-    //   this.details = JSON.stringify(response);
-    // });
   }
 
   getDatatypesHTTP(): Observable<any> {
@@ -57,19 +53,28 @@ export class ListViewService {
     return this.http.get(ServerURL.datastructure + "/" + name);
   }
 
-  getDataStructure(topic: String): any {
-    this.getDataStructureHTTP(topic).subscribe(
-      response => {
-        return response;
-      },
-      err => {
-        return undefined;
-      }
-    );
+  checkSchemaAvailable(topic: String) {
+    if (
+      this.topicSchemas.filter(element => element.name == topic).length == 0
+    ) {
+      this.getDataStructureHTTP(topic).subscribe(
+        response => {
+          this.topicSchemas.push({
+            name: topic,
+            schema: response
+          });
+          this.topicSchemasEmitter.emit(this.topicSchemas);
+        },
+        err => {
+          console.log(err);
+        }
+      );
+    }
   }
 
   subscribeTopicWS(name: String) {
     this.checkOpenWS();
+    this.checkSchemaAvailable(name);
     setTimeout(() => {
       if (!this.subscribedTopics.includes(name)) {
         this.socket.next({
@@ -86,13 +91,14 @@ export class ListViewService {
 
   publishTopicWS(name: String) {
     this.checkOpenWS();
+    this.checkSchemaAvailable(name);
     setTimeout(() => {
       if (!this.publishingTopics.includes(name)) {
         this.socket.next({
           type: "PUBLISH",
           topicName: name
         });
-  
+
         this.publishingTopics.push(name);
         this.emitAll();
       }
