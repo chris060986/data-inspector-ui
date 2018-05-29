@@ -51,13 +51,7 @@
 
       <!-- Row 3 -->
       <mat-card class="list" fxFlex="65%">
-        <mat-card-title class="listhead">Topic Instances</mat-card-title>
-        <mat-list>
-          <mat-list-item *ngFor="let item of topicInstances">
-            <p class="textElement">{{item}}</p>
-            <button mat-raised-button (click)="openDialog(item)">Inspect</button>
-          </mat-list-item>
-        </mat-list>
+        <diu-data-view></diu-data-view>
       </mat-card>
     </div>
 

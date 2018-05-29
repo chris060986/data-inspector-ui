@@ -41,7 +41,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
-  MatBadgeModule
+  MatBadgeModule,
 } from '@angular/material';
 
 /**

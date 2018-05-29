@@ -13,6 +13,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormElementComponent } from './components/dynamic-form/form-level/form-element/form-element.component';
 import { ListViewComponent } from './components/list-view/list-view.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { DataViewComponent } from './components/data-view/data-view.component';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     DynamicFormComponent,
     FormLevelComponent,
     FormElementComponent,
-    ListViewComponent
+    ListViewComponent,
+    DataViewComponent
   ],
   exports: [DataInspectorComponent],
   providers: [

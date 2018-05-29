@@ -5,8 +5,7 @@
 
 .list {
   margin: 5px;
-  text-align: center;
-  overflow-y: auto;
+  /* text-align: center; */
   padding: 5px
 }
 
