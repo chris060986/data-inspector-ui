@@ -22,7 +22,7 @@
   </mat-sidenav>
 
   <mat-sidenav-content>
-    <mat-toolbar color="accent">
+    <mat-toolbar color="accent"  class="mat-elevation-z5">
       <button color="primary" mat-raised-button (click)="sidenav.toggle()">Register Topics</button>
     </mat-toolbar>
 
@@ -32,13 +32,13 @@
       <mat-card class="list" fxFlex="35%">
         <mat-card-title class="listhead">Registered Topics</mat-card-title>
         <div class="contentItems">
-          <div class="listItem" *ngFor="let item of subscribedTopics">
+          <div class="listItem" *ngFor="let item of registeredTopics">
             <p class="listItemText">{{item}}</p>
             <div class="listItemTools">
-              <button color="accent" mat-icon-button matTooltip="unsubscribe" (click)="unSubscribeTopic(item)">
+              <button *ngIf="subscribedTopics.includes(item)" color="accent" mat-icon-button matTooltip="unsubscribe" (click)="unsubscribeTopic(item)">
                 <mat-icon >notifications_off</mat-icon>
               </button>
-              <button color="accent" mat-icon-button matTooltip="unpublish" (click)="unpublishTopic(item)">
+              <button *ngIf="publishingTopics.includes(item)" color="accent" mat-icon-button matTooltip="unpublish" (click)="unpublishTopic(item)">
                 <mat-icon>portable_wifi_off</mat-icon>
               </button>
               <button color="accent" mat-icon-button matTooltip="list instances" (click)="listInstances(item)">

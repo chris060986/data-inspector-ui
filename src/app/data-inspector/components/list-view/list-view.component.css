@@ -13,14 +13,16 @@
 .listItem {
     display: block;
     width: 100%;
+    text-align: left;
 }
 
 .listItemText {
     display: inline-block;
+    margin-left: 10px;
 }
 
 .listItemTools {
-    display: inline-block;
+    display: inline;
     float: right;
 }
 
