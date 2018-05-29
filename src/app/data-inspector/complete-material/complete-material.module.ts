@@ -41,6 +41,7 @@ import {
   MatTabsModule,
   MatToolbarModule,
   MatTooltipModule,
+  MatBadgeModule
 } from '@angular/material';
 
 /**
@@ -89,6 +90,7 @@ import {
     OverlayModule,
     PlatformModule,
     PortalModule,
+    MatBadgeModule
   ]
 })
 export class CompleteMaterialModule { }

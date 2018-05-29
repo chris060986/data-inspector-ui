@@ -1,50 +1,50 @@
 .container {
-    max-height: calc(100vh - 2*64px);
-    height: calc(100vh - 2*64px);
+  max-height: calc(100vh - 2*64px);
+  height: calc(100vh - 2*64px);
 }
 
 .list {
-    margin: 5px;
-    text-align: center;
-    overflow-y: auto;
-    padding: 5px
+  margin: 5px;
+  text-align: center;
+  overflow-y: auto;
+  padding: 5px
 }
 
 .listItem {
-    display: block;
-    width: 100%;
-    text-align: left;
+  display: block;
+  width: 100%;
+  text-align: left;
 }
 
 .listItemText {
-    display: inline-block;
-    margin-left: 10px;
+  display: inline-block;
+  margin-left: 10px;
 }
 
 .listItemTools {
-    display: inline;
-    float: right;
+  float: right;
 }
 
 /* ########## CONTENT TOPIC LIST ################# */
 
 .contentItems {
-    overflow-y: auto;
-    max-height: calc(100vh - 2*64px - 65px);
-    height: calc(100vh - 2*64px - 65px);
+  overflow-y: scroll;
+  max-height: calc(100vh - 2*64px - 65px);
+  height: calc(100vh - 2*64px - 65px);
 }
 
 /* ########## SIDENAV TOPIC LIST ################# */
 
 .sidenavList {
-    max-height: calc(100vh - 120px);
-    height: calc(100vh - 120px);
-    margin: 3px!important;
-    padding-right: 5px!important;
+  max-height: calc(100vh - 120px);
+  height: calc(100vh - 120px);
+  margin: 3px !important;
+  padding-right: 5px !important;
 }
 
 .sidenavItems {
-    overflow-y: auto;
-    max-height: calc(100vh - 150px);
-    height: calc(100vh - 150px);
+  overflow-y: scroll;
+  max-height: calc(100vh - 150px);
+  height: calc(100vh - 150px);
+  position: relative;
 }

@@ -33,7 +33,7 @@
         <mat-card-title class="listhead">Registered Topics</mat-card-title>
         <div class="contentItems">
           <div class="listItem" *ngFor="let item of registeredTopics">
-            <p class="listItemText">{{item}}</p>
+            <p matBadge="22" matBadgePosition="above" matBadgeOverlap="false" class="listItemText">{{item}}</p>
             <div class="listItemTools">
               <button *ngIf="subscribedTopics.includes(item)" color="accent" mat-icon-button matTooltip="unsubscribe" (click)="unsubscribeTopic(item)">
                 <mat-icon >notifications_off</mat-icon>
@@ -41,7 +41,7 @@
               <button *ngIf="publishingTopics.includes(item)" color="accent" mat-icon-button matTooltip="unpublish" (click)="unpublishTopic(item)">
                 <mat-icon>portable_wifi_off</mat-icon>
               </button>
-              <button color="accent" mat-icon-button matTooltip="list instances" (click)="listInstances(item)">
+              <button color="accent" mat-icon-button matTooltip="list data" (click)="listData(item)">
                 <mat-icon>list</mat-icon>
               </button>
             </div>

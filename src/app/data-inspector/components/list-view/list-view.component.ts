@@ -8,55 +8,48 @@ import * as _ from 'underscore';
   styleUrls: ['./list-view.component.css']
 })
 export class ListViewComponent implements OnInit {
-  allTopics: Array<String> = [];
-  subscribedTopics: Array<String> = [];
-  publishingTopics: Array<String> = [];
-  registeredTopics: Array<String> = [];
-  topicInstances: Array<String> = [];
-  currentTopic: String;
+  private allTopics: Array<String> = [];
+  private subscribedTopics: Array<String> = [];
+  private publishingTopics: Array<String> = [];
+  private registeredTopics: Array<String> = [];
+  private topicInstances: Array<String> = [];
+  private currentTopic: String;
 
   constructor(private listViewService: ListViewService) { }
 
   ngOnInit() {
-    this.listViewService.getDatatypes().subscribe((data: Array<String>) => {
-      this.allTopics = _.sortBy(data);
+    this.listViewService.allTopicsEmitter.subscribe((data: Array<String>) => {
+      this.allTopics = data;
     });
-    // this.listViewService.getDataStructure(data.name).subscribe(response => {
-    //   console.log(response);
-    //   this.details = JSON.stringify(response);
-    // });
+    this.listViewService.subscribedTopicsEmitter.subscribe((data: Array<String>) => {
+      this.subscribedTopics = data;
+    });
+    this.listViewService.publishingTopicsEmitter.subscribe((data: Array<String>) => {
+      this.publishingTopics = data;
+    });
+    this.listViewService.registeredTopicsEmitter.subscribe((data: Array<String>) => {
+      this.registeredTopics = data;
+    });
   }
 
   subscribeTopic(topic: String) {
-    if (!this.subscribedTopics.includes(topic)) {
-      this.subscribedTopics.push(topic);
-      this.mergeRegisteredTopics();
-    }
+    this.listViewService.subscribeTopicWS(topic);
   }
 
   unsubscribeTopic(topic: String) {
-    this.subscribedTopics = this.subscribedTopics.filter(element => element != topic);
-    this.mergeRegisteredTopics();
+    this.listViewService.unsubscribeTopicWS(topic);
+
   }
 
   publishTopic(topic: String) {
-    if (!this.publishingTopics.includes(topic)) {
-      this.publishingTopics.push(topic);
-      this.mergeRegisteredTopics();
-    }
+    this.listViewService.publishTopicWS(topic);
   }
 
   unpublishTopic(topic: String) {
-    this.publishingTopics = this.publishingTopics.filter(element => element != topic);
-    this.mergeRegisteredTopics();
+    this.listViewService.unpublishTopicWS(topic);
   }
 
-  mergeRegisteredTopics() {
-    this.registeredTopics = _.union(this.subscribedTopics, this.publishingTopics);
-    this.registeredTopics = _.sortBy(this.registeredTopics);
-  }
-
-  listInstances(topic: String) {
+  listData(topic: String) {
     if (!this.currentTopic || this.currentTopic != topic) {
       this.currentTopic = topic;
       this.buildInstanceList();
