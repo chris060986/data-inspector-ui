@@ -14,6 +14,7 @@
   display: block;
   width: 100%;
   text-align: left;
+  border-radius: 5px;
 }
 
 .listItemText {
@@ -23,6 +24,10 @@
 
 .listItemTools {
   float: right;
+}
+
+.isSelected {
+  background-color: lightgray;
 }
 
 /* ########## CONTENT TOPIC LIST ################# */
@@ -48,3 +53,4 @@
   height: calc(100vh - 150px);
   position: relative;
 }
+

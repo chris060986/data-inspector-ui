@@ -13,7 +13,6 @@ export class ListViewComponent implements OnInit {
   private publishingTopics: Array<String> = [];
   private registeredTopics: Array<String> = [];
   private topicSchemas: Array<any> = [];
-  private topicInstances: Array<String> = [];
   private currentTopic: String;
 
   constructor(private listViewService: ListViewService) { }
@@ -55,17 +54,17 @@ export class ListViewComponent implements OnInit {
   }
 
   listData(topic: String) {
-    if (!this.currentTopic || this.currentTopic != topic) {
+    if(!this.currentTopic || this.currentTopic != topic) {
       this.currentTopic = topic;
-      this.buildInstanceList();
+    } else if(this.currentTopic && this.currentTopic == topic) {
+      this.currentTopic = undefined;
     }
   }
 
-  buildInstanceList() {
-    this.topicInstances.splice(0, this.topicInstances.length);
-    for (let index = 1; index < 21; index++) {
-      this.topicInstances.push(this.currentTopic + " Instance " + index.toString());
-    }
+  getSelectedClass(topic: String): any {
+    return {
+      'isSelected': this.currentTopic == topic ? true : false
+    };
   }
 
   // openDialog(item): void {
