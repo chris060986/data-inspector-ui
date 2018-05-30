@@ -2,5 +2,4 @@
 .tableContent {
   max-height: calc(100vh - 2*64px - 20px);
   height: calc(100vh - 2*64px - 20px);
-  overflow-y: auto;
 }

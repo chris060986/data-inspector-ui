@@ -44,7 +44,10 @@ export class ListViewComponent implements OnInit, OnDestroy {
     this.subscriptions.push(this.dataService.topicDataEmitter.subscribe((data: Array<TopicData>) => {
       this.topicData = data;
       if(this.currentTopic) {
-        this.currentTopicData = this.topicData.filter(element => element.topicName = this.currentTopic);
+        const tmpData: Array<TopicData> = this.topicData.filter(element => element.topicName == this.currentTopic);
+        if(this.currentTopicData.length != tmpData.length) {
+          this.currentTopicData = tmpData;
+        }
       }
     }));
   }

@@ -93,23 +93,21 @@ export class DataService {
         this.mergeRegisteredTopics();
         this.emitAll();
       }
-    }, 200);
+    }, 400);
   }
 
   publishTopicWS(name: string) {
     this.checkOpenWS();
     this.checkSchemaAvailable(name);
-    setTimeout(() => {
-      if (!this.publishingTopics.includes(name)) {
-        this.socket.next({
-          type: "PUBLISH",
-          topicName: name
-        });
+    if (!this.publishingTopics.includes(name)) {
+      this.socket.next({
+        type: "PUBLISH",
+        topicName: name
+      });
 
-        this.publishingTopics.push(name);
-        this.emitAll();
-      }
-    }, 200);
+      this.publishingTopics.push(name);
+      this.emitAll();
+    }
   }
 
   unsubscribeTopicWS(name: string) {
