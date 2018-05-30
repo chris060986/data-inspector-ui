@@ -81,8 +81,8 @@ export class ListViewComponent implements OnInit, OnDestroy {
   listData(topic: string) {
     if(!this.currentTopic || this.currentTopic != topic) {
       this.currentTopic = topic;
-      this.currentTopicSchema = this.topicSchemas.filter(element => element.topicName = this.currentTopic)[0];
-      this.currentTopicData = this.topicData.filter(element => element.topicName = this.currentTopic);
+      this.currentTopicSchema = this.topicSchemas.filter(element => element.topicName == this.currentTopic)[0];
+      this.currentTopicData = this.topicData.filter(element => element.topicName == this.currentTopic);
     } else if(this.currentTopic && this.currentTopic == topic) {
       this.currentTopic = undefined;
       this.currentTopicSchema = undefined;
@@ -103,13 +103,4 @@ export class ListViewComponent implements OnInit, OnDestroy {
       return 'accent';
     }
   }
-
-  // openDialog(item): void {
-  //   let dialogRef = this.dialog.open(InspectDialogComponent, {
-  //     width: '90vw',
-  //     data: {
-  //       name: item
-  //     }
-  //   });
-  // }
 }

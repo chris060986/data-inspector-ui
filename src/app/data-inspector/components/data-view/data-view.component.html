@@ -2,12 +2,12 @@
   <mat-tab-group class="tableContent">
     <mat-tab label="Instances">
       <ng-template matTabContent>
-        <diu-table-view [data]="topicInstances"></diu-table-view>
+        <diu-table-view *ngIf="topicName" [data]="topicInstances"></diu-table-view>
       </ng-template>
     </mat-tab>
     <mat-tab label="Samples">
       <ng-template matTabContent>
-        <diu-table-view [data]="topicData"></diu-table-view>
+        <diu-table-view *ngIf="topicName" [data]="topicData"></diu-table-view>
       </ng-template>
     </mat-tab>
   </mat-tab-group>
