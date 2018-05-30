@@ -10,13 +10,13 @@ export class FormLevelComponent implements OnInit {
   @Input() localFormGroup: FormGroup;
   @Input() structureObject: Object;
   @Input() dataObject: Object;
-  @Input() requiredFields: Array<String>;
-  @Input() propName: String;
+  @Input() requiredFields: Array<string>;
+  @Input() propName: string;
 
-  private allPropertyKeys: Array<String> = [];
-  private actLevelForms: Array<String> = [];
-  private nextLevelForms: Array<String> = [];
-  private arrayForms: Array<String> = [];
+  private allPropertyKeys: Array<string> = [];
+  private actLevelForms: Array<string> = [];
+  private nextLevelForms: Array<string> = [];
+  private arrayForms: Array<string> = [];
 
   constructor() {}
 

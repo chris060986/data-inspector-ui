@@ -4,37 +4,43 @@ import { HttpClient } from "@angular/common/http";
 import { WebsocketService } from "../../websocket/websocket.service";
 import { ServerURL } from "../../urls";
 import * as _ from "underscore";
+import { TopicSchema } from "../../models/schema.interface";
+import { TopicData } from "../../models/data.interface";
 
 @Injectable({
   providedIn: "root"
 })
-export class ListViewService {
+export class DataService {
   private socket: Subject<any>;
   private subscriptions: Array<Subscription> = [];
   public shouldBeConnected: boolean = false;
-  public allTopics: Array<String> = [];
-  public allTopicsEmitter: EventEmitter<Array<String>> = new EventEmitter();
-  public topicSchemas: Array<any> = [];
-  public topicSchemasEmitter: EventEmitter<Array<any>> = new EventEmitter();
-  public subscribedTopics: Array<String> = [];
+  public allTopics: Array<string> = [];
+  public allTopicsEmitter: EventEmitter<Array<string>> = new EventEmitter();
+  public topicSchemas: Array<TopicSchema> = [];
+  public topicSchemasEmitter: EventEmitter<
+    Array<TopicSchema>
+  > = new EventEmitter();
+  public subscribedTopics: Array<string> = [];
   public subscribedTopicsEmitter: EventEmitter<
-    Array<String>
+    Array<string>
   > = new EventEmitter();
-  public publishingTopics: Array<String> = [];
+  public publishingTopics: Array<string> = [];
   public publishingTopicsEmitter: EventEmitter<
-    Array<String>
+    Array<string>
   > = new EventEmitter();
-  public registeredTopics: Array<String> = [];
+  public registeredTopics: Array<string> = [];
   public registeredTopicsEmitter: EventEmitter<
-    Array<String>
+    Array<string>
   > = new EventEmitter();
+  public topicData: Array<TopicData> = [];
+  public topicDataEmitter: EventEmitter<Array<TopicData>> = new EventEmitter();
 
   constructor(
     private http: HttpClient,
     private websocketService: WebsocketService
   ) {
     this.getDatatypesHTTP().subscribe(
-      (response: Array<String>) => {
+      (response: Array<string>) => {
         this.allTopics = _.sortBy(response);
         this.allTopicsEmitter.emit(this.allTopics);
       },
@@ -49,18 +55,19 @@ export class ListViewService {
     return this.http.get(ServerURL.datatypes);
   }
 
-  getDataStructureHTTP(name: String): Observable<any> {
+  getDataStructureHTTP(name: string): Observable<any> {
     return this.http.get(ServerURL.datastructure + "/" + name);
   }
 
-  checkSchemaAvailable(topic: String) {
+  checkSchemaAvailable(topic: string) {
     if (
-      this.topicSchemas.filter(element => element.name == topic).length == 0
+      this.topicSchemas.filter(element => element.topicName == topic).length ==
+      0
     ) {
       this.getDataStructureHTTP(topic).subscribe(
         response => {
           this.topicSchemas.push({
-            name: topic,
+            topicName: topic,
             schema: response
           });
           this.topicSchemasEmitter.emit(this.topicSchemas);
@@ -72,7 +79,7 @@ export class ListViewService {
     }
   }
 
-  subscribeTopicWS(name: String) {
+  subscribeTopicWS(name: string) {
     this.checkOpenWS();
     this.checkSchemaAvailable(name);
     setTimeout(() => {
@@ -89,7 +96,7 @@ export class ListViewService {
     }, 200);
   }
 
-  publishTopicWS(name: String) {
+  publishTopicWS(name: string) {
     this.checkOpenWS();
     this.checkSchemaAvailable(name);
     setTimeout(() => {
@@ -105,7 +112,7 @@ export class ListViewService {
     }, 200);
   }
 
-  unsubscribeTopicWS(name: String) {
+  unsubscribeTopicWS(name: string) {
     this.subscribedTopics = this.subscribedTopics.filter(
       element => element != name
     );
@@ -113,11 +120,12 @@ export class ListViewService {
       type: "UNSUBSCRIBE",
       topicName: name
     });
+    this.topicData = this.topicData.filter(element => element.topicName != name);
     this.emitAll();
     this.checkCloseWS();
   }
 
-  unpublishTopicWS(name: String) {
+  unpublishTopicWS(name: string) {
     this.publishingTopics = this.publishingTopics.filter(
       element => element != name
     );
@@ -142,6 +150,7 @@ export class ListViewService {
     this.subscribedTopicsEmitter.emit(this.subscribedTopics);
     this.publishingTopicsEmitter.emit(this.publishingTopics);
     this.registeredTopicsEmitter.emit(this.registeredTopics);
+    this.topicDataEmitter.emit(this.topicData);
   }
 
   checkOpenWS() {
@@ -150,7 +159,9 @@ export class ListViewService {
       this.socket = this.websocketService.createWebsocket();
       this.subscriptions.push(
         this.socket.subscribe(message => {
-          console.log(message);
+          try {
+            this.procceedMessage(JSON.parse(message.data));
+          } catch (error) {}
         })
       );
       console.log("Websocket connected ...");
@@ -165,6 +176,16 @@ export class ListViewService {
         subscription.unsubscribe();
       });
       console.log("Websocket disconnected ...");
+    }
+  }
+
+  procceedMessage(message: any) {
+    if (message.topicName && message.data) {
+      this.topicData.push({
+        topicName: message.topicName,
+        data: message.data
+      });
+      this.topicDataEmitter.emit(this.topicData);
     }
   }
 }

@@ -8,11 +8,11 @@ import { FormGroup, Validators } from '@angular/forms';
 })
 export class FormElementComponent implements OnInit {
 
-  @Input() propName: String;
-  @Input() type: String;
+  @Input() propName: string;
+  @Input() type: string;
   @Input() parentFormGroup: FormGroup;
   @Input() options: Array<any>;
-  @Input() errorMessage: String;
+  @Input() errorMessage: string;
   @Input() required: boolean = false;
 
   constructor() { }
@@ -20,11 +20,11 @@ export class FormElementComponent implements OnInit {
   ngOnInit() { 
   }
 
-  getAppearance(): String {
+  getAppearance(): string {
     return this.required ? "outline" : "standard";
   }
 
-  getLabel(): String {
+  getLabel(): string {
     return this.required ? this.propName+ " *" : this.propName;
   }
 }

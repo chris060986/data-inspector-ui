@@ -15,7 +15,7 @@
   </div>
 
   <div *ngIf="!options" [ngSwitch]="type">
-    <!-- String Field -->
+    <!-- string Field -->
     <mat-form-field *ngSwitchCase="'string'" [appearance]="getAppearance()">
       <mat-label>{{getLabel()}}</mat-label>
       <input matInput [formControlName]="propName" autocomplete="off" type="text">

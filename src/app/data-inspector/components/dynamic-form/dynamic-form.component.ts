@@ -97,11 +97,11 @@ export class DynamicFormComponent implements OnInit {
   
 
   private topLevelForm: FormGroup;
-  private title: String;
-  private schemaVersion: String;
+  private title: string;
+  private schemaVersion: string;
   private structureObject: Object;
   private dataObject: Object;
-  private requiredFields: Array<String>;
+  private requiredFields: Array<string>;
 
   constructor() {}
 

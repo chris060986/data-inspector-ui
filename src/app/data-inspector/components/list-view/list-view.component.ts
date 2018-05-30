@@ -1,70 +1,104 @@
-import { Component, OnInit } from '@angular/core';
-import { ListViewService } from './list-view.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as _ from 'underscore';
+import { TopicSchema } from '../../models/schema.interface';
+import { DataService } from './data.service';
+import { Subscription } from 'rxjs';
+import { TopicData } from '../../models/data.interface';
 
 @Component({
   selector: 'diu-list-view',
   templateUrl: './list-view.component.html',
   styleUrls: ['./list-view.component.css']
 })
-export class ListViewComponent implements OnInit {
-  private allTopics: Array<String> = [];
-  private subscribedTopics: Array<String> = [];
-  private publishingTopics: Array<String> = [];
-  private registeredTopics: Array<String> = [];
-  private topicSchemas: Array<any> = [];
-  private currentTopic: String;
+export class ListViewComponent implements OnInit, OnDestroy {
+  private subscriptions: Array<Subscription> = [];
+  private allTopics: Array<string> = [];
+  private subscribedTopics: Array<string> = [];
+  private publishingTopics: Array<string> = [];
+  private registeredTopics: Array<string> = [];
+  private topicSchemas: Array<TopicSchema> = [];
+  private topicData: Array<TopicData> = [];
+  private currentTopic: string;
+  private currentTopicSchema: TopicSchema;
+  private currentTopicData: Array<TopicData> = [];
+  
 
-  constructor(private listViewService: ListViewService) { }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.listViewService.allTopicsEmitter.subscribe((data: Array<String>) => {
+    this.subscriptions.push(this.dataService.allTopicsEmitter.subscribe((data: Array<string>) => {
       this.allTopics = data;
-    });
-    this.listViewService.subscribedTopicsEmitter.subscribe((data: Array<String>) => {
+    }));
+    this.subscriptions.push(this.dataService.subscribedTopicsEmitter.subscribe((data: Array<string>) => {
       this.subscribedTopics = data;
-    });
-    this.listViewService.publishingTopicsEmitter.subscribe((data: Array<String>) => {
+    }));
+    this.subscriptions.push(this.dataService.publishingTopicsEmitter.subscribe((data: Array<string>) => {
       this.publishingTopics = data;
-    });
-    this.listViewService.registeredTopicsEmitter.subscribe((data: Array<String>) => {
+    }));
+    this.subscriptions.push(this.dataService.registeredTopicsEmitter.subscribe((data: Array<string>) => {
       this.registeredTopics = data;
-    });
-    this.listViewService.topicSchemasEmitter.subscribe((data: Array<any>) => {
+    }));
+    this.subscriptions.push(this.dataService.topicSchemasEmitter.subscribe((data: Array<TopicSchema>) => {
       this.topicSchemas = data;
-      console.log(this.topicSchemas);
+    }));
+    this.subscriptions.push(this.dataService.topicDataEmitter.subscribe((data: Array<TopicData>) => {
+      this.topicData = data;
+      if(this.currentTopic) {
+        this.currentTopicData = this.topicData.filter(element => element.topicName = this.currentTopic);
+      }
+    }));
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.forEach((subscription: Subscription) => {
+      subscription.unsubscribe();
     });
   }
 
-  subscribeTopic(topic: String) {
-    this.listViewService.subscribeTopicWS(topic);
+  subscribeTopic(topic: string) {
+    this.dataService.subscribeTopicWS(topic);
   }
 
-  unsubscribeTopic(topic: String) {
-    this.listViewService.unsubscribeTopicWS(topic);
-
-  }
-
-  publishTopic(topic: String) {
-    this.listViewService.publishTopicWS(topic);
-  }
-
-  unpublishTopic(topic: String) {
-    this.listViewService.unpublishTopicWS(topic);
-  }
-
-  listData(topic: String) {
-    if(!this.currentTopic || this.currentTopic != topic) {
-      this.currentTopic = topic;
-    } else if(this.currentTopic && this.currentTopic == topic) {
+  unsubscribeTopic(topic: string) {
+    this.dataService.unsubscribeTopicWS(topic);
+    if(this.currentTopic && this.currentTopic == topic){
       this.currentTopic = undefined;
+      this.currentTopicSchema = undefined;
     }
   }
 
-  getSelectedClass(topic: String): any {
+  publishTopic(topic: string) {
+    this.dataService.publishTopicWS(topic);
+  }
+
+  unpublishTopic(topic: string) {
+    this.dataService.unpublishTopicWS(topic);
+  }
+
+  listData(topic: string) {
+    if(!this.currentTopic || this.currentTopic != topic) {
+      this.currentTopic = topic;
+      this.currentTopicSchema = this.topicSchemas.filter(element => element.topicName = this.currentTopic)[0];
+      this.currentTopicData = this.topicData.filter(element => element.topicName = this.currentTopic);
+    } else if(this.currentTopic && this.currentTopic == topic) {
+      this.currentTopic = undefined;
+      this.currentTopicSchema = undefined;
+      this.currentTopicData = [];
+    }
+  }
+
+  getSelectedClass(topic: string): any {
     return {
       'isSelected': this.currentTopic == topic ? true : false
     };
+  }
+
+  getDataToggleColor(topic): string {
+    if(this.topicData.filter(element => element.topicName == topic).length % 2 == 1) {
+      return 'primary';
+    } else {
+      return 'accent';
+    }
   }
 
   // openDialog(item): void {
