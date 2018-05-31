@@ -4,6 +4,8 @@ import { TopicSchema } from '../../models/schema.interface';
 import { DataService } from './data.service';
 import { Subscription } from 'rxjs';
 import { TopicData } from '../../models/data.interface';
+import { SendDialogComponent } from '../send-dialog/send-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'diu-list-view',
@@ -21,9 +23,9 @@ export class ListViewComponent implements OnInit, OnDestroy {
   private currentTopic: string;
   private currentTopicSchema: TopicSchema;
   private currentTopicData: Array<TopicData> = [];
-  
 
-  constructor(private dataService: DataService) { }
+
+  constructor(private dataService: DataService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.subscriptions.push(this.dataService.allTopicsEmitter.subscribe((data: Array<string>) => {
@@ -43,9 +45,9 @@ export class ListViewComponent implements OnInit, OnDestroy {
     }));
     this.subscriptions.push(this.dataService.topicDataEmitter.subscribe((data: Array<TopicData>) => {
       this.topicData = data;
-      if(this.currentTopic) {
+      if (this.currentTopic) {
         const tmpData: Array<TopicData> = this.topicData.filter(element => element.topicName == this.currentTopic);
-        if(this.currentTopicData.length != tmpData.length) {
+        if (this.currentTopicData.length != tmpData.length) {
           this.currentTopicData = tmpData;
         }
       }
@@ -64,7 +66,7 @@ export class ListViewComponent implements OnInit, OnDestroy {
 
   unsubscribeTopic(topic: string) {
     this.dataService.unsubscribeTopicWS(topic);
-    if(this.currentTopic && this.currentTopic == topic){
+    if (this.currentTopic && this.currentTopic == topic) {
       this.currentTopic = undefined;
       this.currentTopicSchema = undefined;
     }
@@ -79,11 +81,11 @@ export class ListViewComponent implements OnInit, OnDestroy {
   }
 
   listData(topic: string) {
-    if(!this.currentTopic || this.currentTopic != topic) {
+    if (!this.currentTopic || this.currentTopic != topic) {
       this.currentTopic = topic;
       this.currentTopicSchema = this.topicSchemas.filter(element => element.topicName == this.currentTopic)[0];
       this.currentTopicData = this.topicData.filter(element => element.topicName == this.currentTopic);
-    } else if(this.currentTopic && this.currentTopic == topic) {
+    } else if (this.currentTopic && this.currentTopic == topic) {
       this.currentTopic = undefined;
       this.currentTopicSchema = undefined;
       this.currentTopicData = [];
@@ -97,10 +99,17 @@ export class ListViewComponent implements OnInit, OnDestroy {
   }
 
   getDataToggleColor(topic): string {
-    if(this.topicData.filter(element => element.topicName == topic).length % 2 == 1) {
+    if (this.topicData.filter(element => element.topicName == topic).length % 2 == 1) {
       return 'primary';
     } else {
       return 'accent';
     }
+  }
+
+  sendWithoutData(topic: string) {
+    let dialogRef = this.dialog.open(SendDialogComponent, {
+      width: '80vw',
+      data: {}
+    });
   }
 }

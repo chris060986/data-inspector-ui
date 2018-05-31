@@ -30,10 +30,12 @@ export class TableViewComponent implements OnInit, OnChanges {
     this.data.forEach((topicData: TopicData) => {
       tableData.push(topicData.data);
     });
-    if(tableData[0]){
+    if (tableData[0]) {
       this.displayedColumns = [];
       Object.keys(tableData[0]).forEach(key => {
-        this.displayedColumns.push(key);
+        if (typeof tableData[0][key] !== 'object') {
+          this.displayedColumns.push(key);
+        }
       });
     }
     this.dataSource.data = tableData;

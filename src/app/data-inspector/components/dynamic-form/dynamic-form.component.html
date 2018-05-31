@@ -1,8 +1,4 @@
-<mat-card>
-  <h1>{{title}}</h1>
-  <h3>JSON-Schema-Version: {{schemaVersion}}</h3>
-  <form [formGroup]="topLevelForm" (ngSubmit)="onSubmit()">
-    <diu-form-level [localFormGroup]="topLevelForm" [structureObject]="structureObject" [dataObject]="dataObject" [requiredFields]="requiredFields"></diu-form-level>
-    <button class="someMargin" mat-button type="submit" [disabled]="!this.topLevelForm.valid">SENDEN</button>
-  </form>
-</mat-card>
+<form [formGroup]="topLevelForm" (ngSubmit)="onSubmit()">
+  <diu-form-level [localFormGroup]="topLevelForm" [structureObject]="structureObject" [dataObject]="dataObject" [requiredFields]="requiredFields"></diu-form-level>
+  <button class="someMargin" mat-button type="submit" [disabled]="!this.topLevelForm.valid">SENDEN</button>
+</form>

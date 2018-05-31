@@ -15,6 +15,8 @@ import { ListViewComponent } from './components/list-view/list-view.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DataViewComponent } from './components/data-view/data-view.component';
 import { TableViewComponent } from './components/data-view/table-view/table-view.component';
+import { SendDialogComponent } from './components/send-dialog/send-dialog.component';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @NgModule({
   imports: [
@@ -36,10 +38,22 @@ import { TableViewComponent } from './components/data-view/table-view/table-view
     ListViewComponent,
     DataViewComponent,
     TableViewComponent,
+    SendDialogComponent,
   ],
-  exports: [DataInspectorComponent],
+  entryComponents: [
+    SendDialogComponent
+  ],
+  exports: [
+    DataInspectorComponent
+  ],
   providers: [
-
+    {
+      provide: MatDialogRef,
+      useValue: {}
+    }, {
+      provide: MAT_DIALOG_DATA,
+      useValue: {}
+    }
   ]
 })
 export class DataInspectorModule { }
