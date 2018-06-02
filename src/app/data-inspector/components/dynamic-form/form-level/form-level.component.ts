@@ -18,7 +18,7 @@ export class FormLevelComponent implements OnInit {
   private nextLevelForms: Array<string> = [];
   private arrayForms: Array<string> = [];
 
-  constructor() {}
+  constructor() { }
 
   ngOnInit() {
     if (this.structureObject) {
@@ -82,7 +82,7 @@ export class FormLevelComponent implements OnInit {
 
   integerValidator(control: FormControl): { [s: string]: boolean } {
     let reg = new RegExp("^[-+]?\\d*$");
-    if (!reg.test(control.value)) {
+    if (control.value != null && !reg.test(control.value)) {
       return { integer: false };
     }
     return null;
@@ -90,7 +90,7 @@ export class FormLevelComponent implements OnInit {
 
   integerWithoutZeroValidator(control: FormControl): { [s: string]: boolean } {
     let reg = new RegExp("^[-+]?\\d*$");
-    if (!reg.test(control.value) || control.value === "0") {
+    if (control.value != null && !reg.test(control.value) || control.value === "0") {
       return { integerWithoutZero: false };
     }
     return null;
@@ -98,7 +98,7 @@ export class FormLevelComponent implements OnInit {
 
   numberValidator(control: FormControl): { [s: string]: boolean } {
     let reg = new RegExp("^[-+]?([0-9]+([.,][0-9]+)?|[.,][0-9]+)$");
-    if (!reg.test(control.value)) {
+    if (control.value != null && !reg.test(control.value)) {
       return { number: false };
     }
     return null;
@@ -106,7 +106,7 @@ export class FormLevelComponent implements OnInit {
 
   numberWithoutZeroValidator(control: FormControl): { [s: string]: boolean } {
     let reg = new RegExp("^[-+]?([0-9]+(.[0-9]+)?|.[0-9]+)$");
-    if (!reg.test(control.value) || control.value === "0") {
+    if (control.value != null && !reg.test(control.value) || control.value === "0") {
       return { numberWithoutZero: false };
     }
     return null;
@@ -114,22 +114,22 @@ export class FormLevelComponent implements OnInit {
 
   getErrorMessage(field: FormControl) {
     if (field.errors == null) return undefined;
-    return field.hasError("maxlength")
-      ? "The entered value is too long!"
-      : field.hasError("minlength")
-        ? "The entered value is too short!"
-        : field.hasError("max")
-          ? "The entered value greater than the maximum value!"
-          : field.errors["integer"] != undefined
-            ? "Only integers are valid!"
-            : field.errors["integerWithoutZero"] != undefined
-              ? "Only integers are valid (not 0)!"
-              : field.errors["number"] != undefined
-                ? "Only numbers are valid!"
-                : field.errors["numberWithoutZero"] != undefined
-                  ? "Only numbers are valid (not 0)!"
-                  : field.hasError("required")
-                    ? "You have to enter a value!"
+    return field.hasError("required")
+      ? "You have to enter a value!"
+      : field.hasError("maxlength")
+        ? "The entered value is too long!"
+        : field.hasError("minlength")
+          ? "The entered value is too short!"
+          : field.hasError("max")
+            ? "The entered value greater than the maximum value!"
+            : field.errors["integer"] != undefined
+              ? "Only integers are valid!"
+              : field.errors["integerWithoutZero"] != undefined
+                ? "Only integers are valid (not 0)!"
+                : field.errors["number"] != undefined
+                  ? "Only numbers are valid!"
+                  : field.errors["numberWithoutZero"] != undefined
+                    ? "Only numbers are valid (not 0)!"
                     : undefined;
   }
 }

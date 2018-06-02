@@ -27,7 +27,7 @@
     <!-- Integer Field -->
     <mat-form-field *ngSwitchCase="'integer'" [appearance]="getAppearance()">
       <mat-label>{{getLabel()}}</mat-label>
-      <input matInput [formControlName]="propName" autocomplete="off" type="number">
+      <input matInput [formControlName]="propName" autocomplete="off">
       <mat-error *ngIf="errorMessage">
         {{errorMessage}}
       </mat-error>
@@ -36,7 +36,7 @@
     <!-- Other Numbers Field -->
     <mat-form-field *ngSwitchCase="'number'" [appearance]="getAppearance()">
       <mat-label>{{getLabel()}}</mat-label>
-      <input matInput [formControlName]="propName" autocomplete="off" type="number">
+      <input matInput [formControlName]="propName" autocomplete="off">
       <mat-error *ngIf="errorMessage">
         {{errorMessage}}
       </mat-error>

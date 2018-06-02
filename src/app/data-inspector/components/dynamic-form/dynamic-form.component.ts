@@ -1,6 +1,9 @@
-import { Component, OnInit } from "@angular/core";
+import { Subscription } from 'rxjs';
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from "@angular/core";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
-import { MAT_CHECKBOX_CLICK_ACTION } from "@angular/material";
+import { MAT_CHECKBOX_CLICK_ACTION, MatSnackBar } from "@angular/material";
+import { TopicSchema } from "../../models/schema.interface";
+import { TopicData } from "../../models/data.interface";
 
 @Component({
   selector: "diu-dynamic-form",
@@ -8,117 +11,38 @@ import { MAT_CHECKBOX_CLICK_ACTION } from "@angular/material";
   styleUrls: ["./dynamic-form.component.css"],
   providers: [{ provide: MAT_CHECKBOX_CLICK_ACTION, useValue: "check" }]
 })
-export class DynamicFormComponent implements OnInit {
-  jsonSchema = {
-    $schema: "http://json-schema.org/draft-04/schema#",
-    type: "object",
-    title: "COMPUTER-Schema",
-    properties: {
-      isWorking: {
-        type: "boolean"
-      },
-      processor: {
-        type: "string",
-        enum: [
-          "i7 7200",
-          "i5 7200"
-        ]
-      },
-      storage: {
-        type: "array",
-        items: [
-          {
-            type: "object",
-            properties: {
-              type: {
-                type: "string"
-              },
-              memory: {
-                type: "integer"
-              }
-            },
-            required: ["type", "memory"]
-          },
-          {
-            type: "object",
-            properties: {
-              type: {
-                type: "string"
-              },
-              memory: {
-                type: "integer"
-              }
-            },
-            required: ["type", "memory"]
-          },
-          {
-            type: "string"
-          }
-        ]
-      },
-      ram: {
-        type: "number"
-      },
-      cooler: {
-        type: "object",
-        properties: {
-          name: {
-            type: "string"
-          },
-          speed: {
-            type: "integer"
-          }
-        }
-      }
-    },
-    required: ["processor", "storage", "ram", "cooler"]
-  };
+export class DynamicFormComponent implements OnInit, OnDestroy {
 
-  jsonValues = {
-    isWorking: true,
-    processor: "i7 7200",
-    storage: [
-      {
-        type: "HDD",
-        memory: 1024
-      },
-      {
-        type: "SSD",
-        memory: 512
-      }
-    ],
-    ram: 8.1,
-    cooler: {
-      name: "Aplenfön",
-      speed: 1500
-    }
-  };
-
-  
-
+  @Input() structureObject: any;
+  @Input() dataObject: any;
+  @Input() requiredFields: Array<string>;
+  @Input() submitEmitter: EventEmitter<any>;
+  @Output() dataSubmitted: EventEmitter<any> = new EventEmitter();
   private topLevelForm: FormGroup;
-  private title: string;
-  private schemaVersion: string;
-  private structureObject: Object;
-  private dataObject: Object;
-  private requiredFields: Array<string>;
+  private subscription: Subscription;
 
-  constructor() {}
+  constructor(public snackBar: MatSnackBar) { }
 
   ngOnInit() {
+    this.subscription = this.submitEmitter.subscribe(() => {
+      this.onSubmit();
+    });
     this.topLevelForm = new FormGroup({});
-    this.title = this.jsonSchema.title;
-    this.schemaVersion = this.jsonSchema.$schema;
-    this.structureObject = this.jsonSchema.properties;
-    this.requiredFields = this.jsonSchema.required;
-    this.dataObject = this.jsonValues;
   }
 
   onSubmit() {
-    console.log("Form Values:", this.topLevelForm.value);
+    if(this.topLevelForm.valid) {
+      this.dataSubmitted.emit(this.topLevelForm.value);
+    } else {
+      this.dataSubmitted.emit(undefined);
+      this.snackBar.open('Form not valid ...', '',{
+        duration: 1000
+      });
+    }
   }
 
-  onNewHobby() {
-    (<FormArray>this.topLevelForm.get("hobbies")).push(new FormControl(""));
+  
+  ngOnDestroy() {
+    this.subscription.unsubscribe()
   }
 }

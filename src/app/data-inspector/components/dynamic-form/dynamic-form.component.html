@@ -1,4 +1,5 @@
 <form [formGroup]="topLevelForm" (ngSubmit)="onSubmit()">
-  <diu-form-level [localFormGroup]="topLevelForm" [structureObject]="structureObject" [dataObject]="dataObject" [requiredFields]="requiredFields"></diu-form-level>
-  <button class="someMargin" mat-button type="submit" [disabled]="!this.topLevelForm.valid">SENDEN</button>
+  <diu-form-level [localFormGroup]="topLevelForm" [structureObject]="structureObject" [dataObject]="dataObject"
+    [requiredFields]="requiredFields"></diu-form-level>
+  <button cmat-button type="submit" hidden="true"></button>
 </form>

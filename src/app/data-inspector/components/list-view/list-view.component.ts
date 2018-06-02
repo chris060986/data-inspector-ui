@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import { TopicData } from '../../models/data.interface';
 import { SendDialogComponent } from '../send-dialog/send-dialog.component';
 import { MatDialog } from '@angular/material';
+import { element } from 'protractor';
 
 @Component({
   selector: 'diu-list-view',
@@ -107,9 +108,15 @@ export class ListViewComponent implements OnInit, OnDestroy {
   }
 
   sendWithoutData(topic: string) {
-    let dialogRef = this.dialog.open(SendDialogComponent, {
-      width: '80vw',
-      data: {}
-    });
+    const schema: TopicSchema = this.topicSchemas.filter(element => element.topicName == topic).pop();
+    if(schema) {
+      let dialogRef = this.dialog.open(SendDialogComponent, {
+        width: '80vw',
+        data: {
+          topicSchema: Object.create(schema),
+          topicData: undefined
+        }
+      });
+    }
   }
 }
