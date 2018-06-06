@@ -1,3 +1,4 @@
+import { DataService } from './../../data/data.service';
 import { TopicData } from './../../models/data.interface';
 import { TopicSchema } from './../../models/schema.interface';
 import { Component, OnInit, Inject, EventEmitter } from '@angular/core';
@@ -17,7 +18,7 @@ export class SendDialogComponent implements OnInit {
   private requiredFields: Array<string>;
   private submitEmitter: EventEmitter<any> = new EventEmitter();
 
-  constructor(
+  constructor( private dataService: DataService,
     public dialogRef: MatDialogRef<SendDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.topicSchema = data.topicSchema;
@@ -28,7 +29,7 @@ export class SendDialogComponent implements OnInit {
     if (this.topicSchema.schema && this.topicSchema.schema.properties) {
       this.structureObject = this.topicSchema.schema.properties;
       this.requiredFields = this.topicSchema.schema.required;
-      if (this.dataObject) {
+      if (this.topicData) {
         this.dataObject = this.topicData.data;
       }
     }
@@ -36,10 +37,11 @@ export class SendDialogComponent implements OnInit {
 
   sendNewData() {
     this.submitEmitter.emit();
-    console.log("SEND");
   }
 
-  onSubmit(event: any) {
-    console.log(event);
+  onSubmit(submittedData: any) {
+    if(submittedData){
+      this.dataService.sendDataToWS(this.topicSchema.topicName, submittedData);
+    }
   }
 }

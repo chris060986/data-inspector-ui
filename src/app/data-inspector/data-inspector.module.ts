@@ -17,6 +17,7 @@ import { DataViewComponent } from './components/data-view/data-view.component';
 import { TableViewComponent } from './components/data-view/table-view/table-view.component';
 import { SendDialogComponent } from './components/send-dialog/send-dialog.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { WarnSnackComponent } from './components/snackbars/warn-snack/warn-snack.component';
 
 @NgModule({
   imports: [
@@ -39,9 +40,11 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
     DataViewComponent,
     TableViewComponent,
     SendDialogComponent,
+    WarnSnackComponent,
   ],
   entryComponents: [
-    SendDialogComponent
+    SendDialogComponent,
+    WarnSnackComponent
   ],
   exports: [
     DataInspectorComponent

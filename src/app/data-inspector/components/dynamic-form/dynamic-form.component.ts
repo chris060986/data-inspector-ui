@@ -1,5 +1,6 @@
+import { WarnSnackComponent } from './../snackbars/warn-snack/warn-snack.component';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges } from "@angular/core";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { MAT_CHECKBOX_CLICK_ACTION, MatSnackBar } from "@angular/material";
 import { TopicSchema } from "../../models/schema.interface";
@@ -11,8 +12,7 @@ import { TopicData } from "../../models/data.interface";
   styleUrls: ["./dynamic-form.component.css"],
   providers: [{ provide: MAT_CHECKBOX_CLICK_ACTION, useValue: "check" }]
 })
-export class DynamicFormComponent implements OnInit, OnDestroy {
-
+export class DynamicFormComponent implements OnInit, OnChanges, OnDestroy {
   @Input() structureObject: any;
   @Input() dataObject: any;
   @Input() requiredFields: Array<string>;
@@ -30,12 +30,19 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     this.topLevelForm = new FormGroup({});
   }
 
+  ngOnChanges() {
+    console.log("changes")
+  }
+
   onSubmit() {
     if(this.topLevelForm.valid) {
       this.dataSubmitted.emit(this.topLevelForm.value);
+      this.snackBar.open('Data submitted ...','',{
+        duration: 1000
+      });
     } else {
       this.dataSubmitted.emit(undefined);
-      this.snackBar.open('Form not valid ...', '',{
+      this.snackBar.openFromComponent(WarnSnackComponent,{
         duration: 1000
       });
     }

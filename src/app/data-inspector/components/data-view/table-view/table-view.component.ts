@@ -4,7 +4,9 @@ import {
   ViewChild,
   Input,
   OnChanges,
-  SimpleChanges
+  SimpleChanges,
+  Output,
+  EventEmitter
 } from "@angular/core";
 import { MatTableDataSource, MatSort } from "@angular/material";
 import { TopicData } from "../../../models/data.interface";
@@ -16,9 +18,10 @@ import { TopicData } from "../../../models/data.interface";
 })
 export class TableViewComponent implements OnInit, OnChanges {
   @Input() data: Array<TopicData>;
+  @Output() dataSelected: EventEmitter<any> = new EventEmitter();
 
   displayedColumns: Array<string>;
-  dataSource: MatTableDataSource<any> = new MatTableDataSource();;
+  dataSource: MatTableDataSource<any> = new MatTableDataSource();
   @ViewChild(MatSort) sort: MatSort;
 
   ngOnInit() {
@@ -37,7 +40,14 @@ export class TableViewComponent implements OnInit, OnChanges {
           this.displayedColumns.push(key);
         }
       });
+      // this.displayedColumns.push('actions');
     }
     this.dataSource.data = tableData;
   }
+
+  selectData(data: any) {
+    this.dataSelected.emit(data);
+  }
+
+
 }

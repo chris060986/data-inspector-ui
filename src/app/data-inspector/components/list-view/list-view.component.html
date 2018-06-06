@@ -6,7 +6,7 @@
       <mat-card-title>Available Datatypes</mat-card-title>
       <div class="sidenavItems">
         <div class="listItem" *ngFor="let item of allTopics">
-          <p class="listItemText">{{item}}</p>
+          <p class="listItemText unselectableText">{{item}}</p>
           <div class="listItemTools">
             <button mat-icon-button color="accent" matTooltipShowDelay="1000" matTooltip="subscribe" (click)="subscribeTopic(item)">
               <mat-icon>notifications</mat-icon>
@@ -33,7 +33,7 @@
         <mat-card-title class="listhead">Registered Topics</mat-card-title>
         <div class="contentItems">
           <div class="listItem" *ngFor="let item of registeredTopics" [ngClass]="getSelectedClass(item)">
-            <p matBadge="" [matBadgeColor]="getDataToggleColor(item)" matBadgePosition="above" matBadgeOverlap="false" class="listItemText">{{item}}</p>
+            <p matBadge="" [matBadgeColor]="getDataToggleColor(item)" matBadgePosition="above" matBadgeOverlap="false" class="listItemText unselectableText">{{item}}</p>
             <div class="listItemTools">
               <button mat-icon-button *ngIf="subscribedTopics.includes(item)" color="accent" matTooltipShowDelay="1000" matTooltip="unsubscribe"
                 (click)="unsubscribeTopic(item)">

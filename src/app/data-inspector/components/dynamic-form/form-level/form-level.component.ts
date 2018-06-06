@@ -78,6 +78,7 @@ export class FormLevelComponent implements OnInit {
         }
       });
     }
+    console.log(this.dataObject,this.localFormGroup)
   }
 
   integerValidator(control: FormControl): { [s: string]: boolean } {

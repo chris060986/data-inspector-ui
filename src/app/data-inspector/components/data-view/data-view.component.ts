@@ -1,7 +1,9 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, ViewChild } from "@angular/core";
-import { TopicData } from "../../models/data.interface";
+import { TopicData } from './../../models/data.interface';
+import { Component, OnInit, Input, OnChanges, ViewChild } from "@angular/core";
 import { TopicSchema } from "../../models/schema.interface";
 import * as _ from 'underscore';
+import { MatDialog } from "@angular/material";
+import { SendDialogComponent } from "../send-dialog/send-dialog.component";
 
 @Component({
   selector: "diu-data-view",
@@ -10,22 +12,26 @@ import * as _ from 'underscore';
 })
 export class DataViewComponent implements OnInit, OnChanges {
 
-  topicName: string;
   @Input() topicSchema: TopicSchema;
   @Input() topicData: Array<TopicData>;
+  private topicName: string;
   private topicInstances: Array<TopicData> = [];
+
+  constructor(public dialog: MatDialog) {
+
+  }
 
   ngOnInit() {
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if(this.topicSchema) {
+  ngOnChanges() {
+    if (this.topicSchema) {
       this.topicName = this.topicSchema.topicName;
       const primaryKey: any = this.topicSchema.schema.primary;
       let primaryKeys: Array<any> = [];
       this.topicData.forEach((data: TopicData) => {
         const tmpKey = data.data[primaryKey];
-        if(!primaryKeys.includes(tmpKey)) {
+        if (!primaryKeys.includes(tmpKey)) {
           primaryKeys.push(tmpKey);
         }
       });
@@ -35,6 +41,24 @@ export class DataViewComponent implements OnInit, OnChanges {
       });
     } else {
       this.topicName = undefined;
+    }
+  }
+
+  sendWithData(data: any) {
+    console.log(data);
+    const topicData = JSON.parse(JSON.stringify(data));
+    console.log(topicData);
+    if (this.topicSchema) {
+      let dialogRef = this.dialog.open(SendDialogComponent, {
+        width: '80vw',
+        data: {
+          topicSchema: Object.create(this.topicSchema),
+          topicData: {
+            topicName: '',
+            data: topicData
+          }
+        }
+      });
     }
   }
 }

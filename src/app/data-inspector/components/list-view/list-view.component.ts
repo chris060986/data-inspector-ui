@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import * as _ from 'underscore';
 import { TopicSchema } from '../../models/schema.interface';
-import { DataService } from './data.service';
+import { DataService } from './../../data/data.service';
 import { Subscription } from 'rxjs';
 import { TopicData } from '../../models/data.interface';
 import { SendDialogComponent } from '../send-dialog/send-dialog.component';

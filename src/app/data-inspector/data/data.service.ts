@@ -1,11 +1,11 @@
 import { Injectable, EventEmitter } from "@angular/core";
 import { Subject, Observable, Subscription } from "rxjs";
 import { HttpClient } from "@angular/common/http";
-import { WebsocketService } from "../../websocket/websocket.service";
-import { ServerURL } from "../../urls";
+import { WebsocketService } from "../websocket/websocket.service";
+import { ServerURL } from "../urls";
 import * as _ from "underscore";
-import { TopicSchema } from "../../models/schema.interface";
-import { TopicData } from "../../models/data.interface";
+import { TopicSchema } from "../models/schema.interface";
+import { TopicData } from "../models/data.interface";
 
 @Injectable({
   providedIn: "root"
@@ -99,15 +99,17 @@ export class DataService {
   publishTopicWS(name: string) {
     this.checkOpenWS();
     this.checkSchemaAvailable(name);
-    if (!this.publishingTopics.includes(name)) {
-      this.socket.next({
-        type: "PUBLISH",
-        topicName: name
-      });
-
-      this.publishingTopics.push(name);
-      this.emitAll();
-    }
+    setTimeout(() => {
+      if (!this.publishingTopics.includes(name)) {
+        this.socket.next({
+          type: "PUBLISH",
+          topicName: name
+        });
+  
+        this.publishingTopics.push(name);
+        this.emitAll();
+      }
+    }, 400);
   }
 
   unsubscribeTopicWS(name: string) {
@@ -133,6 +135,14 @@ export class DataService {
     });
     this.emitAll();
     this.checkCloseWS();
+  }
+
+  sendDataToWS(name: string, topicData: any) {
+    this.socket.next({
+      type: 'NEWDATA',
+      topicName: name,
+      data: topicData
+    });
   }
 
   mergeRegisteredTopics() {
