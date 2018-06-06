@@ -5,13 +5,13 @@
       <diu-form-element *ngIf="actLevelForms.includes(prop)" [propName]="prop" [type]="structureObject[prop].type" [parentFormGroup]="localFormGroup"
         [options]="structureObject[prop].enum" [errorMessage]=getErrorMessage(localFormGroup.get(prop)) [required]="requiredFields && requiredFields.includes(prop)"></diu-form-element>
       <diu-form-level *ngIf="nextLevelForms.includes(prop)" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)" [structureObject]="structureObject[prop].properties"
-        [dataObject]="dataObject?.prop" [requiredFields]="structureObject.require"></diu-form-level>
+        [dataObject]="dataObject[prop]" [requiredFields]="structureObject[prop].required"></diu-form-level>
       <div *ngIf="arrayForms.includes(prop)" [formArrayName]="prop">
         <mat-card class="containerCard">
           <h4>{{prop}}</h4>
           <mat-list-item *ngFor="let item of structureObject[prop].items; let i = index">
             <diu-form-level *ngIf="item.type == 'object'" [localFormGroup]="localFormGroup.get(prop).controls[i]" [structureObject]="item.properties"
-              [dataObject]="dataObject?.prop[i]" [requiredFields]="item.required"></diu-form-level>
+              [dataObject]="getArrayData(dataObject, prop, index)" [requiredFields]="item.required"></diu-form-level>
           </mat-list-item>
         </mat-card>
       </div>

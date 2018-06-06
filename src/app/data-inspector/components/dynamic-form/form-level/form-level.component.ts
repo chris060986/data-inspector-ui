@@ -21,6 +21,7 @@ export class FormLevelComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.structureObject, this.dataObject)
     if (this.structureObject) {
       Object.entries(this.structureObject).forEach(([key, val]) => {
         this.allPropertyKeys.push(key);
@@ -78,7 +79,14 @@ export class FormLevelComponent implements OnInit {
         }
       });
     }
-    console.log(this.dataObject,this.localFormGroup)
+  }
+
+  getArrayData(data: any, prop: string, index: number): any {
+    if(data && data[prop]) {
+      return data[prop][index];
+    } else {
+      return undefined;
+    }
   }
 
   integerValidator(control: FormControl): { [s: string]: boolean } {
@@ -132,5 +140,9 @@ export class FormLevelComponent implements OnInit {
                   : field.errors["numberWithoutZero"] != undefined
                     ? "Only numbers are valid (not 0)!"
                     : undefined;
+  }
+
+  test(object: any): string {
+    return JSON.stringify(object);
   }
 }
