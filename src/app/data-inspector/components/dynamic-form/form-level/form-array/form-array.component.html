@@ -1,9 +1,17 @@
 <div *ngIf="fixedArray">
   <mat-list-item *ngFor="let item of structureObject.items; let i = index">
     <mat-card class="containerCard">
+
+      <!-- current level primitives -->
+      <diu-form-element *ngIf="item.type != 'object' && item.type != 'array'" [propName]="i" [type]="item.type" [parentFormGroup]="localFormArray"
+        [options]="item.enum" [errorMessage]="getErrorMessage(localFormArray.controls[i])">
+      </diu-form-element>
+
+      <!-- next level with object -->
       <diu-form-level *ngIf="item.type == 'object'" [localFormGroup]="localFormArray.controls[i]" [structureObject]="item.properties"
         [dataObject]="getArrayData(dataObject, i)" [requiredFields]="item.required">
       </diu-form-level>
+
     </mat-card>
   </mat-list-item>
 </div>

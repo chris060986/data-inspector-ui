@@ -3,7 +3,7 @@
   <div *ngIf="options">
     <!-- Enum Field -->
     <mat-form-field [appearance]="getAppearance()">
-      <mat-label>{{getLabel()}}</mat-label>
+      <mat-label *ngIf="!numberCheck(propName)">{{getLabel()}}</mat-label>
       <mat-select [formControlName]="propName">
         <mat-option>--</mat-option>
         <mat-option *ngFor="let option of options" [value]="option">{{option}}</mat-option>
@@ -17,7 +17,7 @@
   <div *ngIf="!options" [ngSwitch]="type">
     <!-- string Field -->
     <mat-form-field *ngSwitchCase="'string'" [appearance]="getAppearance()">
-      <mat-label>{{getLabel()}}</mat-label>
+      <mat-label *ngIf="!numberCheck(propName)">{{getLabel()}}</mat-label>
       <input matInput [formControlName]="propName" autocomplete="off" type="text">
       <mat-error *ngIf="errorMessage">
         {{errorMessage}}
@@ -26,7 +26,7 @@
 
     <!-- Integer Field -->
     <mat-form-field *ngSwitchCase="'integer'" [appearance]="getAppearance()">
-      <mat-label>{{getLabel()}}</mat-label>
+      <mat-label *ngIf="!numberCheck(propName)">{{getLabel()}}</mat-label>
       <input matInput [formControlName]="propName" autocomplete="off">
       <mat-error *ngIf="errorMessage">
         {{errorMessage}}
@@ -35,7 +35,7 @@
 
     <!-- Other Numbers Field -->
     <mat-form-field *ngSwitchCase="'number'" [appearance]="getAppearance()">
-      <mat-label>{{getLabel()}}</mat-label>
+      <mat-label *ngIf="!numberCheck(propName)">{{getLabel()}}</mat-label>
       <input matInput [formControlName]="propName" autocomplete="off">
       <mat-error *ngIf="errorMessage">
         {{errorMessage}}

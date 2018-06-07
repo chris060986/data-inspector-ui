@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { FormGroup, Validators } from '@angular/forms';
+import { FormGroup, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'diu-form-element',
@@ -26,5 +26,9 @@ export class FormElementComponent implements OnInit {
 
   getLabel(): string {
     return this.required ? this.propName+ " *" : this.propName;
+  }
+
+  numberCheck(value: any) {
+    return Number.isInteger(value);
   }
 }
