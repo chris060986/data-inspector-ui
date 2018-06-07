@@ -3,9 +3,9 @@
   <div [formGroup]="localFormGroup">
     <mat-list-item *ngFor="let prop of allPropertyKeys">
       <diu-form-element *ngIf="actLevelForms.includes(prop)" [propName]="prop" [type]="structureObject[prop].type" [parentFormGroup]="localFormGroup"
-        [options]="structureObject[prop].enum" [errorMessage]=getErrorMessage(localFormGroup.get(prop)) [required]="requiredFields && requiredFields.includes(prop)"></diu-form-element>
+        [options]="structureObject[prop].enum" [errorMessage]="getErrorMessage(localFormGroup.get(prop))" [required]="requiredFields && requiredFields.includes(prop)"></diu-form-element>
       <diu-form-level *ngIf="nextLevelForms.includes(prop)" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)" [structureObject]="structureObject[prop].properties"
-        [dataObject]="dataObject[prop]" [requiredFields]="structureObject[prop].required"></diu-form-level>
+        [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required"></diu-form-level>
       <div *ngIf="arrayForms.includes(prop)" [formArrayName]="prop">
         <mat-card class="containerCard">
           <h4>{{prop}}</h4>

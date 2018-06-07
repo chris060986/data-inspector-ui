@@ -1,6 +1,6 @@
 import { WarnSnackComponent } from './../snackbars/warn-snack/warn-snack.component';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges } from "@angular/core";
+import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, AfterViewChecked } from "@angular/core";
 import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { MAT_CHECKBOX_CLICK_ACTION, MatSnackBar } from "@angular/material";
 import { TopicSchema } from "../../models/schema.interface";
@@ -12,26 +12,25 @@ import { TopicData } from "../../models/data.interface";
   styleUrls: ["./dynamic-form.component.css"],
   providers: [{ provide: MAT_CHECKBOX_CLICK_ACTION, useValue: "check" }]
 })
-export class DynamicFormComponent implements OnInit, OnChanges, OnDestroy {
+export class DynamicFormComponent implements OnInit, AfterViewChecked {
   @Input() structureObject: any;
   @Input() dataObject: any;
   @Input() requiredFields: Array<string>;
   @Input() submitEmitter: EventEmitter<any>;
   @Output() dataSubmitted: EventEmitter<any> = new EventEmitter();
-  private topLevelForm: FormGroup;
+  private topLevelForm: FormGroup = new FormGroup({});
   private subscription: Subscription;
 
   constructor(public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-    this.subscription = this.submitEmitter.subscribe(() => {
-      this.onSubmit();
-    });
-    this.topLevelForm = new FormGroup({});
+
   }
 
-  ngOnChanges() {
-    console.log("changes")
+  ngAfterViewChecked() {
+     this.subscription = this.submitEmitter.subscribe(() => {
+      this.onSubmit();
+    });
   }
 
   onSubmit() {

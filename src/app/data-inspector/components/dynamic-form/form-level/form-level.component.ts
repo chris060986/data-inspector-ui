@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input, AfterViewChecked, AfterContentInit, AfterContentChecked } from "@angular/core";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
@@ -21,68 +21,77 @@ export class FormLevelComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.structureObject, this.dataObject)
-    if (this.structureObject) {
-      Object.entries(this.structureObject).forEach(([key, val]) => {
-        this.allPropertyKeys.push(key);
-        let tmpFormControl: FormControl;
-        let currentValidators: Array<any> = [];
-        if (val.type == "integer")
-          currentValidators.push(this.integerValidator);
-        if (val.type == "number") currentValidators.push(this.numberValidator);
-        switch (val.type) {
-          case "string":
-          case "integer":
-          case "number":
-          case "boolean":
-            if (this.requiredFields && this.requiredFields.includes(key)) {
-              currentValidators.push(Validators.required);
-            }
-            if (
-              val.enum &&
-              this.dataObject[key] &&
-              !val.enum.includes(this.dataObject[key])
-            ) {
-              this.dataObject[key] = undefined;
-            }
-            if (this.dataObject && this.dataObject[key]) {
-              tmpFormControl = new FormControl(
-                this.dataObject[key],
-                currentValidators
-              );
-            } else {
-              tmpFormControl = new FormControl(undefined, currentValidators);
-            }
-            this.localFormGroup.addControl(key, tmpFormControl);
-            this.actLevelForms.push(key);
-            break;
-
-          case "object":
-            this.localFormGroup.addControl(key, new FormGroup({}));
-            this.nextLevelForms.push(key);
-            break;
-
-          case "array":
-            let tmpFormArray: FormArray = new FormArray([]);
-            let i = 0;
-            val.items.forEach(items => {
-              if (items.type == "object") {
-                tmpFormArray.push(new FormGroup({}));
+    Promise.resolve().then(() => {
+      if (this.structureObject) {
+        Object.entries(this.structureObject).forEach(([key, val]) => {
+          this.allPropertyKeys.push(key);
+          let tmpFormControl: FormControl;
+          let currentValidators: Array<any> = [];
+          if (val.type == "integer")
+            currentValidators.push(this.integerValidator);
+          if (val.type == "number") currentValidators.push(this.numberValidator);
+          switch (val.type) {
+            case "string":
+            case "integer":
+            case "number":
+            case "boolean":
+              if (this.requiredFields && this.requiredFields.includes(key)) {
+                currentValidators.push(Validators.required);
               }
-            });
-            this.localFormGroup.addControl(key, tmpFormArray);
-            this.arrayForms.push(key);
-            break;
+              if (
+                val.enum &&
+                this.dataObject[key] &&
+                !val.enum.includes(this.dataObject[key])
+              ) {
+                this.dataObject[key] = undefined;
+              }
+              if (this.dataObject && this.dataObject[key]) {
+                tmpFormControl = new FormControl(
+                  this.dataObject[key],
+                  currentValidators
+                );
+              } else {
+                tmpFormControl = new FormControl(undefined, currentValidators);
+              }
+              this.localFormGroup.addControl(key, tmpFormControl);
+              this.actLevelForms.push(key);
+              break;
 
-          default:
-            break;
-        }
-      });
+            case "object":
+              this.localFormGroup.addControl(key, new FormGroup({}));
+              this.nextLevelForms.push(key);
+              break;
+
+            case "array":
+              let tmpFormArray: FormArray = new FormArray([]);
+              let i = 0;
+              val.items.forEach(items => {
+                if (items.type == "object") {
+                  tmpFormArray.push(new FormGroup({}));
+                }
+              });
+              this.localFormGroup.addControl(key, tmpFormArray);
+              this.arrayForms.push(key);
+              break;
+
+            default:
+              break;
+          }
+        });
+      }
+    });
+  }
+
+  getData(data: any, prop: string) {
+    if (data && data[prop]) {
+      return data[prop];
+    } else {
+      return undefined;
     }
   }
 
   getArrayData(data: any, prop: string, index: number): any {
-    if(data && data[prop]) {
+    if (data && data[prop]) {
       return data[prop][index];
     } else {
       return undefined;
