@@ -26,7 +26,7 @@
       </div>
 
       <!-- Formarrays -->
-      <div *ngIf="arrayForms.includes(prop)" [formArrayName]="prop">
+      <div *ngIf="arrayForms.includes(prop)" class="arrayContainer" [formArrayName]="prop">
         <h4>{{prop}}</h4>
         <mat-list-item *ngFor="let item of structureObject[prop].items; let i = index">
           <mat-card class="containerCard">

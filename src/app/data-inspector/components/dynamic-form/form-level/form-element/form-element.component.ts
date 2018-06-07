@@ -21,7 +21,7 @@ export class FormElementComponent implements OnInit {
   }
 
   getAppearance(): string {
-    return this.required ? "outline" : "standard";
+    return this.required ? "outline" : "fill";
   }
 
   getLabel(): string {

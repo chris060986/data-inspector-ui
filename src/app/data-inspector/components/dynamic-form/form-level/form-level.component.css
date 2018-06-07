@@ -1,11 +1,16 @@
 .containerCard {
-    padding: 10px!important;
-    margin: 10px!important;
-    margin-left: 0px!important;
+    padding: 0px!important;
+    padding-top: 10px!important;
+    margin: 0px!important;
+    margin-bottom: 5px!important;
 }
 
 .levelContainer {
-    margin-left: 20px;
+    margin-left: 25px;
+}
+
+.arrayContainer {
+    margin-bottom: 20px;
 }
 
 .deleteObjectButton {
@@ -14,4 +19,5 @@
 
 h4 {
     display: inline-block;
+    margin: 5px;
 }
