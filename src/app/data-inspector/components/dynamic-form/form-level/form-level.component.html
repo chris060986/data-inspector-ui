@@ -11,7 +11,7 @@
           <h4>{{prop}}</h4>
           <mat-list-item *ngFor="let item of structureObject[prop].items; let i = index">
             <diu-form-level *ngIf="item.type == 'object'" [localFormGroup]="localFormGroup.get(prop).controls[i]" [structureObject]="item.properties"
-              [dataObject]="getArrayData(dataObject, prop, index)" [requiredFields]="item.required"></diu-form-level>
+              [dataObject]="getArrayData(dataObject, prop, i)" [requiredFields]="item.required"></diu-form-level>
           </mat-list-item>
         </mat-card>
       </div>

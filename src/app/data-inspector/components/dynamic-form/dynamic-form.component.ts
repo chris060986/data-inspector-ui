@@ -24,7 +24,7 @@ export class DynamicFormComponent implements OnInit {
   constructor(public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-     this.subscription = this.submitEmitter.subscribe((message) => {
+     this.subscription = this.submitEmitter.subscribe(() => {
       this.onSubmit();
     });
   }
