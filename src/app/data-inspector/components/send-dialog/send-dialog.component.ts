@@ -36,7 +36,7 @@ export class SendDialogComponent implements OnInit {
   }
 
   sendNewData() {
-    this.submitEmitter.emit();
+    this.submitEmitter.emit('sendData');
   }
 
   onSubmit(submittedData: any) {

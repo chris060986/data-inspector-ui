@@ -12,7 +12,7 @@ import { TopicData } from "../../models/data.interface";
   styleUrls: ["./dynamic-form.component.css"],
   providers: [{ provide: MAT_CHECKBOX_CLICK_ACTION, useValue: "check" }]
 })
-export class DynamicFormComponent implements OnInit, AfterViewChecked {
+export class DynamicFormComponent implements OnInit {
   @Input() structureObject: any;
   @Input() dataObject: any;
   @Input() requiredFields: Array<string>;
@@ -24,11 +24,7 @@ export class DynamicFormComponent implements OnInit, AfterViewChecked {
   constructor(public snackBar: MatSnackBar) { }
 
   ngOnInit() {
-
-  }
-
-  ngAfterViewChecked() {
-     this.subscription = this.submitEmitter.subscribe(() => {
+     this.subscription = this.submitEmitter.subscribe((message) => {
       this.onSubmit();
     });
   }
