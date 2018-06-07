@@ -18,6 +18,7 @@ import { TableViewComponent } from './components/data-view/table-view/table-view
 import { SendDialogComponent } from './components/send-dialog/send-dialog.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { WarnSnackComponent } from './components/snackbars/warn-snack/warn-snack.component';
+import { FormArrayComponent } from './components/dynamic-form/form-level/form-array/form-array.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { WarnSnackComponent } from './components/snackbars/warn-snack/warn-snack
     TableViewComponent,
     SendDialogComponent,
     WarnSnackComponent,
+    FormArrayComponent,
   ],
   entryComponents: [
     SendDialogComponent,

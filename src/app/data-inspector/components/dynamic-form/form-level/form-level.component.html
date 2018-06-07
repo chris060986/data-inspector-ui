@@ -27,13 +27,17 @@
       <!-- Formarrays -->
       <div *ngIf="arrayForms.includes(prop)" class="arrayContainer" [formArrayName]="prop">
         <h4>{{prop}}</h4>
-        <mat-list-item *ngFor="let item of structureObject[prop].items; let i = index">
-          <mat-card class="containerCard">
-            <diu-form-level *ngIf="item.type == 'object'" [localFormGroup]="localFormGroup.get(prop).controls[i]" [structureObject]="item.properties"
-              [dataObject]="getArrayData(dataObject, prop, i)" [requiredFields]="item.required">
-            </diu-form-level>
-          </mat-card>
-        </mat-list-item>
+        <button *ngIf="!requiredFields.includes(prop) && !hiddenProperties.includes(prop)" mat-icon-button class="deleteObjectButton"
+          type="button" (click)="deleteArrayFromForm(prop)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button *ngIf="!requiredFields.includes(prop) && hiddenProperties.includes(prop)" mat-icon-button class="deleteObjectButton"
+          type="button" (click)="addArrayToForm(prop)">
+          <mat-icon>add</mat-icon>
+        </button>
+        <diu-form-array *ngIf="!hiddenProperties.includes(prop)" [structureObject]="structureObject[prop]" [localFormArray]="localFormGroup.get(prop)"
+          [dataObject]="getData(dataObject, prop)">
+        </diu-form-array>
       </div>
 
     </mat-list-item>

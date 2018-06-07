@@ -1,0 +1,9 @@
+<div *ngIf="fixedArray">
+  <mat-list-item *ngFor="let item of structureObject.items; let i = index">
+    <mat-card class="containerCard">
+      <diu-form-level *ngIf="item.type == 'object'" [localFormGroup]="localFormArray.controls[i]" [structureObject]="item.properties"
+        [dataObject]="getArrayData(dataObject, i)" [requiredFields]="item.required">
+      </diu-form-level>
+    </mat-card>
+  </mat-list-item>
+</div>

@@ -78,15 +78,15 @@ export class FormLevelComponent implements OnInit {
               break;
 
             case "array":
+              // 
+              // if(Array.isArray(val.items)){
+              //   val.items.forEach(items => {
+              //     if (items.type == "object") {
+              //       tmpFormArray.push(new FormGroup({}));
+              //     } 
+              //   });
+              // }
               let tmpFormArray: FormArray = new FormArray([]);
-              let i = 0;
-              if(Array.isArray(val.items)){
-                val.items.forEach(items => {
-                  if (items.type == "object") {
-                    tmpFormArray.push(new FormGroup({}));
-                  } 
-                });
-              }
               this.localFormGroup.addControl(key, tmpFormArray);
               this.arrayForms.push(key);
               break;
@@ -107,14 +107,6 @@ export class FormLevelComponent implements OnInit {
     }
   }
 
-  getArrayData(data: any, prop: string, index: number): any {
-    if (data && data[prop]) {
-      return data[prop][index];
-    } else {
-      return undefined;
-    }
-  }
-
   deleteObjectFromForm(prop: string) {
     if (!this.hiddenProperties.includes(prop)) {
       this.hiddenProperties.push(prop);
@@ -128,7 +120,22 @@ export class FormLevelComponent implements OnInit {
     );
     if (!this.localFormGroup.contains(prop)) {
       this.localFormGroup.addControl(prop, new FormGroup({}));
-      this.nextLevelForms.push(prop);
+    }
+  }
+
+  deleteArrayFromForm(prop: string) {
+    if (!this.hiddenProperties.includes(prop)) {
+      this.hiddenProperties.push(prop);
+      this.localFormGroup.removeControl(prop);
+    }
+  }
+
+  addArrayToForm(prop: string) {
+    this.hiddenProperties = this.hiddenProperties.filter(
+      element => element != prop
+    );
+    if (!this.localFormGroup.contains(prop)) {
+      this.localFormGroup.addControl(prop, new FormArray([]));
     }
   }
 
