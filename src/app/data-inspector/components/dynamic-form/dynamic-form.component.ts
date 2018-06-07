@@ -5,12 +5,16 @@ import { FormArray, FormControl, FormGroup } from "@angular/forms";
 import { MAT_CHECKBOX_CLICK_ACTION, MatSnackBar } from "@angular/material";
 import { TopicSchema } from "../../models/schema.interface";
 import { TopicData } from "../../models/data.interface";
+import { DefinitionsService } from './definitions.service';
 
 @Component({
   selector: "diu-dynamic-form",
   templateUrl: "./dynamic-form.component.html",
   styleUrls: ["./dynamic-form.component.css"],
-  providers: [{ provide: MAT_CHECKBOX_CLICK_ACTION, useValue: "check" }]
+  providers: [
+    { provide: MAT_CHECKBOX_CLICK_ACTION, useValue: "check" },
+    DefinitionsService
+  ]
 })
 export class DynamicFormComponent implements OnInit {
   @Input() structureObject: any;
@@ -21,7 +25,7 @@ export class DynamicFormComponent implements OnInit {
   private topLevelForm: FormGroup = new FormGroup({});
   private subscription: Subscription;
 
-  constructor(public snackBar: MatSnackBar) { }
+  constructor(public snackBar: MatSnackBar, private service: DefinitionsService) { }
 
   ngOnInit() {
      this.subscription = this.submitEmitter.subscribe(() => {

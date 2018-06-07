@@ -20,10 +20,7 @@ export class FormLevelComponent implements OnInit {
   @Input() structureObject: Object;
   @Input() dataObject: Object;
   @Input() requiredFields: Array<string>;
-  @Input() selfRequired: boolean = true;
   @Input() propName: string;
-  @Output() remove: EventEmitter<string> = new EventEmitter();
-  @Output() add: EventEmitter<string> = new EventEmitter();
 
   private allPropertyKeys: Array<string> = [];
   private actLevelForms: Array<string> = [];
@@ -83,11 +80,13 @@ export class FormLevelComponent implements OnInit {
             case "array":
               let tmpFormArray: FormArray = new FormArray([]);
               let i = 0;
-              val.items.forEach(items => {
-                if (items.type == "object") {
-                  tmpFormArray.push(new FormGroup({}));
-                }
-              });
+              if(Array.isArray(val.items)){
+                val.items.forEach(items => {
+                  if (items.type == "object") {
+                    tmpFormArray.push(new FormGroup({}));
+                  } 
+                });
+              }
               this.localFormGroup.addControl(key, tmpFormArray);
               this.arrayForms.push(key);
               break;

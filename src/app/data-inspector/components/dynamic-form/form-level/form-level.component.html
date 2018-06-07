@@ -20,8 +20,7 @@
           <mat-icon>add</mat-icon>
         </button>
         <diu-form-level *ngIf="!hiddenProperties.includes(prop)" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)" [structureObject]="structureObject[prop].properties"
-          [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required" [hidden]="hiddenProperties.includes(prop)"
-          [selfRequired]="requiredFields.includes(prop)">
+          [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required">
         </diu-form-level>
       </div>
 
