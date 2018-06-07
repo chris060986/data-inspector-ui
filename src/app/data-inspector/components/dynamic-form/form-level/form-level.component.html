@@ -1,20 +1,43 @@
-<mat-card class="containerCard">
-  <h4 *ngIf="propName">{{propName}}</h4>
+<!-- <mat-card class="containerCard"> -->
+<div class="levelContainer" *ngIf="!hidden">
   <div [formGroup]="localFormGroup">
     <mat-list-item *ngFor="let prop of allPropertyKeys">
+
+      <!-- Act. level Elements -->
       <diu-form-element *ngIf="actLevelForms.includes(prop)" [propName]="prop" [type]="structureObject[prop].type" [parentFormGroup]="localFormGroup"
-        [options]="structureObject[prop].enum" [errorMessage]="getErrorMessage(localFormGroup.get(prop))" [required]="requiredFields && requiredFields.includes(prop)"></diu-form-element>
-      <diu-form-level *ngIf="nextLevelForms.includes(prop)" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)" [structureObject]="structureObject[prop].properties"
-        [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required"></diu-form-level>
-      <div *ngIf="arrayForms.includes(prop)" [formArrayName]="prop">
-        <mat-card class="containerCard">
-          <h4>{{prop}}</h4>
-          <mat-list-item *ngFor="let item of structureObject[prop].items; let i = index">
-            <diu-form-level *ngIf="item.type == 'object'" [localFormGroup]="localFormGroup.get(prop).controls[i]" [structureObject]="item.properties"
-              [dataObject]="getArrayData(dataObject, prop, i)" [requiredFields]="item.required"></diu-form-level>
-          </mat-list-item>
-        </mat-card>
+        [options]="structureObject[prop].enum" [errorMessage]="getErrorMessage(localFormGroup.get(prop))" [required]="requiredFields && requiredFields.includes(prop)">
+      </diu-form-element>
+
+      <!-- next Level Groups -->
+      <div *ngIf="nextLevelForms.includes(prop)">
+        <h4>{{prop}}</h4>
+        <button *ngIf="!requiredFields.includes(prop) && !hiddenProperties.includes(prop)" mat-icon-button class="deleteObjectButton"
+          type="button" (click)="deleteObjectFromForm(prop)">
+          <mat-icon>delete</mat-icon>
+        </button>
+        <button *ngIf="!requiredFields.includes(prop) && hiddenProperties.includes(prop)" mat-icon-button class="deleteObjectButton"
+          type="button" (click)="addObjectToForm(prop)">
+          <mat-icon>add</mat-icon>
+        </button>
+        <diu-form-level *ngIf="!hiddenProperties.includes(prop)" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)" [structureObject]="structureObject[prop].properties"
+          [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required" [hidden]="hiddenProperties.includes(prop)"
+          [selfRequired]="requiredFields.includes(prop)">
+        </diu-form-level>
       </div>
+
+      <!-- Formarrays -->
+      <div *ngIf="arrayForms.includes(prop)" [formArrayName]="prop">
+        <h4>{{prop}}</h4>
+        <mat-list-item *ngFor="let item of structureObject[prop].items; let i = index">
+          <mat-card class="containerCard">
+            <diu-form-level *ngIf="item.type == 'object'" [localFormGroup]="localFormGroup.get(prop).controls[i]" [structureObject]="item.properties"
+              [dataObject]="getArrayData(dataObject, prop, i)" [requiredFields]="item.required">
+            </diu-form-level>
+          </mat-card>
+        </mat-list-item>
+      </div>
+
     </mat-list-item>
   </div>
-</mat-card>
+</div>
+<!-- </mat-card> -->

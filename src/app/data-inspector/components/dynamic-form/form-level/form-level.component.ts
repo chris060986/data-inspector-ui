@@ -1,4 +1,13 @@
-import { Component, OnInit, Input, AfterViewChecked, AfterContentInit, AfterContentChecked } from "@angular/core";
+import {
+  Component,
+  OnInit,
+  Input,
+  AfterViewChecked,
+  AfterContentInit,
+  AfterContentChecked,
+  Output,
+  EventEmitter
+} from "@angular/core";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 
 @Component({
@@ -11,16 +20,24 @@ export class FormLevelComponent implements OnInit {
   @Input() structureObject: Object;
   @Input() dataObject: Object;
   @Input() requiredFields: Array<string>;
+  @Input() selfRequired: boolean = true;
   @Input() propName: string;
+  @Output() remove: EventEmitter<string> = new EventEmitter();
+  @Output() add: EventEmitter<string> = new EventEmitter();
 
   private allPropertyKeys: Array<string> = [];
   private actLevelForms: Array<string> = [];
   private nextLevelForms: Array<string> = [];
   private arrayForms: Array<string> = [];
+  private hiddenProperties: Array<string> = [];
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit() {
+    this.buildComponent();
+  }
+
+  buildComponent() {
     Promise.resolve().then(() => {
       if (this.structureObject) {
         Object.entries(this.structureObject).forEach(([key, val]) => {
@@ -29,7 +46,8 @@ export class FormLevelComponent implements OnInit {
           let currentValidators: Array<any> = [];
           if (val.type == "integer")
             currentValidators.push(this.integerValidator);
-          if (val.type == "number") currentValidators.push(this.numberValidator);
+          if (val.type == "number")
+            currentValidators.push(this.numberValidator);
           switch (val.type) {
             case "string":
             case "integer":
@@ -98,6 +116,23 @@ export class FormLevelComponent implements OnInit {
     }
   }
 
+  deleteObjectFromForm(prop: string) {
+    if (!this.hiddenProperties.includes(prop)) {
+      this.hiddenProperties.push(prop);
+      this.localFormGroup.removeControl(prop);
+    }
+  }
+
+  addObjectToForm(prop: string) {
+    this.hiddenProperties = this.hiddenProperties.filter(
+      element => element != prop
+    );
+    if (!this.localFormGroup.contains(prop)) {
+      this.localFormGroup.addControl(prop, new FormGroup({}));
+      this.nextLevelForms.push(prop);
+    }
+  }
+
   integerValidator(control: FormControl): { [s: string]: boolean } {
     let reg = new RegExp("^[-+]?\\d*$");
     if (control.value != null && !reg.test(control.value)) {
@@ -108,7 +143,10 @@ export class FormLevelComponent implements OnInit {
 
   integerWithoutZeroValidator(control: FormControl): { [s: string]: boolean } {
     let reg = new RegExp("^[-+]?\\d*$");
-    if (control.value != null && !reg.test(control.value) || control.value === "0") {
+    if (
+      (control.value != null && !reg.test(control.value)) ||
+      control.value === "0"
+    ) {
       return { integerWithoutZero: false };
     }
     return null;
@@ -124,7 +162,10 @@ export class FormLevelComponent implements OnInit {
 
   numberWithoutZeroValidator(control: FormControl): { [s: string]: boolean } {
     let reg = new RegExp("^[-+]?([0-9]+(.[0-9]+)?|.[0-9]+)$");
-    if (control.value != null && !reg.test(control.value) || control.value === "0") {
+    if (
+      (control.value != null && !reg.test(control.value)) ||
+      control.value === "0"
+    ) {
       return { numberWithoutZero: false };
     }
     return null;

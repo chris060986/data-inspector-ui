@@ -3,3 +3,15 @@
     margin: 10px!important;
     margin-left: 0px!important;
 }
+
+.levelContainer {
+    margin-left: 20px;
+}
+
+.deleteObjectButton {
+    display: inline-block;
+}
+
+h4 {
+    display: inline-block;
+}
