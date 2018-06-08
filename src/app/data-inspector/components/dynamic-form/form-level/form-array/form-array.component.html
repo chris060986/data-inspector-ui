@@ -1,5 +1,5 @@
 <div *ngIf="fixedArray">
-  <mat-list-item *ngFor="let item of structureObject.items; let i = index">
+  <div *ngFor="let item of structureObject.items; let i = index" class="arrayContainer">
     <mat-card class="containerCard">
 
       <!-- current level primitives -->
@@ -13,5 +13,28 @@
       </diu-form-level>
 
     </mat-card>
-  </mat-list-item>
+  </div>
+</div>
+<div *ngIf="!fixedArray && structureObject?.items?.type">
+  <div *ngFor="let control of localFormArray.controls; let i = index" class="arrayContainer">
+    <mat-card class="containerCard">
+
+      <!-- current level primitives -->
+      <diu-form-element *ngIf="structureObject.items.type != 'object' && structureObject.items.type != 'array'" [propName]="i"
+        [type]="structureObject.items.type" [parentFormGroup]="localFormArray" [options]="structureObject.items.enum" [errorMessage]="getErrorMessage(control)">
+      </diu-form-element>
+
+      <!-- next level with object -->
+      <diu-form-level *ngIf="structureObject.items.type  == 'object'" [localFormGroup]="control" [structureObject]="structureObject.items.properties"
+        [dataObject]="getArrayData(dataObject, i)" [requiredFields]="structureObject.items.required">
+      </diu-form-level>
+
+    </mat-card>
+    <button mat-icon-button class="deleteObjectButton" type="button" (click)="deleteObjectFromForm(i)">
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+  <button mat-icon-button class="addObjectButton" type="button" (click)="addEmtpyObjectToForm()">
+    <mat-icon>add</mat-icon>
+  </button>
 </div>

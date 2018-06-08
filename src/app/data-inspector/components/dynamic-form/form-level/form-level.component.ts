@@ -135,7 +135,19 @@ export class FormLevelComponent implements OnInit {
     }
   }
 
-  test(object: any): string {
-    return JSON.stringify(object);
+  toggleObject(checked: boolean, prop: string) {
+    if(checked) {
+      this.addObjectToForm(prop);
+    } else {
+      this.deleteObjectFromForm(prop);
+    }
+  }
+
+  toggleArray(checked: boolean, prop: string) {
+    if(checked) {
+      this.addArrayToForm(prop);
+    } else {
+      this.deleteArrayFromForm(prop);
+    }
   }
 }

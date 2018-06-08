@@ -22,7 +22,7 @@ export class FormArrayComponent implements OnInit {
     if (this.structureObject && this.structureObject.items) {
       if (Array.isArray(this.structureObject.items)) {
         this.fixedArray = true;
-        let index: number = -1
+        let index: number = -1;
         this.structureObject.items.forEach(item => {
           index++;
           let tmpFormControl: FormControl;
@@ -64,25 +64,54 @@ export class FormArrayComponent implements OnInit {
         });
       } else {
         this.fixedArray = false;
-        if (this.structureObject.items.type) {
-          switch (this.structureObject.items.type) {
-            case "string":
-            case "integer":
-            case "number":
-            case "boolean":
-              break;
-
-            case "object":
-              break;
-
-            default:
-              break;
-          }
+        if (this.structureObject.items.type && this.dataObject) {
+          this.dataObject.forEach(value => {
+            this.addObjectToForm(value);
+          });
         }
       }
     }
-    console.log(this.structureObject, this.localFormArray, this.dataObject);
+  }
 
+  deleteObjectFromForm(index: number) {
+    this.localFormArray.removeAt(index);
+  }
+
+  addObjectToForm(value: any) {
+    let currentValidators: Array<any> = [];
+    if (this.structureObject.items.type == "integer")
+      currentValidators.push(DuiValidators.integerValidator);
+    if (this.structureObject.items.type == "number")
+      currentValidators.push(DuiValidators.numberValidator);
+    switch (this.structureObject.items.type) {
+      case "string":
+      case "integer":
+      case "number":
+      case "boolean":
+        if (
+          this.structureObject.items.enum &&
+          !this.structureObject.items.enum.includes(value)
+        ) {
+          value = undefined;
+        }
+        let tmpFormControl: FormControl = new FormControl(
+          value,
+          currentValidators
+        );
+        this.localFormArray.push(tmpFormControl);
+        break;
+
+      case "object":
+        this.localFormArray.push(new FormGroup({}));
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  addEmtpyObjectToForm() {
+    this.addObjectToForm(undefined);
   }
 
   getArrayData(data: Array<any>, index: number): any {

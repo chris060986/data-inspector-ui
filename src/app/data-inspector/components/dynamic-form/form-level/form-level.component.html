@@ -1,4 +1,3 @@
-<!-- <mat-card class="containerCard"> -->
 <div class="levelContainer" *ngIf="!hidden">
   <div [formGroup]="localFormGroup">
     <mat-list-item *ngFor="let prop of allPropertyKeys">
@@ -10,15 +9,8 @@
 
       <!-- next Level Groups -->
       <div *ngIf="nextLevelForms.includes(prop)">
-        <h4>{{prop}}</h4>
-        <button *ngIf="!requiredFields.includes(prop) && !hiddenProperties.includes(prop)" mat-icon-button class="deleteObjectButton"
-          type="button" (click)="deleteObjectFromForm(prop)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button *ngIf="!requiredFields.includes(prop) && hiddenProperties.includes(prop)" mat-icon-button class="deleteObjectButton"
-          type="button" (click)="addObjectToForm(prop)">
-          <mat-icon>add</mat-icon>
-        </button>
+        <h4 color="accent">{{prop}}</h4>
+        <mat-slide-toggle *ngIf="!requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleObject($event.checked,prop)"></mat-slide-toggle>
         <diu-form-level *ngIf="!hiddenProperties.includes(prop)" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)" [structureObject]="structureObject[prop].properties"
           [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required">
         </diu-form-level>
@@ -26,15 +18,8 @@
 
       <!-- Formarrays -->
       <div *ngIf="arrayForms.includes(prop)" class="arrayContainer" [formArrayName]="prop">
-        <h4>{{prop}}</h4>
-        <button *ngIf="!requiredFields.includes(prop) && !hiddenProperties.includes(prop)" mat-icon-button class="deleteObjectButton"
-          type="button" (click)="deleteArrayFromForm(prop)">
-          <mat-icon>delete</mat-icon>
-        </button>
-        <button *ngIf="!requiredFields.includes(prop) && hiddenProperties.includes(prop)" mat-icon-button class="deleteObjectButton"
-          type="button" (click)="addArrayToForm(prop)">
-          <mat-icon>add</mat-icon>
-        </button>
+        <h4 color="accent">{{prop}}</h4>
+        <mat-slide-toggle *ngIf="!requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleArray($event.checked,prop)"></mat-slide-toggle>
         <diu-form-array *ngIf="!hiddenProperties.includes(prop)" [structureObject]="structureObject[prop]" [localFormArray]="localFormGroup.get(prop)"
           [dataObject]="getData(dataObject, prop)">
         </diu-form-array>
@@ -43,4 +28,3 @@
     </mat-list-item>
   </div>
 </div>
-<!-- </mat-card> -->

@@ -14,3 +14,7 @@ h4 {
     display: inline-block;
     margin: 5px;
 }
+
+.enableSlider {
+    margin-left: 15px!important;
+}
