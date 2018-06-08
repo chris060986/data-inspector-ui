@@ -2,7 +2,7 @@ import { DataService } from './../../data/data.service';
 import { TopicData } from './../../models/data.interface';
 import { TopicSchema } from './../../models/schema.interface';
 import { Component, OnInit, Inject, EventEmitter } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'diu-send-dialog',
@@ -15,6 +15,7 @@ export class SendDialogComponent implements OnInit {
   private topicData: TopicData;
   private structureObject: any = undefined;
   private dataObject: any = undefined;
+  private definitions: any = undefined;
   private requiredFields: Array<string>;
   private submitEmitter: EventEmitter<any> = new EventEmitter();
 
@@ -29,6 +30,7 @@ export class SendDialogComponent implements OnInit {
     if (this.topicSchema.schema && this.topicSchema.schema.properties) {
       this.structureObject = this.topicSchema.schema.properties;
       this.requiredFields = this.topicSchema.schema.required;
+      this.definitions = this.topicSchema.schema.definitions;
       if (this.topicData) {
         this.dataObject = this.topicData.data;
       }

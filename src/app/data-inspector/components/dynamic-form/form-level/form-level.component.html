@@ -11,8 +11,13 @@
       <div *ngIf="nextLevelForms.includes(prop)">
         <h4 color="accent">{{prop}}</h4>
         <mat-slide-toggle *ngIf="!requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleObject($event.checked,prop)"></mat-slide-toggle>
-        <diu-form-level *ngIf="!hiddenProperties.includes(prop)" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)" [structureObject]="structureObject[prop].properties"
-          [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required">
+        <div *ngIf="structureObject[prop].oneOf" class="choiceToggle">
+          <mat-button-toggle-group>
+            <mat-button-toggle *ngFor="let choice of getOneOfArray(structureObject[prop].oneOf)" (click)="setOneOf(prop, choice)">{{choice}}</mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <diu-form-level *ngIf="!hiddenProperties.includes(prop) && structureObject[prop].properties" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)"
+          [structureObject]="structureObject[prop].properties" [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required">
         </diu-form-level>
       </div>
 

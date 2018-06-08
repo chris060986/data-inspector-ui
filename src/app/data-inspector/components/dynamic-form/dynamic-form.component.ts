@@ -1,10 +1,8 @@
 import { WarnSnackComponent } from './../snackbars/warn-snack/warn-snack.component';
 import { Subscription } from 'rxjs';
-import { Component, OnInit, Input, Output, EventEmitter, OnDestroy, OnChanges, AfterViewChecked } from "@angular/core";
-import { FormArray, FormControl, FormGroup } from "@angular/forms";
+import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
+import { FormGroup } from "@angular/forms";
 import { MAT_CHECKBOX_CLICK_ACTION, MatSnackBar } from "@angular/material";
-import { TopicSchema } from "../../models/schema.interface";
-import { TopicData } from "../../models/data.interface";
 import { DefinitionsService } from './definitions.service';
 
 @Component({
@@ -19,18 +17,26 @@ import { DefinitionsService } from './definitions.service';
 export class DynamicFormComponent implements OnInit {
   @Input() structureObject: any;
   @Input() dataObject: any;
+  @Input() definitions: any;
   @Input() requiredFields: Array<string>;
   @Input() submitEmitter: EventEmitter<any>;
   @Output() dataSubmitted: EventEmitter<any> = new EventEmitter();
   private topLevelForm: FormGroup = new FormGroup({});
   private subscription: Subscription;
 
-  constructor(public snackBar: MatSnackBar, private service: DefinitionsService) { }
+  constructor(public snackBar: MatSnackBar, private definitionsService: DefinitionsService) { }
 
   ngOnInit() {
      this.subscription = this.submitEmitter.subscribe(() => {
       this.onSubmit();
     });
+    if(this.definitions) {
+      Object.keys(this.definitions).forEach(key => {
+        if(this.definitions[key]) {
+          this.definitionsService.addDefinition(key, this.definitions[key]);
+        }
+      })
+    }
   }
 
   onSubmit() {

@@ -1,15 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  AfterViewChecked,
-  AfterContentInit,
-  AfterContentChecked,
-  Output,
-  EventEmitter
-} from "@angular/core";
+import { Component, OnInit, Input } from "@angular/core";
 import { FormArray, FormControl, FormGroup, Validators } from "@angular/forms";
 import { DuiValidators } from "../diu-validators";
+import { DefinitionsService } from "../definitions.service";
 
 @Component({
   selector: "diu-form-level",
@@ -29,7 +21,7 @@ export class FormLevelComponent implements OnInit {
   private arrayForms: Array<string> = [];
   private hiddenProperties: Array<string> = [];
 
-  constructor() {}
+  constructor(private definitionsService: DefinitionsService) {}
 
   //Import Error-Message-Function
   private getErrorMessage = DuiValidators.getErrorMessage;
@@ -55,7 +47,7 @@ export class FormLevelComponent implements OnInit {
             case "number":
             case "boolean":
               let value: any;
-              if(this.dataObject && this.dataObject[key]) {
+              if (this.dataObject && this.dataObject[key]) {
                 value = this.dataObject[key];
               } else {
                 value = undefined;
@@ -75,8 +67,8 @@ export class FormLevelComponent implements OnInit {
               break;
 
             case "object":
-              this.localFormGroup.addControl(key, new FormGroup({}));
               this.nextLevelForms.push(key);
+              this.localFormGroup.addControl(key, new FormGroup({}));
               break;
 
             case "array":
@@ -99,6 +91,37 @@ export class FormLevelComponent implements OnInit {
     } else {
       return undefined;
     }
+  }
+
+  getOneOfArray(oneOfArray: any): Array<string> {
+    let tmpArray: Array<string> = [];
+    if (Array.isArray(oneOfArray)) {
+      oneOfArray.forEach(item => {
+        Object.keys(item).forEach(key => {
+          tmpArray.push(key);
+        });
+      });
+    }
+    return tmpArray;
+  }
+
+  setOneOf(prop: string, choice: string) {
+    Object.keys(this.structureObject[prop]).forEach(key => {
+      if (key == "properties" || key == "required" || key == "enum") {
+        delete this.structureObject[prop][key];
+      }
+    });
+    setTimeout(() => {
+      this.localFormGroup.removeControl(prop);
+      this.localFormGroup.addControl(prop, new FormGroup({}));
+      this.structureObject[prop].oneOf.forEach(item => {
+        if (item[choice]) {
+          Object.keys(item[choice]).forEach(key => {
+            this.structureObject[prop][key] = item[choice][key];
+          });
+        }
+      });
+    }, 1);
   }
 
   deleteObjectFromForm(prop: string) {
