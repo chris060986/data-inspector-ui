@@ -111,7 +111,7 @@ export class ListViewComponent implements OnInit, OnDestroy {
     const schema: TopicSchema = this.topicSchemas.filter(element => element.topicName == topic).pop();
     if(schema) {
       let dialogRef = this.dialog.open(SendDialogComponent, {
-        width: '80vw',
+        width: '60vw',
         data: {
           topicSchema: Object.create(schema),
           topicData: undefined

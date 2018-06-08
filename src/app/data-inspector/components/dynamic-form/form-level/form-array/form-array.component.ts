@@ -36,21 +36,19 @@ export class FormArrayComponent implements OnInit {
             case "integer":
             case "number":
             case "boolean":
-              if (
-                item.enum &&
-                this.dataObject[index] &&
-                !item.enum.includes(this.dataObject[index])
-              ) {
-                this.dataObject[index] = undefined;
-              }
+              let value: any;
               if (this.dataObject && this.dataObject[index]) {
-                tmpFormControl = new FormControl(
-                  this.dataObject[index],
-                  currentValidators
-                );
+                value = this.dataObject[index];
               } else {
-                tmpFormControl = new FormControl(undefined, currentValidators);
+                value = undefined;
               }
+              if (item.enum && value && !item.enum.includes(value)) {
+                value = undefined;
+              }
+              if (item.type == "boolean" && !value) {
+                value = false;
+              }
+              tmpFormControl = new FormControl(value, currentValidators);
               this.localFormArray.push(tmpFormControl);
               break;
 
@@ -93,6 +91,9 @@ export class FormArrayComponent implements OnInit {
           !this.structureObject.items.enum.includes(value)
         ) {
           value = undefined;
+        }
+        if (this.structureObject.items.type == "boolean" && !value) {
+          value = false;
         }
         let tmpFormControl: FormControl = new FormControl(
           value,

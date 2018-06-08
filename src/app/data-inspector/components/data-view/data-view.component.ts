@@ -48,7 +48,7 @@ export class DataViewComponent implements OnInit, OnChanges {
     const topicData = JSON.parse(JSON.stringify(data));
     if (this.topicSchema) {
       let dialogRef = this.dialog.open(SendDialogComponent, {
-        width: '80vw',
+        width: '60vw',
         data: {
           topicSchema: Object.create(this.topicSchema),
           topicData: {

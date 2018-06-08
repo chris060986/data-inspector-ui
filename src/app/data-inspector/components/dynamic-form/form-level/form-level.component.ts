@@ -54,24 +54,22 @@ export class FormLevelComponent implements OnInit {
             case "integer":
             case "number":
             case "boolean":
+              let value: any;
+              if(this.dataObject && this.dataObject[key]) {
+                value = this.dataObject[key];
+              } else {
+                value = undefined;
+              }
               if (this.requiredFields && this.requiredFields.includes(key)) {
                 currentValidators.push(Validators.required);
               }
-              if (
-                val.enum &&
-                this.dataObject[key] &&
-                !val.enum.includes(this.dataObject[key])
-              ) {
-                this.dataObject[key] = undefined;
+              if (val.enum && value && !val.enum.includes(value)) {
+                value = undefined;
               }
-              if (this.dataObject && this.dataObject[key]) {
-                tmpFormControl = new FormControl(
-                  this.dataObject[key],
-                  currentValidators
-                );
-              } else {
-                tmpFormControl = new FormControl(undefined, currentValidators);
+              if (val.type == "boolean" && !value) {
+                value = false;
               }
+              tmpFormControl = new FormControl(value, currentValidators);
               this.localFormGroup.addControl(key, tmpFormControl);
               this.actLevelForms.push(key);
               break;
@@ -136,7 +134,7 @@ export class FormLevelComponent implements OnInit {
   }
 
   toggleObject(checked: boolean, prop: string) {
-    if(checked) {
+    if (checked) {
       this.addObjectToForm(prop);
     } else {
       this.deleteObjectFromForm(prop);
@@ -144,7 +142,7 @@ export class FormLevelComponent implements OnInit {
   }
 
   toggleArray(checked: boolean, prop: string) {
-    if(checked) {
+    if (checked) {
       this.addArrayToForm(prop);
     } else {
       this.deleteArrayFromForm(prop);
