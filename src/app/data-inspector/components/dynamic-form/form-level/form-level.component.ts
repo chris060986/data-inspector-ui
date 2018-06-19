@@ -46,22 +46,24 @@ export class FormLevelComponent implements OnInit {
             case "integer":
             case "number":
             case "boolean":
+              // get prefill value for form
               let value: any;
               if (this.dataObject && this.dataObject[key]) {
                 value = this.dataObject[key];
               } else {
                 value = undefined;
               }
-              if (this.requiredFields && this.requiredFields.includes(key)) {
-                currentValidators.push(Validators.required);
+              if (val.type == "boolean" && !value) {
+                value = false;
               }
               if (val.enum && value && !val.enum.includes(value)) {
                 value = undefined;
               }
-              if (val.type == "boolean" && !value) {
-                value = false;
+              //set validators
+              if (this.requiredFields && this.requiredFields.includes(key)) {
+                currentValidators.push(Validators.required);
               }
-              tmpFormControl = new FormControl(value, currentValidators);
+              tmpFormControl = new FormControl(value, [...currentValidators, ...DuiValidators.extractAndReturnValidators(val)]);
               this.localFormGroup.addControl(key, tmpFormControl);
               this.actLevelForms.push(key);
               break;

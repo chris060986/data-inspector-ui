@@ -1,4 +1,4 @@
-import { FormControl } from "@angular/forms";
+import { FormControl, Validators } from "@angular/forms";
 
 export class DuiValidators {
   static integerValidator(control: FormControl): { [s: string]: boolean } {
@@ -39,6 +39,26 @@ export class DuiValidators {
     return null;
   }
 
+  static extractAndReturnValidators(object: any): Array<any> {
+    let tmpValidators: Array<any> = [];
+    if (object.max) {
+      tmpValidators.push(Validators.max(object.max));
+    }
+    if (object.min) {
+      tmpValidators.push(Validators.min(object.min));
+    }
+    if (object.maxLength) {
+      tmpValidators.push(Validators.maxLength(object.maxLength));
+    }
+    if (object.minLength) {
+      tmpValidators.push(Validators.minLength(object.minLength));
+    }
+    if (object.pattern) {
+      tmpValidators.push(Validators.pattern(object.pattern));
+    }
+    return tmpValidators;
+  }
+
   static getErrorMessage(field: FormControl) {
     if (field.errors == null) return undefined;
     return field.hasError("required")
@@ -48,15 +68,19 @@ export class DuiValidators {
         : field.hasError("minlength")
           ? "The entered value is too short!"
           : field.hasError("max")
-            ? "The entered value greater than the maximum value!"
-            : field.errors["integer"] != undefined
-              ? "Only integers are valid!"
-              : field.errors["integerWithoutZero"] != undefined
-                ? "Only integers are valid (not 0)!"
-                : field.errors["number"] != undefined
-                  ? "Only numbers are valid!"
-                  : field.errors["numberWithoutZero"] != undefined
-                    ? "Only numbers are valid (not 0)!"
-                    : undefined;
+            ? "Maximum value exceeded!"
+            : field.hasError("min")
+              ? "The value is below the minimum!"
+              : field.hasError("pattern")
+                ? "Defined pattern not matched!"
+                : field.errors["integer"] != undefined
+                  ? "Only integers are valid!"
+                  : field.errors["integerWithoutZero"] != undefined
+                    ? "Only integers are valid (not 0)!"
+                    : field.errors["number"] != undefined
+                      ? "Only numbers are valid!"
+                      : field.errors["numberWithoutZero"] != undefined
+                        ? "Only numbers are valid (not 0)!"
+                        : undefined;
   }
 }
