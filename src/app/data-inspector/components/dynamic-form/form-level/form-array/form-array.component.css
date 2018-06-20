@@ -1,5 +1,5 @@
 .arrayContainer {
-  margin-left: 25px;
+  margin-left: 35px;
   display: flex;
   align-items: center;
 }
@@ -16,5 +16,5 @@
 }
 
 .addObjectButton {
-  margin-left: 25px;
+  margin-left: 35px;
 }

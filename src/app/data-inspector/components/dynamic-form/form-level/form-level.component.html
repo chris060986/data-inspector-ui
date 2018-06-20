@@ -9,6 +9,7 @@
 
       <!-- next Level Groups -->
       <div *ngIf="nextLevelForms.includes(prop)">
+        <br/>
         <h4 color="accent">{{prop}}</h4>
         <mat-slide-toggle *ngIf="!requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleObject($event.checked,prop)"></mat-slide-toggle>
         <div *ngIf="structureObject[prop].oneOf" class="choiceToggle">
@@ -23,12 +24,15 @@
 
       <!-- Formarrays -->
       <div *ngIf="arrayForms.includes(prop)" class="arrayContainer" [formArrayName]="prop">
+        <br/>
         <h4 color="accent">{{prop}}</h4>
         <mat-slide-toggle *ngIf="!requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleArray($event.checked,prop)"></mat-slide-toggle>
         <diu-form-array *ngIf="!hiddenProperties.includes(prop)" [structureObject]="structureObject[prop]" [localFormArray]="localFormGroup.get(prop)"
           [dataObject]="getData(dataObject, prop)">
         </diu-form-array>
       </div>
+
+      <!-- After all -->
 
     </mat-list-item>
   </div>
