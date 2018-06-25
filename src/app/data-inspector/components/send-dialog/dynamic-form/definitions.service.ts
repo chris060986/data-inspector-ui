@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { TopicSchema } from '../../models/schema.interface';
+import { TopicSchema } from '../../../models/schema.interface';
 
 @Injectable()
 export class DefinitionsService {

@@ -6,19 +6,19 @@ import { CompleteMaterialModule } from './complete-material/complete-material.mo
 import { DataInspectorComponent } from './data-inspector.component';
 import { NavigationComponent } from './components/navigation/navigation.component';
 import { HttpClientModule } from '@angular/common/http';
-import { DynamicFormComponent } from './components/dynamic-form/dynamic-form.component';
-import { FormLevelComponent } from './components/dynamic-form/form-level/form-level.component';
+import { DynamicFormComponent } from './components/send-dialog/dynamic-form/dynamic-form.component';
+import { FormLevelComponent } from './components/send-dialog/dynamic-form/form-level/form-level.component';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { FormElementComponent } from './components/dynamic-form/form-level/form-element/form-element.component';
+import { FormElementComponent } from './components/send-dialog/dynamic-form/form-level/form-element/form-element.component';
 import { ListViewComponent } from './components/list-view/list-view.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { DataViewComponent } from './components/data-view/data-view.component';
-import { TableViewComponent } from './components/data-view/table-view/table-view.component';
+import { DataViewComponent } from './components/list-view/data-view/data-view.component';
+import { TableViewComponent } from './components/list-view/data-view/table-view/table-view.component';
 import { SendDialogComponent } from './components/send-dialog/send-dialog.component';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { WarnSnackComponent } from './components/snackbars/warn-snack/warn-snack.component';
-import { FormArrayComponent } from './components/dynamic-form/form-level/form-array/form-array.component';
+import { WarnSnackComponent } from './components/others/warn-snack/warn-snack.component';
+import { FormArrayComponent } from './components/send-dialog/dynamic-form/form-level/form-array/form-array.component';
 
 @NgModule({
   imports: [

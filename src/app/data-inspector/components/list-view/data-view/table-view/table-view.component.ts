@@ -9,7 +9,7 @@ import {
   EventEmitter
 } from "@angular/core";
 import { MatTableDataSource, MatSort } from "@angular/material";
-import { TopicData } from "../../../models/data.interface";
+import { TopicData } from "../../../../models/data.interface";
 
 @Component({
   selector: "diu-table-view",

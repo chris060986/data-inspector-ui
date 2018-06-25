@@ -1,4 +1,4 @@
-import { WarnSnackComponent } from './../snackbars/warn-snack/warn-snack.component';
+import { WarnSnackComponent } from './../../others/warn-snack/warn-snack.component';
 import { Subscription } from 'rxjs';
 import { Component, OnInit, Input, Output, EventEmitter } from "@angular/core";
 import { FormGroup } from "@angular/forms";

@@ -1,9 +1,9 @@
-import { TopicData } from './../../models/data.interface';
+import { TopicData } from './../../../models/data.interface';
 import { Component, OnInit, Input, OnChanges, ViewChild } from "@angular/core";
-import { TopicSchema } from "../../models/schema.interface";
+import { TopicSchema } from "../../../models/schema.interface";
 import * as _ from 'underscore';
 import { MatDialog } from "@angular/material";
-import { SendDialogComponent } from "../send-dialog/send-dialog.component";
+import { SendDialogComponent } from "../../send-dialog/send-dialog.component";
 
 @Component({
   selector: "diu-data-view",
