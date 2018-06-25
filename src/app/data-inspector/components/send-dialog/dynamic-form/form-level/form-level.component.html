@@ -11,7 +11,7 @@
       <div *ngIf="nextLevelForms.includes(prop)">
         <br/>
         <h4 color="accent">{{prop}}</h4>
-        <mat-slide-toggle *ngIf="!requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleObject($event.checked,prop)"></mat-slide-toggle>
+        <mat-slide-toggle *ngIf="!requiredFields || !requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleObject($event.checked,prop)"></mat-slide-toggle>
         <div *ngIf="structureObject[prop].oneOf" class="choiceToggle">
           <mat-button-toggle-group>
             <mat-button-toggle *ngFor="let choice of getOneOfArray(structureObject[prop].oneOf)" (click)="setOneOf(prop, choice)">{{choice}}</mat-button-toggle>
@@ -26,7 +26,7 @@
       <div *ngIf="arrayForms.includes(prop)" class="arrayContainer" [formArrayName]="prop">
         <br/>
         <h4 color="accent">{{prop}}</h4>
-        <mat-slide-toggle *ngIf="!requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleArray($event.checked,prop)"></mat-slide-toggle>
+        <mat-slide-toggle *ngIf="!requiredFields || !requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleArray($event.checked,prop)"></mat-slide-toggle>
         <diu-form-array *ngIf="!hiddenProperties.includes(prop)" [structureObject]="structureObject[prop]" [localFormArray]="localFormGroup.get(prop)"
           [dataObject]="getData(dataObject, prop)">
         </diu-form-array>
