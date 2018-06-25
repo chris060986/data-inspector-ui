@@ -1,9 +1,16 @@
 .levelContainer {
-    margin-left: 35px;
+    margin-left: 10px;
+    padding-left: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border-left: 3px solid darkgrey;
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 20px;
 }
 
 .arrayContainer {
-    margin-bottom: 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 .deleteObjectButton {
@@ -11,6 +18,7 @@
 }
 
 h4 {
+    color: darkgrey;
     display: inline-block;
     margin: 5px;
 }
