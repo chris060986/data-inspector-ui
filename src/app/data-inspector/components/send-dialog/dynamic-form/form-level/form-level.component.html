@@ -1,4 +1,4 @@
-<div class="levelContainer" *ngIf="!hidden">
+<div [ngClass]="getLevelClasses()" *ngIf="!hidden">
   <div [formGroup]="localFormGroup">
     <mat-list-item *ngFor="let prop of allPropertyKeys">
 
@@ -22,7 +22,7 @@
       </div>
 
       <!-- Formarrays -->
-      <div *ngIf="arrayForms.includes(prop)" [formArrayName]="prop">
+      <div *ngIf="arrayForms.includes(prop)" [formArrayName]="prop" class="arrayContainer">
         <h4 color="accent">{{prop}} {{'[ ]'}}</h4>
         <mat-slide-toggle *ngIf="!requiredFields || !requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleArray($event.checked,prop)"></mat-slide-toggle>
         <diu-form-array *ngIf="!hiddenProperties.includes(prop)" [structureObject]="structureObject[prop]" [localFormArray]="localFormGroup.get(prop)"

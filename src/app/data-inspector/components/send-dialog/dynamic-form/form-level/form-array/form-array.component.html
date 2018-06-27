@@ -1,7 +1,7 @@
 <div *ngIf="fixedArray" class="arrayContainer">
   <div *ngFor="let item of structureObject.items; let i = index" class="arrayElement">
-    <div class="containerCard">
-
+    <!-- <h5 class="inlineToItem">{{i+1}}.</h5> -->
+    <div class="itemContainer">
       <!-- current level primitives -->
       <diu-form-element *ngIf="item.type != 'object' && item.type != 'array'" [propName]="i" [type]="item.type" [parentFormGroup]="localFormArray"
         [options]="item.enum" [errorMessage]="getErrorMessage(localFormArray.controls[i])">
@@ -17,7 +17,8 @@
 </div>
 <div *ngIf="!fixedArray && structureObject?.items?.type" class="arrayContainer">
   <div *ngFor="let control of localFormArray.controls; let i = index" class="arrayElement">
-    <div class="containerCard">
+    <!-- <h5 class="inlineToItem">{{i+1}}.</h5> -->
+    <div class="itemContainer">
 
       <!-- current level primitives -->
       <diu-form-element *ngIf="structureObject.items.type != 'object' && structureObject.items.type != 'array'" [propName]="i"
@@ -30,7 +31,7 @@
       </diu-form-level>
 
     </div>
-    <button mat-icon-button class="deleteObjectButton" type="button" (click)="deleteObjectFromForm(i)">
+    <button mat-icon-button class="inlineToItem" type="button" (click)="deleteObjectFromForm(i)">
       <mat-icon>delete</mat-icon>
     </button>
   </div>

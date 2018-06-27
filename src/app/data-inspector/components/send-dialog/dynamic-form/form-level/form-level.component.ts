@@ -14,6 +14,7 @@ export class FormLevelComponent implements OnInit {
   @Input() dataObject: Object;
   @Input() requiredFields: Array<string>;
   @Input() propName: string;
+  @Input() firstLevel: boolean = false;
 
   private allPropertyKeys: Array<string> = [];
   private actLevelForms: Array<string> = [];
@@ -172,5 +173,12 @@ export class FormLevelComponent implements OnInit {
     } else {
       this.deleteArrayFromForm(prop);
     }
+  }
+
+  getLevelClasses(): any {
+    return {
+      levelContainer: true, 
+      levelBrace: !this.firstLevel
+    };
   }
 }

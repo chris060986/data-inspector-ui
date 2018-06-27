@@ -1,11 +1,14 @@
 .levelContainer {
     margin-left: 10px;
-    padding-left: 20px;
-    margin-top: 5px;
-    margin-bottom: 5px;
-    border-left: 3px solid darkgrey;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 20px;
+    padding-left: 40px;
+    padding-top: 10px;
+    padding-bottom:5px;
+}
+
+.levelBrace{
+    border-left: 1px solid darkgrey;
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 30px;
 }
 
 .arrayContainer {
@@ -21,6 +24,7 @@ h4 {
     color: darkgrey;
     display: inline-block;
     margin: 5px;
+    margin-bottom: 0px;
 }
 
 .enableSlider {

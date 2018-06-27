@@ -44,7 +44,7 @@
 
     <!-- Boolean Field -->
     <div *ngSwitchCase="'boolean'" class="checkboxField">
-      <mat-checkbox [formControlName]="propName" color="primary">
+      <mat-checkbox [formControlName]="propName" color="primary" labelPosition="before">
         {{propName}}
       </mat-checkbox>
     </div>
