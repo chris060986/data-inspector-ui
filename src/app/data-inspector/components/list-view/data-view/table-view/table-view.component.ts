@@ -29,9 +29,12 @@ export class TableViewComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+
     const tableData: Array<any> = [];
     this.data.forEach((topicData: TopicData) => {
-      tableData.push(topicData.data);
+      let convertedData: any = new Object();
+      this.extractAttributes(convertedData, topicData.data, '');
+      tableData.push(convertedData);
     });
     if (tableData[0]) {
       this.displayedColumns = [];
@@ -40,7 +43,6 @@ export class TableViewComponent implements OnInit, OnChanges {
           this.displayedColumns.push(key);
         }
       });
-      // this.displayedColumns.push('actions');
     }
     this.dataSource.data = tableData;
   }
@@ -49,5 +51,14 @@ export class TableViewComponent implements OnInit, OnChanges {
     this.dataSelected.emit(data);
   }
 
-
+  extractAttributes(objectToFill: any, data: any, prefix: string) {
+    Object.keys(data).forEach(key => {
+      if(typeof data[key] !== 'object') {
+        objectToFill[prefix + key] = data[key];
+      } else if (!Array.isArray(data[key])) {
+        let nextPrefix: string = prefix + key + '-';
+        this.extractAttributes(objectToFill, data[key], nextPrefix);
+      }
+    });
+  } 
 }

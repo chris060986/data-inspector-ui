@@ -13,6 +13,9 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./list-view.component.css']
 })
 export class ListViewComponent implements OnInit, OnDestroy {
+  toppings: string[] = []
+  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+
   private subscriptions: Array<Subscription> = [];
   private allTopics: Array<string> = [];
   private subscribedTopics: Array<string> = [];

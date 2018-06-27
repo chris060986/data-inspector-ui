@@ -23,7 +23,18 @@
 
   <mat-sidenav-content>
     <mat-toolbar color="accent" class="mat-elevation-z5">
-      <button color="primary" mat-raised-button (click)="sidenav.toggle()">Register Topics</button>
+      <button class="registerButton" color="primary" mat-raised-button (click)="sidenav.toggle()">Register Topics</button>
+      <div class="toolbarTextBox">
+        <span>Data Inspector Main View</span>
+      </div>
+      <div class="columnBox">
+        <mat-select placeholder="Toppings" [(value)]="toppings" multiple class="columnSelector">
+          <mat-select-trigger>
+            Select Table Columns
+          </mat-select-trigger>
+          <mat-option *ngFor="let topping of toppingList" [value]="topping">{{topping}}</mat-option>
+        </mat-select>
+      </div>
     </mat-toolbar>
 
     <div class="container" fxLayout="row" fxLayoutGap="5px">

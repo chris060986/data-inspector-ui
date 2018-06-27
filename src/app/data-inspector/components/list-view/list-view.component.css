@@ -1,3 +1,21 @@
+.registerButton {
+  width: 150px;
+}
+
+.columnBox {
+  text-align: right;
+}
+
+.toolbarTextBox {
+  width: 100%;
+  text-align: center;
+}
+
+.columnSelector {
+  width: 250px;
+  margin-right: 10px;
+}
+
 .container {
   max-height: calc(100vh - 2*64px);
   height: calc(100vh - 2*64px);
