@@ -16,6 +16,7 @@ export class ListViewComponent implements OnInit, OnDestroy {
 
   private subscriptions: Array<Subscription> = [];
   private allTopics: Array<string> = [];
+  private filteredTopics: Array<string> = [];
   private subscribedTopics: Array<string> = [];
   private publishingTopics: Array<string> = [];
   private registeredTopics: Array<string> = [];
@@ -31,6 +32,7 @@ export class ListViewComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.subscriptions.push(this.dataService.allTopicsEmitter.subscribe((data: Array<string>) => {
       this.allTopics = data;
+      this.filteredTopics = this.allTopics;
     }));
     this.subscriptions.push(this.dataService.subscribedTopicsEmitter.subscribe((data: Array<string>) => {
       this.subscribedTopics = data;
@@ -117,6 +119,14 @@ export class ListViewComponent implements OnInit, OnDestroy {
           topicData: undefined
         }
       });
+    }
+  }
+
+  calculateFilter(value: string){
+    if(value == '') {
+      this.filteredTopics = this.allTopics;
+    } else {
+      this.filteredTopics = this.allTopics.filter(element => element.includes(value));
     }
   }
 }

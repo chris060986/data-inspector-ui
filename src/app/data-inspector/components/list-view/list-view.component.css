@@ -1,11 +1,10 @@
+.topicFilter {
+  text-align: center;
+}
+
 .toolbarTextBox {
   text-align: center;
   margin: auto;
-}
-
-.columnSelector {
-  width: 250px;
-  margin-right: 10px;
 }
 
 .container {
@@ -59,8 +58,7 @@
 
 .sidenavItems {
   overflow-y: auto;
-  max-height: calc(100vh - 150px);
-  height: calc(100vh - 150px);
+  max-height: calc(100vh - 215px);
   position: relative;
 }
 

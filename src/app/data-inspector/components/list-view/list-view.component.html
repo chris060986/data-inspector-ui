@@ -4,8 +4,16 @@
     <!-- Row 1 -->
     <mat-card class="sidenavList">
       <mat-card-title>Available Datatypes</mat-card-title>
+      <div class="topicFilter">
+        <mat-form-field>
+          <input matInput placeholder="Filter" autocomplete="off" (keyup)="calculateFilter(filterField.value)" #filterField>
+          <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="filterField.value='';calculateFilter(filterField.value)">
+            <mat-icon>close</mat-icon>
+          </button>
+        </mat-form-field>
+      </div>
       <div class="sidenavItems">
-        <div class="listItem mat-elevation-z3" *ngFor="let item of allTopics">
+        <div class="listItem mat-elevation-z3" *ngFor="let item of filteredTopics">
           <p class="listItemText unselectableText">{{item}}</p>
           <div class="listItemTools">
             <button mat-icon-button color="accent" matTooltipShowDelay="1000" matTooltip="subscribe" (click)="subscribeTopic(item)">
