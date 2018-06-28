@@ -1,12 +1,19 @@
-<mat-form-field appearance="standard">
-  <mat-label>Select Table Columns</mat-label>
-  <mat-select [(value)]="selectedColumns" multiple>
-    <mat-select-trigger>
-      Select Table Columns
-    </mat-select-trigger>
-    <mat-option *ngFor="let col of displayedColumns" [value]="col">{{col}}</mat-option>
-  </mat-select>
-</mat-form-field>
+<div class="actionContainer ">
+  <mat-form-field class="actionField">
+    <input matInput placeholder="Filter" autocomplete="off" (keyup)="calculateFilter(filterField.value)" #filterField>
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="filterField.value='';calculateFilter(filterField.value)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+  <mat-form-field class="actionField">
+    <mat-select [(value)]="selectedColumns" multiple>
+      <mat-select-trigger>
+        Select Table Columns
+      </mat-select-trigger>
+      <mat-option *ngFor="let col of displayedColumns" [value]="col">{{col}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
 
 <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z20 dataTable">
 

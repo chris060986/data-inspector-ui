@@ -27,7 +27,6 @@ export class TableViewComponent implements OnInit, OnChanges {
   dataSource: MatTableDataSource<any> = new MatTableDataSource();
   @ViewChild(MatSort) sort: MatSort;
 
-
   ngOnInit() {
     this.dataSource.sort = this.sort;
     this.selectedColumns = this.displayedColumns;
@@ -37,26 +36,31 @@ export class TableViewComponent implements OnInit, OnChanges {
     const tableData: Array<any> = [];
     this.data.forEach((topicData: TopicData) => {
       let convertedData: any = new Object();
-      convertedData['_rawData'] = topicData.data;
-      this.extractAttributes(convertedData, topicData.data, '');
+      convertedData["_rawData"] = topicData.data;
+      this.extractAttributes(convertedData, topicData.data, "");
       tableData.push(convertedData);
     });
-    if(changes.topicName) {
+    if (changes.topicName) {
       if (tableData[0]) {
         this.displayedColumns = [];
         Object.keys(tableData[0]).forEach(key => {
-          if (typeof tableData[0][key] !== 'object') {
+          if (typeof tableData[0][key] !== "object") {
             this.displayedColumns.push(key);
           }
         });
-        if(this.primaryKey && this.displayedColumns.includes(this.primaryKey)) {
-          this.displayedColumns = this.displayedColumns.filter(element => element != this.primaryKey);
+        if (
+          this.primaryKey &&
+          this.displayedColumns.includes(this.primaryKey)
+        ) {
+          this.displayedColumns = this.displayedColumns.filter(
+            element => element != this.primaryKey
+          );
           this.displayedColumns.unshift(this.primaryKey);
         }
       }
       this.selectedColumns = this.displayedColumns;
     }
-    
+
     this.dataSource.data = tableData;
   }
 
@@ -66,12 +70,16 @@ export class TableViewComponent implements OnInit, OnChanges {
 
   extractAttributes(objectToFill: any, data: any, prefix: string) {
     Object.keys(data).forEach(key => {
-      if(typeof data[key] !== 'object') {
+      if (typeof data[key] !== "object") {
         objectToFill[prefix + key] = data[key];
       } else if (!Array.isArray(data[key])) {
-        let nextPrefix: string = prefix + key + '-';
+        let nextPrefix: string = prefix + key + "-";
         this.extractAttributes(objectToFill, data[key], nextPrefix);
       }
     });
-  } 
+  }
+
+  calculateFilter(value: string) {
+    this.dataSource.filter = value.trim().toLowerCase();
+  }
 }

@@ -7,10 +7,12 @@ th.mat-sort-header-sorted {
   color: black;
 }
 
-.selectorOverlay{
-
+.actionContainer {
+  display: flex;
 }
 
-.columnSelector {
-
+.actionField {
+  margin: 5px;
+  display: inline-block;
+  width: 100%;
 }
