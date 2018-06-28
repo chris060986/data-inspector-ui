@@ -1,14 +1,6 @@
-.registerButton {
-  width: 150px;
-}
-
-.columnBox {
-  text-align: right;
-}
-
 .toolbarTextBox {
-  width: 100%;
   text-align: center;
+  margin: auto;
 }
 
 .columnSelector {
@@ -23,15 +15,13 @@
 
 .list {
   margin: 5px;
-  /* text-align: center; */
   padding: 5px
 }
 
 .listItem {
-  display: block;
-  width: 100%;
-  text-align: left;
+  display:flex;
   border-radius: 5px;
+  margin: 4px;
 }
 
 .listItemText {
@@ -40,7 +30,9 @@
 }
 
 .listItemTools {
-  float: right;
+  display: inline-block;
+  text-align: right;
+  width: 100%;
 }
 
 .isSelected {
@@ -50,7 +42,7 @@
 /* ########## CONTENT TOPIC LIST ################# */
 
 .contentItems {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: calc(100vh - 2*64px - 65px);
   height: calc(100vh - 2*64px - 65px);
 }
@@ -62,10 +54,11 @@
   height: calc(100vh - 120px);
   margin: 3px !important;
   padding-right: 5px !important;
+  padding-left: 5px !important;
 }
 
 .sidenavItems {
-  overflow-y: scroll;
+  overflow-y: auto;
   max-height: calc(100vh - 150px);
   height: calc(100vh - 150px);
   position: relative;

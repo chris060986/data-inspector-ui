@@ -2,12 +2,12 @@
   <mat-tab-group class="tableContent">
     <mat-tab label="Instances">
       <ng-template matTabContent>
-        <diu-table-view *ngIf="topicName" [data]="topicInstances" (dataSelected)="sendWithData($event)"></diu-table-view>
+        <diu-table-view *ngIf="topicName" [topicName]="topicName" [data]="topicInstances" [primaryKey]="topicSchema?.schema?.primary" (dataSelected)="sendWithData($event)"></diu-table-view>
       </ng-template>
     </mat-tab>
     <mat-tab label="Samples">
       <ng-template matTabContent>
-        <diu-table-view *ngIf="topicName" [data]="topicData" (dataSelected)="sendWithData($event)"></diu-table-view>
+        <diu-table-view *ngIf="topicName" [topicName]="topicName" [data]="topicData" [primaryKey]="topicSchema?.schema?.primary" (dataSelected)="sendWithData($event)"></diu-table-view>
       </ng-template>
     </mat-tab>
   </mat-tab-group>

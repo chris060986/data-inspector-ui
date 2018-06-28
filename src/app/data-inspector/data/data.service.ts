@@ -85,7 +85,7 @@ export class DataService {
     setTimeout(() => {
       if (!this.subscribedTopics.includes(name)) {
         this.socket.next({
-          type: "SUBSCRIBE",
+          action: "SUBSCRIBE",
           topicName: name
         });
 
@@ -102,7 +102,7 @@ export class DataService {
     setTimeout(() => {
       if (!this.publishingTopics.includes(name)) {
         this.socket.next({
-          type: "PUBLISH",
+          action: "PUBLISH",
           topicName: name
         });
   
@@ -117,7 +117,7 @@ export class DataService {
       element => element != name
     );
     this.socket.next({
-      type: "UNSUBSCRIBE",
+      action: "UNSUBSCRIBE",
       topicName: name
     });
     this.topicData = this.topicData.filter(element => element.topicName != name);
@@ -130,7 +130,7 @@ export class DataService {
       element => element != name
     );
     this.socket.next({
-      type: "UNPUBLISH",
+      action: "UNPUBLISH",
       topicName: name
     });
     this.emitAll();
@@ -139,7 +139,7 @@ export class DataService {
 
   sendDataToWS(name: string, topicData: any) {
     this.socket.next({
-      type: 'NEWDATA',
+      action: 'NEWDATA',
       topicName: name,
       data: topicData
     });

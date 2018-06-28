@@ -1,37 +1,40 @@
 <div [ngClass]="getLevelClasses()" *ngIf="!hidden">
   <div [formGroup]="localFormGroup">
-    <mat-list-item *ngFor="let prop of allPropertyKeys">
-
+    <mat-list-item *ngFor="let prop of actLevelForms">
       <!-- Act. level Elements -->
-      <diu-form-element *ngIf="actLevelForms.includes(prop)" [propName]="prop" [type]="structureObject[prop].type" [parentFormGroup]="localFormGroup"
-        [options]="structureObject[prop].enum" [errorMessage]="getErrorMessage(localFormGroup.get(prop))" [required]="requiredFields && requiredFields.includes(prop)">
+      <diu-form-element [propName]="prop" [type]="structureObject[prop].type" [parentFormGroup]="localFormGroup" [options]="structureObject[prop].enum"
+        [errorMessage]="getErrorMessage(localFormGroup.get(prop))" [required]="requiredFields && requiredFields.includes(prop)">
       </diu-form-element>
+    </mat-list-item>
 
+    <mat-list-item *ngFor="let prop of nextLevelForms">
       <!-- next Level Groups -->
-      <div *ngIf="nextLevelForms.includes(prop)">
-        <h4 color="accent">{{prop}} {{'{ }'}}</h4>
-        <mat-slide-toggle *ngIf="!requiredFields || !requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleObject($event.checked,prop)"></mat-slide-toggle>
-        <div *ngIf="structureObject[prop].oneOf" class="choiceToggle">
-          <mat-button-toggle-group>
-            <mat-button-toggle *ngFor="let choice of getOneOfArray(structureObject[prop].oneOf)" (click)="setOneOf(prop, choice)">{{choice}}</mat-button-toggle>
-          </mat-button-toggle-group>
-        </div>
-        <diu-form-level *ngIf="!hiddenProperties.includes(prop) && structureObject[prop].properties" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)"
-          [structureObject]="structureObject[prop].properties" [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required">
-        </diu-form-level>
+      <h4 color="accent">{{prop}} {{'{ }'}}</h4>
+      <mat-slide-toggle *ngIf="!requiredFields || !requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true"
+        (change)="toggleObject($event.checked,prop)"></mat-slide-toggle>
+      <div *ngIf="structureObject[prop].oneOf" class="choiceToggle">
+        <mat-button-toggle-group>
+          <mat-button-toggle *ngFor="let choice of getOneOfArray(structureObject[prop].oneOf)" (click)="setOneOf(prop, choice)">{{choice}}</mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
+      <diu-form-level *ngIf="!hiddenProperties.includes(prop) && structureObject[prop].properties" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)"
+        [structureObject]="structureObject[prop].properties" [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required">
+      </diu-form-level>
+    </mat-list-item>
 
+    <mat-list-item *ngFor="let prop of arrayForms">
       <!-- Formarrays -->
-      <div *ngIf="arrayForms.includes(prop)" [formArrayName]="prop" class="arrayContainer">
+      <div [formArrayName]="prop" class="arrayContainer">
         <h4 color="accent">{{prop}} {{'[ ]'}}</h4>
-        <mat-slide-toggle *ngIf="!requiredFields || !requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true" (change)="toggleArray($event.checked,prop)"></mat-slide-toggle>
+        <mat-slide-toggle *ngIf="!requiredFields || !requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true"
+          (change)="toggleArray($event.checked,prop)"></mat-slide-toggle>
         <diu-form-array *ngIf="!hiddenProperties.includes(prop)" [structureObject]="structureObject[prop]" [localFormArray]="localFormGroup.get(prop)"
           [dataObject]="getData(dataObject, prop)">
         </diu-form-array>
       </div>
-
-      <!-- After all -->
-
     </mat-list-item>
+
+    <!-- After all -->
+
   </div>
 </div>
