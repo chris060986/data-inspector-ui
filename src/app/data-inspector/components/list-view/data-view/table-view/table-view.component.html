@@ -1,11 +1,11 @@
 <div class="actionContainer ">
-  <mat-form-field class="actionField" style=" margin-bottom: -1.25em">
+  <mat-form-field class="actionField" style="margin-bottom: -1.25em">
     <input matInput placeholder="Filter" autocomplete="off" (keyup)="calculateFilter(filterField.value)" #filterField>
     <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)="filterField.value='';calculateFilter(filterField.value)">
       <mat-icon>close</mat-icon>
     </button>
   </mat-form-field>
-  <mat-form-field class="actionField" style=" margin-bottom: -1.25em">
+  <mat-form-field class="actionField" style="margin-bottom: -1.25em">
     <mat-select [(value)]="selectedColumns" multiple>
       <mat-select-trigger>
         Select Table Columns
