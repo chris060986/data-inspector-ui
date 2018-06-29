@@ -16,9 +16,10 @@
         </mat-select>
       </mat-form-field>
       <mat-slide-toggle class="enableSlider" *ngIf="!requiredFields || !requiredFields.includes(prop)" color="primary" [checked]="true"
-        (change)="toggleObject($event.checked,prop)"></mat-slide-toggle>
+        (change)="toggleObject($event.checked,prop)" [disabled]="inspectOnly"></mat-slide-toggle>
       <diu-form-level *ngIf="!hiddenProperties.includes(prop) && structureObject[prop].properties" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)"
-        [structureObject]="structureObject[prop].properties" [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required">
+        [structureObject]="structureObject[prop].properties" [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required"
+        [inspectOnly]="inspectOnly">
       </diu-form-level>
     </mat-list-item>
 
@@ -29,7 +30,7 @@
         <mat-slide-toggle *ngIf="!requiredFields || !requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true"
           (change)="toggleArray($event.checked,prop)"></mat-slide-toggle>
         <diu-form-array *ngIf="!hiddenProperties.includes(prop)" [structureObject]="structureObject[prop]" [localFormArray]="localFormGroup.get(prop)"
-          [dataObject]="getData(dataObject, prop)">
+          [dataObject]="getData(dataObject, prop)" [inspectOnly]="inspectOnly">
         </diu-form-array>
       </div>
     </mat-list-item>

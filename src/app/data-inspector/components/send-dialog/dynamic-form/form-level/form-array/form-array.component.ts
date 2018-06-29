@@ -11,6 +11,7 @@ export class FormArrayComponent implements OnInit {
   @Input() structureObject: any;
   @Input() localFormArray: FormArray;
   @Input() dataObject: Array<any>;
+  @Input() inspectOnly: boolean;
   private fixedArray: boolean;
 
   constructor() {}
@@ -49,6 +50,9 @@ export class FormArrayComponent implements OnInit {
                 value = false;
               }
               tmpFormControl = new FormControl(value, currentValidators);
+              if(this.inspectOnly) {
+                tmpFormControl.disable();
+              }
               this.localFormArray.push(tmpFormControl);
               break;
 

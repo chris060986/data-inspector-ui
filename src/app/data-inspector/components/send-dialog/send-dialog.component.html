@@ -1,9 +1,9 @@
 <h2 mat-dialog-title>Send Data</h2>
 <mat-dialog-content>
   <diu-dynamic-form [structureObject]="structureObject" [dataObject]="dataObject" [definitions]="definitions" [requiredFields]="requiredFields" [submitEmitter]="submitEmitter"
-    (dataSubmitted)="onSubmit($event)"></diu-dynamic-form>
+    (dataSubmitted)="onSubmit($event)" [inspectOnly]="inspectOnly"></diu-dynamic-form>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button (click)="sendNewData()">Send</button>
+  <button mat-button *ngIf="!inspectOnly" (click)="sendNewData()">Send</button>
   <button mat-button mat-dialog-close>Close</button>
 </mat-dialog-actions>

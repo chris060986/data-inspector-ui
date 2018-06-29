@@ -14,6 +14,7 @@ export class DataViewComponent implements OnInit, OnChanges {
 
   @Input() topicSchema: TopicSchema;
   @Input() topicData: Array<TopicData>;
+  @Input() inspectOnly: boolean = false;
   private topicName: string;
   private topicInstances: Array<TopicData> = [];
 
@@ -54,7 +55,8 @@ export class DataViewComponent implements OnInit, OnChanges {
           topicData: {
             topicName: '',
             data: topicData
-          }
+          },
+          inspectOnly: this.inspectOnly
         }
       });
     }

@@ -13,6 +13,7 @@ export class SendDialogComponent implements OnInit {
 
   private topicSchema: TopicSchema;
   private topicData: TopicData;
+  private inspectOnly: boolean;
   private structureObject: any = undefined;
   private dataObject: any = undefined;
   private definitions: any = undefined;
@@ -24,6 +25,7 @@ export class SendDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data: any) {
     this.topicSchema = data.topicSchema;
     this.topicData = data.topicData;
+    this.inspectOnly = data.inspectOnly;
   }
 
   ngOnInit() {
@@ -42,7 +44,7 @@ export class SendDialogComponent implements OnInit {
   }
 
   onSubmit(submittedData: any) {
-    if(submittedData){
+    if(submittedData && !this.inspectOnly){
       this.dataService.sendDataToWS(this.topicSchema.topicName, submittedData);
     }
   }

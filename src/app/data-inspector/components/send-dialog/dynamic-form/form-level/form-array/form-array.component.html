@@ -9,7 +9,7 @@
 
       <!-- next level with object -->
       <diu-form-level *ngIf="item.type == 'object'" [localFormGroup]="localFormArray.controls[i]" [structureObject]="item.properties"
-        [dataObject]="getArrayData(dataObject, i)" [requiredFields]="item.required">
+        [dataObject]="getArrayData(dataObject, i)" [requiredFields]="item.required" [inspectOnly]="inspectOnly">
       </diu-form-level>
 
     </div>
@@ -27,7 +27,7 @@
 
       <!-- next level with object -->
       <diu-form-level *ngIf="structureObject.items.type  == 'object'" [localFormGroup]="control" [structureObject]="structureObject.items.properties"
-        [dataObject]="getArrayData(dataObject, i)" [requiredFields]="structureObject.items.required">
+        [dataObject]="getArrayData(dataObject, i)" [requiredFields]="structureObject.items.required" [inspectOnly]="inspectOnly">
       </diu-form-level>
 
     </div>

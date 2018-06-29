@@ -15,6 +15,7 @@ export class FormLevelComponent implements OnInit {
   @Input() requiredFields: Array<string>;
   @Input() propName: string;
   @Input() firstLevel: boolean = false;
+  @Input() inspectOnly: boolean;
 
   private allPropertyKeys: Array<string> = [];
   private actLevelForms: Array<string> = [];
@@ -65,6 +66,9 @@ export class FormLevelComponent implements OnInit {
                 currentValidators.push(Validators.required);
               }
               tmpFormControl = new FormControl(value, [...currentValidators, ...DuiValidators.extractAndReturnValidators(val)]);
+              if(this.inspectOnly) {
+                tmpFormControl.disable();
+              }
               this.localFormGroup.addControl(key, tmpFormControl);
               this.actLevelForms.push(key);
               break;

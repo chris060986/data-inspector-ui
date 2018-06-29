@@ -129,4 +129,12 @@ export class ListViewComponent implements OnInit, OnDestroy {
       this.filteredTopics = this.allTopics.filter(element => element.includes(value));
     }
   }
+
+  getInspectOnly(): boolean {
+    if(this.currentTopic) {
+      return !this.publishingTopics.includes(this.currentTopic);
+    } else {
+      return false;
+    }
+  }
 }

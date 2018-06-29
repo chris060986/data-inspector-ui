@@ -1,5 +1,5 @@
 <form [formGroup]="topLevelForm" (ngSubmit)="onSubmit()">
   <diu-form-level [firstLevel]="true" [localFormGroup]="topLevelForm" [structureObject]="structureObject" [dataObject]="dataObject"
-    [requiredFields]="requiredFields"></diu-form-level>
+    [requiredFields]="requiredFields" [inspectOnly]="inspectOnly"></diu-form-level>
   <button type="submit" hidden="true"></button>
 </form>

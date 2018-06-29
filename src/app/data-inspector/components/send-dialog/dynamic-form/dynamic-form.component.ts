@@ -20,6 +20,7 @@ export class DynamicFormComponent implements OnInit {
   @Input() definitions: any;
   @Input() requiredFields: Array<string>;
   @Input() submitEmitter: EventEmitter<any>;
+  @Input() inspectOnly: boolean;
   @Output() dataSubmitted: EventEmitter<any> = new EventEmitter();
   private topLevelForm: FormGroup = new FormGroup({});
   private subscription: Subscription;
@@ -40,16 +41,18 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.topLevelForm.valid) {
-      this.dataSubmitted.emit(this.topLevelForm.value);
-      this.snackBar.open('Data submitted ...','',{
-        duration: 1000
-      });
-    } else {
-      this.dataSubmitted.emit(undefined);
-      this.snackBar.openFromComponent(WarnSnackComponent,{
-        duration: 1000
-      });
+    if(this.inspectOnly){
+      if(this.topLevelForm.valid) {
+        this.dataSubmitted.emit(this.topLevelForm.value);
+        this.snackBar.open('Data submitted ...','',{
+          duration: 1000
+        });
+      } else {
+        this.dataSubmitted.emit(undefined);
+        this.snackBar.openFromComponent(WarnSnackComponent,{
+          duration: 1000
+        });
+      }
     }
   }
 
