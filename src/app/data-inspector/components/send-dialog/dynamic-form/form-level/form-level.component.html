@@ -10,13 +10,13 @@
     <mat-list-item *ngFor="let prop of nextLevelForms">
       <!-- next Level Groups -->
       <h4 color="accent">{{prop}} {{'{ }'}}</h4>
-      <mat-slide-toggle *ngIf="!requiredFields || !requiredFields.includes(prop)" color="primary" class="enableSlider" [checked]="true"
+      <mat-form-field *ngIf="structureObject[prop].oneOf" class="choiceToggle" style=" margin-bottom: -1.25em">
+        <mat-select placeholder="select choice" (selectionChange)="setOneOf(prop, oneOfSelector.value)" #oneOfSelector>
+          <mat-option *ngFor="let choice of getOneOfArray(structureObject[prop].oneOf)" [value]="choice">{{choice}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-slide-toggle class="enableSlider" *ngIf="!requiredFields || !requiredFields.includes(prop)" color="primary" [checked]="true"
         (change)="toggleObject($event.checked,prop)"></mat-slide-toggle>
-      <div *ngIf="structureObject[prop].oneOf" class="choiceToggle">
-        <mat-button-toggle-group>
-          <mat-button-toggle *ngFor="let choice of getOneOfArray(structureObject[prop].oneOf)" (click)="setOneOf(prop, choice)">{{choice}}</mat-button-toggle>
-        </mat-button-toggle-group>
-      </div>
       <diu-form-level *ngIf="!hiddenProperties.includes(prop) && structureObject[prop].properties" [propName]="prop" [localFormGroup]="localFormGroup.get(prop)"
         [structureObject]="structureObject[prop].properties" [dataObject]="getData(dataObject, prop)" [requiredFields]="structureObject[prop].required">
       </diu-form-level>
