@@ -1,3 +1,7 @@
+.listhead {
+  text-align: center;
+}
+
 .topicFilter {
   text-align: center;
 }
@@ -21,6 +25,8 @@
   display:flex;
   border-radius: 2px;
   margin: 4px;
+  transition: transform 130ms;
+  transition: opacity 130ms;
 }
 
 .listItemText {
@@ -42,6 +48,7 @@
 
 .contentItems {
   overflow-y: auto;
+  overflow-x: hidden;
   max-height: calc(100vh - 2*64px - 65px);
   height: calc(100vh - 2*64px - 65px);
 }

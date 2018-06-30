@@ -19,6 +19,7 @@ import { SendDialogComponent } from './components/send-dialog/send-dialog.compon
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { WarnSnackComponent } from './components/others/warn-snack/warn-snack.component';
 import { FormArrayComponent } from './components/send-dialog/dynamic-form/form-level/form-array/form-array.component';
+import { DataTriggerDirective } from './data/data-trigger.directive';
 
 @NgModule({
   imports: [
@@ -43,6 +44,7 @@ import { FormArrayComponent } from './components/send-dialog/dynamic-form/form-l
     SendDialogComponent,
     WarnSnackComponent,
     FormArrayComponent,
+    DataTriggerDirective,
   ],
   entryComponents: [
     SendDialogComponent,

@@ -34,6 +34,7 @@ export class DataService {
   > = new EventEmitter();
   public topicData: Array<TopicData> = [];
   public topicDataEmitter: EventEmitter<Array<TopicData>> = new EventEmitter();
+  public topicNameEmitter: EventEmitter<string> = new EventEmitter();
 
   constructor(
     private http: HttpClient,
@@ -189,6 +190,7 @@ export class DataService {
 
   procceedMessage(message: any) {
     if (message.topicName && message.data) {
+      this.topicNameEmitter.emit(message.topicName);
       this.topicData.push({
         topicName: message.topicName,
         data: message.data
