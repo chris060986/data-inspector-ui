@@ -22,6 +22,9 @@
             <button mat-icon-button color="primary" matTooltipShowDelay="1000" matTooltip="publish" (click)="publishTopic(item)">
               <mat-icon>wifi_tethering</mat-icon>
             </button>
+            <button mat-icon-button color="primary" matTooltipShowDelay="1000" matTooltip="publish & subscribe" (click)="publishTopic(item); subscribeTopic(item)">
+              <mat-icon>swap_vert</mat-icon>
+            </button>
           </div>
         </div>
       </div>

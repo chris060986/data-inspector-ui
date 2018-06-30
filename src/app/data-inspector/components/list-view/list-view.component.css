@@ -25,8 +25,8 @@
   display:flex;
   border-radius: 2px;
   margin: 4px;
-  transition: transform 130ms;
-  transition: opacity 130ms;
+  transition: transform 250ms;
+  transition: opacity 250ms;
 }
 
 .listItemText {

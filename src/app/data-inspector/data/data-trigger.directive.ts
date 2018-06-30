@@ -19,7 +19,7 @@ export class DataTriggerDirective {
           this.renderer.setStyle(this.element.nativeElement, 'opacity', 1)
           this.renderer.setStyle(this.element.nativeElement, 'transform', 'scale(1)')
           this.transitionActive = false;
-        }, 150);
+        }, 270);
       }
     });
   }
