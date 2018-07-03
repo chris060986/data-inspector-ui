@@ -41,7 +41,7 @@ export class DynamicFormComponent implements OnInit {
   }
 
   onSubmit() {
-    if(this.inspectOnly){
+    if(!this.inspectOnly){
       if(this.topLevelForm.valid) {
         this.dataSubmitted.emit(this.topLevelForm.value);
         this.snackBar.open('Data submitted ...','',{
