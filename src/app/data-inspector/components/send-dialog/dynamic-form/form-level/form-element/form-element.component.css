@@ -1,3 +1,7 @@
 .checkboxField {
   height: 40px;
 }
+
+.dataField {
+  width: 250px;
+}

@@ -14,6 +14,7 @@ export class FormElementComponent implements OnInit {
   @Input() options: Array<any>;
   @Input() errorMessage: string;
   @Input() required: boolean = false;
+  @Input() format: string;
 
   constructor() { }
 

@@ -16,7 +16,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DataViewComponent } from './components/list-view/data-view/data-view.component';
 import { TableViewComponent } from './components/list-view/data-view/table-view/table-view.component';
 import { SendDialogComponent } from './components/send-dialog/send-dialog.component';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA, MAT_DATE_LOCALE } from '@angular/material';
 import { WarnSnackComponent } from './components/others/warn-snack/warn-snack.component';
 import { FormArrayComponent } from './components/send-dialog/dynamic-form/form-level/form-array/form-array.component';
 import { DataTriggerDirective } from './data/data-trigger.directive';
@@ -60,6 +60,9 @@ import { DataTriggerDirective } from './data/data-trigger.directive';
     }, {
       provide: MAT_DIALOG_DATA,
       useValue: {}
+    },
+    { provide: MAT_DATE_LOCALE,
+      useValue: 'en-GB'
     }
   ]
 })

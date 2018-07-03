@@ -2,8 +2,8 @@
   <div [formGroup]="localFormGroup">
     <mat-list-item *ngFor="let prop of actLevelForms">
       <!-- Act. level Elements -->
-      <diu-form-element [propName]="prop" [type]="structureObject[prop].type" [parentFormGroup]="localFormGroup" [options]="structureObject[prop].enum"
-        [errorMessage]="getErrorMessage(localFormGroup.get(prop))" [required]="requiredFields && requiredFields.includes(prop)">
+      <diu-form-element [propName]="prop" [type]="structureObject[prop].type" [parentFormGroup]="localFormGroup" [format]="structureObject[prop].format"
+        [options]="structureObject[prop].enum" [errorMessage]="getErrorMessage(localFormGroup.get(prop))" [required]="requiredFields && requiredFields.includes(prop)">
       </diu-form-element>
     </mat-list-item>
 
