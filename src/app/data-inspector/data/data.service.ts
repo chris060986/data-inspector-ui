@@ -13,6 +13,7 @@ import { TopicData } from "../models/data.interface";
 export class DataService {
   private socket: Subject<any>;
   private subscriptions: Array<Subscription> = [];
+  public maxData: number = 50;
   public shouldBeConnected: boolean = false;
   public allTopics: Array<string> = [];
   public allTopicsEmitter: EventEmitter<Array<string>> = new EventEmitter();
@@ -195,6 +196,9 @@ export class DataService {
         topicName: message.topicName,
         data: message.data
       });
+      if(this.topicData.length > this.maxData) {
+        this.topicData.shift();
+      }
       this.topicDataEmitter.emit(this.topicData);
     }
   }

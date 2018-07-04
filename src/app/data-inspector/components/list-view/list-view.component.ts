@@ -50,7 +50,7 @@ export class ListViewComponent implements OnInit, OnDestroy {
       this.topicData = data;
       if (this.currentTopic) {
         const tmpData: Array<TopicData> = this.topicData.filter(element => element.topicName == this.currentTopic);
-        if (this.currentTopicData.length != tmpData.length) {
+        if (this.currentTopicData.length != tmpData.length || this.currentTopicData.length == this.dataService.maxData) {
           this.currentTopicData = tmpData;
         }
       }
