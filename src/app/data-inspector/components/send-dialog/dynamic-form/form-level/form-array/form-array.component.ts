@@ -49,7 +49,8 @@ export class FormArrayComponent implements OnInit {
               if (item.type == "boolean" && !value) {
                 value = false;
               }
-              tmpFormControl = new FormControl(value, currentValidators);
+              tmpFormControl = new FormControl(value, [...currentValidators, ...DuiValidators.extractAndReturnValidators(item)]);
+              tmpFormControl['validatorValues'] = DuiValidators.getValidatorValues(item);
               if(this.inspectOnly) {
                 tmpFormControl.disable();
               }

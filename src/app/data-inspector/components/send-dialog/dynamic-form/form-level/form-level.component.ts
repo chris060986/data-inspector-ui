@@ -66,6 +66,7 @@ export class FormLevelComponent implements OnInit {
                 currentValidators.push(Validators.required);
               }
               tmpFormControl = new FormControl(value, [...currentValidators, ...DuiValidators.extractAndReturnValidators(val)]);
+              tmpFormControl['validatorValues'] = DuiValidators.getValidatorValues(val);
               if(this.inspectOnly) {
                 tmpFormControl.disable();
               }

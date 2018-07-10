@@ -9,7 +9,9 @@ export class DuiValidators {
     return null;
   }
 
-  static integerWithoutZeroValidator(control: FormControl): { [s: string]: boolean } {
+  static integerWithoutZeroValidator(
+    control: FormControl
+  ): { [s: string]: boolean } {
     let reg = new RegExp("^[-+]?\\d*$");
     if (
       (control.value != null && !reg.test(control.value)) ||
@@ -28,7 +30,9 @@ export class DuiValidators {
     return null;
   }
 
-  static numberWithoutZeroValidator(control: FormControl): { [s: string]: boolean } {
+  static numberWithoutZeroValidator(
+    control: FormControl
+  ): { [s: string]: boolean } {
     let reg = new RegExp("^[-+]?([0-9]+(.[0-9]+)?|.[0-9]+)$");
     if (
       (control.value != null && !reg.test(control.value)) ||
@@ -39,21 +43,41 @@ export class DuiValidators {
     return null;
   }
 
+  static getValidatorValues(object: any): any {
+    let validatorValues: any = new Object();
+    if (object.max != undefined) {
+      validatorValues["max"] = object.max;
+    }
+    if (object.min != undefined) {
+      validatorValues["min"] = object.min;
+    }
+    if (object.maxLength != undefined) {
+      validatorValues["maxLength"] = object.maxLength;
+    }
+    if (object.minLength != undefined) {
+      validatorValues["minLength"] = object.minLength;
+    }
+    if (object.pattern != undefined) {
+      validatorValues["pattern"] = object.pattern;
+    }
+    return validatorValues;
+  }
+
   static extractAndReturnValidators(object: any): Array<any> {
     let tmpValidators: Array<any> = [];
-    if (object.max) {
+    if (object.max != undefined) {
       tmpValidators.push(Validators.max(object.max));
     }
-    if (object.min) {
+    if (object.min != undefined) {
       tmpValidators.push(Validators.min(object.min));
     }
-    if (object.maxLength) {
+    if (object.maxLength != undefined) {
       tmpValidators.push(Validators.maxLength(object.maxLength));
     }
-    if (object.minLength) {
+    if (object.minLength != undefined) {
       tmpValidators.push(Validators.minLength(object.minLength));
     }
-    if (object.pattern) {
+    if (object.pattern != undefined) {
       tmpValidators.push(Validators.pattern(object.pattern));
     }
     return tmpValidators;
@@ -62,25 +86,25 @@ export class DuiValidators {
   static getErrorMessage(field: FormControl) {
     if (field.errors == null) return undefined;
     return field.hasError("required")
-      ? "You have to enter a value!"
+      ? "enter a value"
       : field.hasError("maxlength")
-        ? "The entered value is too long!"
+        ? "maximum of " + field['validatorValues'].maxLength + " characters exceeded"
         : field.hasError("minlength")
-          ? "The entered value is too short!"
+          ? "enter at least " + field['validatorValues'].minLength + " characters"
           : field.hasError("max")
-            ? "Maximum value exceeded!"
+            ? "the maximum value is " + field['validatorValues'].max
             : field.hasError("min")
-              ? "The value is below the minimum!"
+              ? "the minimum value is " + field['validatorValues'].min
               : field.hasError("pattern")
-                ? "Defined pattern not matched!"
+                ? "match the following pattern: " + field['validatorValues'].pattern
                 : field.errors["integer"] != undefined
-                  ? "Only integers are valid!"
+                  ? "enter an integer"
                   : field.errors["integerWithoutZero"] != undefined
-                    ? "Only integers are valid (not 0)!"
+                    ? "enter an integer (not 0)"
                     : field.errors["number"] != undefined
-                      ? "Only numbers are valid!"
+                      ? "enter a number"
                       : field.errors["numberWithoutZero"] != undefined
-                        ? "Only numbers are valid (not 0)!"
+                        ? "enter a number (not 0)"
                         : undefined;
   }
 }
