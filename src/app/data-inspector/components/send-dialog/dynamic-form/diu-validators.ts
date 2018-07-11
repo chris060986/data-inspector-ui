@@ -65,16 +65,16 @@ export class DuiValidators {
 
   static extractAndReturnValidators(object: any): Array<any> {
     let tmpValidators: Array<any> = [];
-    if (object.max != undefined) {
+    if (object.max != undefined && (object.type == 'number' || object.type == 'integer')) {
       tmpValidators.push(Validators.max(object.max));
     }
-    if (object.min != undefined) {
+    if (object.min != undefined && (object.type == 'number' || object.type == 'integer')) {
       tmpValidators.push(Validators.min(object.min));
     }
-    if (object.maxLength != undefined) {
+    if (object.maxLength != undefined && object.type == 'string') {
       tmpValidators.push(Validators.maxLength(object.maxLength));
     }
-    if (object.minLength != undefined) {
+    if (object.minLength != undefined && object.type == 'string') {
       tmpValidators.push(Validators.minLength(object.minLength));
     }
     if (object.pattern != undefined) {
