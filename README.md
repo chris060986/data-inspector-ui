@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/chris060986/data-inspector-ui.svg?branch=master)](https://travis-ci.org/chris060986/data-inspector-ui)
 # Ui
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.6.5.
