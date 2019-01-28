@@ -17,11 +17,11 @@ export class FormLevelComponent implements OnInit {
   @Input() firstLevel: boolean = false;
   @Input() inspectOnly: boolean;
 
-  private allPropertyKeys: Array<string> = [];
-  private actLevelForms: Array<string> = [];
-  private nextLevelForms: Array<string> = [];
-  private arrayForms: Array<string> = [];
-  private hiddenProperties: Array<string> = [];
+  public allPropertyKeys: Array<string> = [];
+  public actLevelForms: Array<string> = [];
+  public nextLevelForms: Array<string> = [];
+  public arrayForms: Array<string> = [];
+  public hiddenProperties: Array<string> = [];
 
   constructor(private definitionsService: DefinitionsService) {}
 

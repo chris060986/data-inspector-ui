@@ -22,7 +22,7 @@ export class DynamicFormComponent implements OnInit {
   @Input() submitEmitter: EventEmitter<any>;
   @Input() inspectOnly: boolean;
   @Output() dataSubmitted: EventEmitter<any> = new EventEmitter();
-  private topLevelForm: FormGroup = new FormGroup({});
+  public topLevelForm: FormGroup = new FormGroup({});
   private subscription: Subscription;
 
   constructor(public snackBar: MatSnackBar, private definitionsService: DefinitionsService) { }
