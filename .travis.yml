@@ -7,6 +7,6 @@ branches:
   only:
   - master
 before_script:
-  - npm install -g @angular/cli
+  - npm install
 script:
 - npm run build
