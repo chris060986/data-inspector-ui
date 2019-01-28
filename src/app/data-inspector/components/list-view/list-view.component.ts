@@ -15,16 +15,16 @@ import { MatDialog } from '@angular/material';
 export class ListViewComponent implements OnInit, OnDestroy {
 
   private subscriptions: Array<Subscription> = [];
-  private allTopics: Array<string> = [];
-  private filteredTopics: Array<string> = [];
-  private subscribedTopics: Array<string> = [];
-  private publishingTopics: Array<string> = [];
-  private registeredTopics: Array<string> = [];
-  private topicSchemas: Array<TopicSchema> = [];
-  private topicData: Array<TopicData> = [];
-  private currentTopic: string;
-  private currentTopicSchema: TopicSchema;
-  private currentTopicData: Array<TopicData> = [];
+  public allTopics: Array<string> = [];
+  public filteredTopics: Array<string> = [];
+  public subscribedTopics: Array<string> = [];
+  public publishingTopics: Array<string> = [];
+  public registeredTopics: Array<string> = [];
+  public topicSchemas: Array<TopicSchema> = [];
+  public topicData: Array<TopicData> = [];
+  public currentTopic: string;
+  public currentTopicSchema: TopicSchema;
+  public currentTopicData: Array<TopicData> = [];
 
 
   constructor(private dataService: DataService, public dialog: MatDialog) { }

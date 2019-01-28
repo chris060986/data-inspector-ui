@@ -11,14 +11,14 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 })
 export class SendDialogComponent implements OnInit {
 
-  private topicSchema: TopicSchema;
-  private topicData: TopicData;
-  private inspectOnly: boolean;
-  private structureObject: any = undefined;
-  private dataObject: any = undefined;
-  private definitions: any = undefined;
-  private requiredFields: Array<string>;
-  private submitEmitter: EventEmitter<any> = new EventEmitter();
+  public topicSchema: TopicSchema;
+  public topicData: TopicData;
+  public inspectOnly: boolean;
+  public structureObject: any = undefined;
+  public dataObject: any = undefined;
+  public definitions: any = undefined;
+  public requiredFields: Array<string>;
+  public submitEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor( private dataService: DataService,
     public dialogRef: MatDialogRef<SendDialogComponent>,

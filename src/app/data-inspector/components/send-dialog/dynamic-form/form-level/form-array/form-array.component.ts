@@ -12,7 +12,7 @@ export class FormArrayComponent implements OnInit {
   @Input() localFormArray: FormArray;
   @Input() dataObject: Array<any>;
   @Input() inspectOnly: boolean;
-  private fixedArray: boolean;
+  public fixedArray: boolean;
 
   constructor() {}
 
