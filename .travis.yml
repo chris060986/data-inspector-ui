@@ -14,7 +14,7 @@ script:
   - npm run build
   - git config --local user.name "travis-ci"
   - git config --local user.email "christoph.birk@gmail.com"
-  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
+  - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')}
   - git tag $TRAVIS_TAG
   - cd dist
   - zip -r data-inspector-ui-$TRAVIS_TAG.zip *
