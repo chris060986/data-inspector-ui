@@ -16,15 +16,16 @@ script:
   - git config --local user.email "christoph.birk@gmail.com"
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')}
   - git tag $TRAVIS_TAG
-  - cd dist
-  - zip -r data-inspector-ui-$TRAVIS_TAG.zip *
-  - cd ..
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
   - docker build -t chris060986/data-inspector-ui:$TRAVIS_TAG .
   - docker tag chris060986/data-inspector-ui:$TRAVIS_TAG chris060986/data-inspector-ui:latest
   - docker push chris060986/data-inspector-ui:$TRAVIS_TAG
   - docker push chris060986/data-inspector-ui:latest 
-  
+
+before_deploy:
+  - cd dist
+  - zip -r data-inspector-ui-$TRAVIS_TAG.zip *
+  - cd ..
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
