@@ -17,8 +17,11 @@ before_deploy:
   - git config --local user.email "christoph.birk@gmail.com"
   - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y%m%d%H%M%S')-$(git log --format=%h -1)}
   - git tag $TRAVIS_TAG
+  - cd dist
+  - zip -r data-inspector-ui-$TRAVIS_TAG.zip *
+  - cd ..
 deploy:
   provider: releases
   api_key: $GITHUB_OAUTH_TOKEN
-  file: "dist/index.html"
+  file: "dist/data-inspector-ui-$TRAVIS_TAG.zip"
   skip_cleanup: true
