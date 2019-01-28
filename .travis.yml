@@ -20,7 +20,7 @@ script:
   - zip -r data-inspector-ui-$TRAVIS_TAG.zip *
   - cd ..
   - docker login -u $DOCKER_USER -p $DOCKER_PASS
-  - docker build -t chris060986/data-inspector-ui:$TRAVIS_TAG
+  - docker build -t chris060986/data-inspector-ui:$TRAVIS_TAG .
   - docker push chris060986/data-inspector-ui:$TRAVIS_TAG
   - docker push chris060986/data-inspector-ui:latest 
   
