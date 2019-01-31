@@ -1,6 +1,8 @@
+import { environment } from './../../environments/environment';
+
 const REST: string = "http://";
 const WS: string = "ws://";
-const baseUrl: string = 'localhost:3000/';
+const baseUrl: string = environment.serviceBaseUrl;
 
 export const ServerURL = {
   websocket: WS + baseUrl + 'websocket',
