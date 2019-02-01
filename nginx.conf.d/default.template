@@ -10,26 +10,26 @@ server {
     location /datatypes {
         proxy_pass http://${DDS2NG_HOST}:${DDS2NG_PORT}/datatypes;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Upgrade $$HTTP_UPGRADE;
         proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
+        proxy_set_header Host $$HOST;
+        proxy_cache_bypass $$HTTP_UPGRADE;
     }
 
     location /websocket {
-        proxy_pass ws://${DDS2NG_HOST}:${DDS2NG_PORT}/websocket;
+        proxy_pass http://${DDS2NG_HOST}:${DDS2NG_PORT}/websocket;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Upgrade $$HTTP_UPGRADE;
         proxy_set_header Connection "Upgrade";
     }
 
     location /datastructures {
         proxy_pass http://${DDS2NG_HOST}:${DDS2NG_PORT}/datastructures;
         proxy_http_version 1.1;
-        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Upgrade $$HTTP_UPGRADE;
         proxy_set_header Connection 'upgrade';
-        proxy_set_header Host $host;
-        proxy_cache_bypass $http_upgrade;
+        proxy_set_header Host $$HOST;
+        proxy_cache_bypass $$HTTP_UPGRADE;
     }
 
     error_page   500 502 503 504  /50x.html;
