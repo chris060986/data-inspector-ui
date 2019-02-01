@@ -5,5 +5,6 @@
 
 export const environment = {
   production: false,
-  serviceBaseUrl: 'http://localhost:3000/'
+  serviceBaseUrl: 'http://localhost:3000/',
+  wsBaseUrl: 'ws://localhost:3000/'
 };
