@@ -4,17 +4,12 @@ import { Routes, RouterModule } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'overview',
+    path: '',
     component: ListViewComponent
   },
   { 
-    path: '',
-    redirectTo: '/overview',
-    pathMatch: 'full'
-  },
-  { 
     path: '**', 
-    redirectTo: '/overview',
+    redirectTo: '',
   }
 ];
 
