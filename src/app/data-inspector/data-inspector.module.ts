@@ -20,6 +20,7 @@ import { MatDialogRef, MAT_DIALOG_DATA, MAT_DATE_LOCALE } from '@angular/materia
 import { WarnSnackComponent } from './components/others/warn-snack/warn-snack.component';
 import { FormArrayComponent } from './components/send-dialog/dynamic-form/form-level/form-array/form-array.component';
 import { DataTriggerDirective } from './data/data-trigger.directive';
+import { LazyForDirective } from './data/lazy-for.directive';
 
 @NgModule({
   imports: [
@@ -45,6 +46,7 @@ import { DataTriggerDirective } from './data/data-trigger.directive';
     WarnSnackComponent,
     FormArrayComponent,
     DataTriggerDirective,
+    LazyForDirective,
   ],
   entryComponents: [
     SendDialogComponent,

@@ -13,7 +13,7 @@
         </mat-form-field>
       </div>
       <div class="sidenavItems">
-        <div class="listItem mat-elevation-z3" *ngFor="let item of filteredTopics">
+        <div class="listItem mat-elevation-z3" *lazyFor="let item of filteredTopics">
           <p class="listItemText unselectableText">{{item}}</p>
           <div class="listItemTools">
             <button mat-icon-button color="primary" matTooltipShowDelay="1000" matTooltip="subscribe" (click)="subscribeTopic(item)">
